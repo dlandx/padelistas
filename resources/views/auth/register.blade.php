@@ -78,7 +78,7 @@
                             <label for="identity" class="col-md-4 col-form-label text-md-right">{{ __('DNI/NIE') }}</label>
 
                             <div class="col-md-6">
-                                <input id="identity" type="text" class="form-control{{ $errors->has('identity') ? ' is-invalid' : '' }}" name="identity" value="{{ old('identity') }}" required autocomplete="identity" autofocus>
+                                <input id="identity" type="text" class="form-control{{ $errors->has('identity') ? ' is-invalid' : '' }}" name="identity" value="{{ old('identity') }}" autocomplete="identity" autofocus>
 
                                 @if ($errors->has('identity'))
                                     <span class="invalid-feedback" role="alert">
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('NÃºmero movil') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Número movil') }}</label>
 
                             <div class="col-md-6">
                                 <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
@@ -102,7 +102,7 @@
                             </div>
                         </div>
 
-                        {{-- }}
+                        
                         <div class="form-group row">
                             <label for="birthdate" class="col-md-4 col-form-label text-md-right">{{ __('Fecha nacimiento') }}</label>
 
@@ -115,10 +115,10 @@
                                     </span>
                                 @endif
                             </div>
-                        </div> {{ --}}
+                        </div>
 
                         <div class="form-group row">
-                            <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('GÃ©nero') }}</label>
+                            <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Género') }}</label>
 
                             <div class="col-md-6">
                                 <input id="gender" type="text" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }}" name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus>
@@ -146,10 +146,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('DirecciÃ³n') }}</label>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
+                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" autocomplete="address" autofocus>
 
                                 @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">

@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('NÃºmero movil') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Número movil') }}</label>
 
                             <div class="col-md-6">
                                 <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
@@ -125,7 +125,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
-                                <a href="#" data-toggle="modal" data-target="#clubModal">Â¿No encuentra su club?</a>
+                                <a href="#" data-toggle="modal" data-target="#clubModal">¿No encuentra su club?</a>
                             </div>
                         </div>
 
@@ -181,7 +181,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="phone_number" class="col-md-4 col-form-label text-md-right">{{ __('NÃºmero movil') }}</label>
+                                            <label for="phone_number" class="col-md-4 col-form-label text-md-right">{{ __('Número movil') }}</label>
                 
                                             <div class="col-md-6">
                                                 <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number" autofocus>
@@ -195,7 +195,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('DirecciÃ³n') }}</label>
+                                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
 
                                             <div class="col-md-6">
                                                 <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
@@ -209,7 +209,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('DescripciÃ³n') }}</label>
+                                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}</label>
 
                                             <div class="col-md-6">
                                                 <input id="description" type="text" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
