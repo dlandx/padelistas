@@ -9,8 +9,14 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
         <!-- Styles -->
-        <style>
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    
+        <style>/*
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -60,40 +66,49 @@
 
             .m-b-md {
                 margin-bottom: 30px;
-            }
+            }*/
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="main_nav">
+            <div class="logo">
+                Padelistas
+            </div>
+            
             @if (Route::has('login'))
-                <div class="top-right links">
+                <nav>
+                    <a href="#site-nav" class="nav-toggle js-nav-toggle js-no-hijack"><span class="sr-only">Menu</span><span></span></a>
+                    
+                    <ul class="menu">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <li class="menu_item">
+                            <a href="{{ url('/home') }}" class="menu_link"><span>{{ __('Home') }}</span></a>
+                        </li>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-
+                        <li class="menu_item">
+                            <a href="/clubs" class="menu_link"><span>{{ __('Clubes') }}</span></a>
+                        </li>
+                        <li class="menu_item">
+                            <a href="{{ route('login') }}" class="menu_link"><span>{{ __('Identificarse') }}</span></a>
+                        </li>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <li class="menu_item">
+                                <a href="{{ route('register') }}" class="menu_link"><span>{{ __('Registrarse') }}</span></a>
+                            </li>
                         @endif
                     @endauth
-                </div>
+                    </ul>
+                </nav>
             @endif
-
-            <div class="content">
+        </div>
+        
+        <div class="content">
                 <div class="title m-b-md">
                     Laravel
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+
         </div>
+        
     </body>
 </html>
