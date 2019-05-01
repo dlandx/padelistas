@@ -235,7 +235,7 @@
                             </div>
                         </div>
                     </div>
-
+                    {{-- FIN VENTANA MODAL --}}
                 </div>
             </div>
         </div>

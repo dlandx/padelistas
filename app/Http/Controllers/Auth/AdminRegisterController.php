@@ -39,7 +39,6 @@ class AdminRegisterController extends Controller
 
         //Admin::create($request->all());
         //return redirect(route('admin.dashboard'));
-        
     }
 
     protected function create(array $data)
