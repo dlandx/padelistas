@@ -15,6 +15,10 @@
                     @endif
 
                     You are logged in! <b>Admin</b>
+                    
+                    <div>
+                        <a href="{{ route('track.index') }}">Gestionar Pistas</a>
+                    </div>
                 </div>
             </div>
         </div>
