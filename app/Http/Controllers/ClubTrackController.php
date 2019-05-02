@@ -66,7 +66,6 @@ class ClubTrackController extends Controller
         // Mostrar informacion de la pista seleccionada...
         $show = ClubTrack::find($id);
         return view('track_show', compact("show"));
-
     }
 
     /**
@@ -77,7 +76,9 @@ class ClubTrackController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Vista para editar una pistas del club..
+        $tracks = ClubTrack::find($id);
+        return view('track_edit', compact("tracks"));
     }
 
     /**
@@ -89,7 +90,10 @@ class ClubTrackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // actualizar la pista...
+        $tracks = ClubTrack::find($id);
+        $tracks->update($request->all());
+        return redirect()->route('track.index');
     }
 
     /**
@@ -100,6 +104,6 @@ class ClubTrackController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

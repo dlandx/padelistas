@@ -35,12 +35,12 @@
                                     <td>{{ $item->price_3 }}</td>
 
                                     <td>
-                                        <form action="/product/{{ $item->id }}" method="">
+                                        <form action="{{ route('track.show', $item->id) }}" method="">
                                             <button type='submit' name='btn' value='{{ $item->id }}'>show</button>
                                         </form>
                                     </td>   
                                     <td>
-                                        <form action="/product/{{ $item->id }}" method="POST">
+                                        <form action="{{ route('track.update', $item->id) }}" method="POST">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button type='submit' name='btn' value='{{ $item->id }}'>eliminar</button>
@@ -49,7 +49,7 @@
 
 
                                     <td>
-                                        <form action="/product/{{ $item->id }}/edit" method="">
+                                        <form action="{{ route('track.edit', $item->id) }}" method="">
                                             <button type='submit' name='btn' value='{{ $item->id }}'>edit</button>
                                         </form>
                                     </td> 
