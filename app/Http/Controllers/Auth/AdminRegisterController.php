@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Admin;
 use App\Club;
@@ -27,26 +28,27 @@ class AdminRegisterController extends Controller
     {
         // Validate the form data
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6'
+            'username' => ['required', 'string', 'max:20', 'unique:admins'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:admins'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['string', 'min:2', 'max:20',],
         ]);
        
         // Registrar BD
         $admin = $this->create($request->all());
-        return redirect(route('admin.dashboard'));
-// dd($request); 
-
-        //Admin::create($request->all());
-        //return redirect(route('admin.dashboard'));
+        return redirect(route('admin.dashboard')); // controlar (acceder y redirect...)
     }
 
     protected function create(array $data)
     {
         return Admin::create([
-            'username' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
+            'name' => $data['name'],
+            'identity_card' => $data['identity'],
+            'phone_number' => $data['phone'],
+            'gender' => $data['gender'],
             'club_id' => $data['club'],
         ]);
     }
