@@ -37,7 +37,8 @@ class ClubTrackController extends Controller
      */
     public function create()
     {
-        //
+        // Vista para añadir pistas al club..
+        return view('track_register');
     }
 
     /**
@@ -48,7 +49,10 @@ class ClubTrackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Añadir las pistas a la BBDD...
+        ClubTrack::create($request->all());
+        // controlar que mantenga los datos del modal...
+        return redirect()->route('track.index');
     }
 
     /**
