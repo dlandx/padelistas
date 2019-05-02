@@ -63,7 +63,10 @@ class ClubTrackController extends Controller
      */
     public function show($id)
     {
-        //
+        // Mostrar informacion de la pista seleccionada...
+        $show = ClubTrack::find($id);
+        return view('track_show', compact("show"));
+
     }
 
     /**
