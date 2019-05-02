@@ -104,6 +104,9 @@ class ClubTrackController extends Controller
      */
     public function destroy($id)
     {
-
+        // eliminar pista
+        $tracks = ClubTrack::find($id);
+        $tracks->delete();
+        return redirect()->route('track.index');
     }
 }
