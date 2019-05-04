@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ClubTrack;
-use Auth;
+use App\User;
 
-class ClubTrackController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,9 +24,9 @@ class ClubTrackController extends Controller
      */
     public function index()
     {
-        // Listar todas las pistas del club que administre el usuario logueado...
-        $tracks = ClubTrack::where('club_id','=', Auth::user()->club_id)->get();     
-        return view('track', compact("tracks"));
+        // Listar los usuario registrados
+        $users = User::all();
+        return view('user', compact("users"));
     }
 
     /**
@@ -37,8 +36,8 @@ class ClubTrackController extends Controller
      */
     public function create()
     {
-        // Vista para añadir pistas al club..
-        return view('track_register');
+        // Vista para añadir usuarios...
+        return view('auth.register');
     }
 
     /**
@@ -49,10 +48,7 @@ class ClubTrackController extends Controller
      */
     public function store(Request $request)
     {
-        // Añadir las pistas a la BBDD...
-        ClubTrack::create($request->all());
-        // controlar que mantenga los datos del modal...
-        return redirect()->route('track.index');
+        //
     }
 
     /**
@@ -63,9 +59,9 @@ class ClubTrackController extends Controller
      */
     public function show($id)
     {
-        // Mostrar informacion de la pista seleccionada...
-        $show = ClubTrack::find($id);
-        return view('track_show', compact("show"));
+        // Información del usuario...
+        $show = User::find($id);
+        return view('user_show', compact("show"));
     }
 
     /**
@@ -76,9 +72,9 @@ class ClubTrackController extends Controller
      */
     public function edit($id)
     {
-        // Vista para editar una pistas del club..
-        $tracks = ClubTrack::find($id);
-        return view('track_edit', compact("tracks"));
+        // Vista para editar un usuario..
+        $users = User::find($id);
+        return view('user_edit', compact("users"));
     }
 
     /**
@@ -90,10 +86,10 @@ class ClubTrackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Actualizar la pista...
-        $tracks = ClubTrack::find($id);
-        $tracks->update($request->all());
-        return redirect()->route('track.index');
+        // Actualizar la usuario...
+        $users = User::find($id);
+        $users->update($request->all());
+        return redirect()->route('user.index');
     }
 
     /**
@@ -104,9 +100,9 @@ class ClubTrackController extends Controller
      */
     public function destroy($id)
     {
-        // Eliminar pista
-        $tracks = ClubTrack::find($id);
-        $tracks->delete();
-        return redirect()->route('track.index');
+        //
+        $users = User::find($id);
+        $users->delete();
+        return redirect()->route('user.index');
     }
 }
