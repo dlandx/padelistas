@@ -19,6 +19,9 @@
                     <div>
                         <a href="{{ route('track.index') }}">Gestionar Pistas</a>
                     </div>
+                    <div>
+                        <a href="{{ route('user.index') }}">Gestionar Usuarios</a>
+                    </div>
                 </div>
             </div>
         </div>

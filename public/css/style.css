@@ -1,82 +1,89 @@
-/* ---------- HOME ---------- */ 
-html, body {
-    background-color: #868b8f;
-    color: #636b6f;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 200;
-    height: 100vh;
+body {
     margin: 0;
-    
-    background-image: url(https://4.bp.blogspot.com/-oQ89uVGKBxM/WSqO1ncRCDI/AAAAAAAAAz0/Byto9jIhSMEeCpq5SRaY-ht-fLvRm4_kwCK4B/s1600/SimplePolyStadiumKit_screenshot01.png);
-    /*
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://4.bp.blogspot.com/-oQ89uVGKBxM/WSqO1ncRCDI/AAAAAAAAAz0/Byto9jIhSMEeCpq5SRaY-ht-fLvRm4_kwCK4B/s1600/SimplePolyStadiumKit_screenshot01.png) no-repeat, radial-gradient(#868b8f 90%, #484f55 103%)
-    */
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+    color: #616161;
+    background: #f7f7f7;
 }
-
-/* https://www.quackit.com/css/grid/examples/css_grid_website_layout_examples.cfm */
-body { 
-    display: grid;
-    grid-template-areas: "nav content";
-    grid-template-columns: .5fr 3fr;
-}
-.main_nav {
-    grid-area: nav;
-}
-
-.content {
-    grid-area: content;
-    align-items: center;
-    display: grid;
-}
-
-.logo {
-    font-size: 4em;
-    text-transform: uppercase;
+.main {
+    width: 15%;
+    float: left;
     position: fixed;
-    top: 4rem;
-    left: 1rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 100%;
+}
+.content {
+    float: right;
+    width: 85%;
+    position: relative;
+}
+a {
+    color: #546e7a;
+}
+
+/* ---------- MENU ---------- */
+.logo {
+    margin: auto;
+    font-size: 2rem;
+    text-transform: uppercase;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
 }
 
-/* ---------- MENU ---------- */ 
-nav {
-    width: 100%;
-    height: 5rem;;
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-    text-align: right;
+.main>nav {
+    margin: auto;
 }
 .menu {
-    position: relative;
-    margin: 0;
-    text-transform: uppercase;
-}
-.menu_item {
     list-style: none;
-    display: inline-block;
-    padding: 0 1rem;
+    text-align: right;
+    line-height: 3rem;
 }
-.menu_item a {                
+.menu>li a {
     text-decoration: none;
-    position: relative;
-    display: block;
-    overflow: hidden;
-    transition: .5s all;
 }
-.menu_item a::before {
-    content: '';
-    width: 100%;
-    position: absolute;
-    border-bottom: 1px solid;
-    bottom: 0;
-    right: 350px;
-    transition: .3s all;
+.menu>li a.active {
+    border-right: 2px solid red;
+    padding-right: 6px;
 }
-.menu_item a:hover:before {
-    right: 0;
+.admin {
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content>section {
+    height: 100vh;
+    display: grid;
+}
+
+.info_home {
+    background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://4.bp.blogspot.com/-oQ89uVGKBxM/WSqO1ncRCDI/AAAAAAAAAz0/Byto9jIhSMEeCpq5SRaY-ht-fLvRm4_kwCK4B/s1600/SimplePolyStadiumKit_screenshot01.png) no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-color: #868b8e; /* #878c90;*/                
+    color: #fff;
+}
+.info_home>div {
+    margin: auto;
+    width: 80%;
+    text-align: center;
+}
+
+.info_app {
+    grid-template-columns: 1fr 1fr;
+}
+.text_app {
+    margin: auto;
+}
+.text_app>h2 {
+    font-size: 3rem;
+    color: #2c2c2c;
+    margin: 2rem;
+}
+.info {
+    text-align: right;
+    margin: 2rem;
+}
+.info_img {
+    /*background: #166732;*/
+    margin: auto;
 }

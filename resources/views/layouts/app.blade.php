@@ -18,8 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
+{{-- }}
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -75,6 +77,70 @@
         <main class="py-4">
             @yield('content')
         </main>
+    </div>
+{{ --}}
+
+    <div id="app">
+        {{-- MENU --}}
+        <div class="main">
+            <div class="logo">Padelistas</div>
+
+            @if (Route::has('login'))
+                <nav>
+                    <ul class="menu">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
+                </nav>
+            @endif
+
+            <div class="admin">
+                <p>Administrador</p>
+                @if (Route::has('login'))
+
+                    @auth
+
+                    @else
+                        <p><a href="{{ route('admin.login') }}"><span>{{ __('Identificarse') }}</span></a></p>
+                        <p><a href="{{ route('admin.register') }}"><span>{{ __('Registrarse') }}</span></a></p>
+                    @endauth
+                @endif
+            </div>
+        </div>
+
+        {{-- CONTENT --}}
+        <div class="content">
+            <main class="py-4">
+                @yield('content')
+            </main>
+        </div>
     </div>
 </body>
 </html>
