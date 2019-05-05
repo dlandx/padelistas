@@ -22,36 +22,23 @@
         <style>
             body {
                 margin: 0;
-                color: #616161;
-                background: #f7f7f7;
             }
             .main {
-                width: 15%;
-                float: left;
                 position: fixed;
                 display: grid;
                 grid-template-rows: 1fr 1fr 1fr;
                 height: 100%;
             }
-            .content {
-                float: right;
-                width: 85%;
-                position: relative;
-            }
-            a {
-                color: #546e7a;
-            }
             
-            /* ---------- MENU ---------- */
             .logo {
-                margin: auto;
+                margin: 2rem;
                 font-size: 2rem;
                 text-transform: uppercase;
                 writing-mode: vertical-rl;
                 transform: rotate(180deg);
             }
             
-            .main>nav {
+            nav {
                 margin: auto;
             }
             .menu {
@@ -72,43 +59,78 @@
             }
             
             /* ---------- CONTENT ---------- */
-            .content>section {
+            section {
                 height: 100vh;
                 display: grid;
+                justify-content: center;
+                align-items: center;
             }
-            
-            .info_home {
+            .home {
                 background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://4.bp.blogspot.com/-oQ89uVGKBxM/WSqO1ncRCDI/AAAAAAAAAz0/Byto9jIhSMEeCpq5SRaY-ht-fLvRm4_kwCK4B/s1600/SimplePolyStadiumKit_screenshot01.png) no-repeat;
-                background-size: 100%;
-                background-position: center;
-                background-color: #868b8e; /* #878c90;*/                
-                color: #fff;
+                background-size: 87%;
+                background-position: right;
+                background-color: #868b8e; /* #878c90;*/
             }
-            .info_home>div {
-                margin: auto;
-                width: 80%;
-                text-align: center;
+            section:nth-of-type(2) {
+                background: gold;
+            }
+            section:nth-of-type(3) {
+                background: green;
             }
             
-            .info_app {
-                grid-template-columns: 1fr 1fr;
+            /* ---------- MENU ---------- /
+            .logo {
+                position: fixed;
+                font-size: 2rem;
+                text-transform: uppercase;
+                top: 2rem;
+                left: 1rem;
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
             }
-            .text_app {
-                margin: auto;
+            nav {
+                position: fixed;
+                display: grid;
+                align-content: center;
+                height: 100%;
             }
-            .text_app>h2 {
-                font-size: 3rem;
-                color: #2c2c2c;
-                margin: 2rem;
-            }
-            .info {
+            .menu {
+                list-style: none;
                 text-align: right;
-                margin: 2rem;
+                line-height: 3rem;
             }
-            .info_img {
-                /*background: #166732;*/
-                margin: auto;
+            .menu>li a {
+                text-decoration: none;
             }
+            .menu>li a.active {
+                border-right: 2px solid red;
+                padding-right: 6px;
+            }
+            
+            /* ---------- CONTENT ---------- /
+            .content {
+                    scroll-snap-type: proximity;
+            }
+            section {
+                height: 100vh;
+                display: grid;
+                justify-content: center;
+                align-items: center;
+                    scroll-snap-align: start;
+            }
+            .home {
+                background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://4.bp.blogspot.com/-oQ89uVGKBxM/WSqO1ncRCDI/AAAAAAAAAz0/Byto9jIhSMEeCpq5SRaY-ht-fLvRm4_kwCK4B/s1600/SimplePolyStadiumKit_screenshot01.png) no-repeat;
+                background-size: 87%;
+                background-position: right;
+                background-color: #868b8e; /* #878c90;/
+            }
+            section:nth-of-type(2) {
+                background: gold;
+            }
+            section:nth-of-type(3) {
+                background: green;
+            } 
+            */
         </style>
     </head>
     <body>
@@ -158,38 +180,43 @@
 
         {{-- CONTENT --}}
         <div class="content">
-            <section class="info_home">
+            <section class="home">
                 <div>
                     <h2>Reservar pista de pádel al instante, nunca fue tan fácil...</h2>
                     <p>¡Reserva tu pista o campo en los clubes disponibles segun tu ciudad!</p>
                 </div>                
             </section>
             
-            <section class="info_app">
-                <div class="text_app">
-                    <h2>Con padelistas juega en 3 pasos sencillos</h2>
-                    
-                    <div class="info">
-                        <h4>Elige tu club</h4>
-                        <p>...</p>
-                    </div>
-                    
-                    <div class="info">
-                        <h4>Reserva</h4>
-                        <p>...</p>
-                    </div>
-                    
-                    <div class="info">
-                        <h4>Juega</h4>
-                        <p>...</p>
-                    </div>                    
-                </div>
+            <section>
+                <div>
+                    <h2>Section 2</h2>
                 
-                <div class="info_img">
-                    <button type="button" class="btn btn-outline-secondary">Ver clubes</button>              
+                    <div class="card project_widget">
+                        <div class="pw_img">
+                            <img class="img-fluid" src="../assets/images/image4.jpg" alt="About the image">
+                        </div>
+                        <div class="body">
+                            <div class="row pw_content">
+                                <div class="col-12 pw_header">
+                                    <h6>New Dashboard</h6>
+                                    <small class="text-muted">sQuare  |  Last Update: 17 Dec 2017</small>
+                                </div>
+                                <div class="col-8 pw_meta">
+                                    <span>4,210 USD</span>                                
+                                    <small class="text-success">Early Dec 2017</small>
+                                </div>
+                                <div class="col-4">
+                                    <div class="sparkline m-t-10" data-type="bar" data-width="97%" data-height="26px" data-bar-width="2" data-bar-spacing="7" data-bar-color="#60bafd"><canvas width="83" height="26" style="display: inline-block; width: 83px; height: 26px; vertical-align: top;"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
             
+            <section>
+                <h2>Section 3</h2>
+            </section>
         </div>
 
     </body>
