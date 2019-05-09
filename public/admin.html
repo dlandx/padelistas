@@ -88,51 +88,16 @@
             }
         }
 
-/* ---------- HOME - STEPS ---------- */
-.main-step {
-    grid-template-columns: 1fr 1fr;
-}
 
 
-/* Card see the hidden content*/
-.step {
-    width: 35%;
-    margin: 1rem;
-    text-align: left;
-    border: 1px solid #0c824a;
-    border-radius: 5px;
-    overflow: hidden;
+.admin-home {
+    display: grid;
+    grid-template-columns: 300px 1fr;
 }
-input[id^="check-club"], input[id^="check-reserve"], input[id^="check-play"] {
-    display: none;
+
+.waiting-list {
+    border-right: 1px solid;
 }
-input[id^="check-club"] + label, input[id^="check-reserve"] + label, input[id^="check-play"] + label {
-    padding: 1rem;
-    cursor: pointer;
-    display: block;
-}
-input[id^="check-club"]:checked + label, input[id^="check-reserve"]:checked + label, input[id^="check-play"]:checked + label {
-    color: grenn;
-}
-/* Style hidden content */
-input[id^="check-club"] ~ .step-hidden, input[id^="check-reserve"] ~ .step-hidden, input[id^="check-play"] ~ .step-hidden {
-    border-top: 1px solid gray;;
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
-}
-input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve"]:checked + label + .step-hidden, input[id^="check-play"]:checked + label + .step-hidden {
-    height: auto;
-    opacity: 1;
-    padding: 1rem;
-}
-/* Hover view hidden content */
-.step>label:hover + .step-hidden {
-    height: auto;
-    opacity: 1;
-    padding: 1rem;
-}
-/* ---------- HOME - END STEPS ---------- */
 
     </style>
 </head>
@@ -155,40 +120,22 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
         </div>
 
         <div class="content">
-            <section class="x">
+            <section>
                 <div>
                     <h1>CLUB PADEL</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum esse error cupiditate perferendis, quia vero aut amet doloribus in alias. Esse voluptate unde ipsa minima veniam provident saepe ea hic.</p>
+                    <div class="admin-home">
+                        <div class="waiting-list">
+                            <h2>Lista espera</h2>
+                        </div>
+
+                        <div class="manage">
+                            <h2>INFO CLUB</h2>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section class="main-step">
-                <div>
-                    <h1>CLUB PADEL</h1>
-                    
-                    <div class="step">
-                        <input type="checkbox" id="check-club"></input>
-                        <label for="check-club">Elige tu club</label>                        
-                        <div class="step-hidden">Elige tu club preferido, o deja que la aplicación te sugiera en base a tu ubicación...</div>
-                    </div>
 
-                    <div class="step">
-                        <input type="checkbox" id="check-reserve"></input>
-                        <label for="check-reserve">Reserva</label>                        
-                        <div class="step-hidden">Elige la pistas, el tiempo que deseas jugar</div>
-                    </div>
-
-                    <div class="step">
-                        <input type="checkbox" id="check-play"></input>
-                        <label for="check-play">Juega</label>                        
-                        <div class="step-hidden">Diviértete y disfruta del deporte. ¡Disfruta al máximo del partido y dalo todo en la pista!</div>
-                    </div>
-                </div>
-
-                <div>
-                    <img src="d" alt="as">
-                </div>
-            </section>
         </div>
     </div>    
 </body>
