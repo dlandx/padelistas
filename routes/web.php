@@ -34,3 +34,8 @@ Route::prefix('admin')->group(function() {
     Route::resource('/club/track', 'ClubTrackController');
     Route::resource('/user', 'UserController');
 });
+
+
+// Caledar 
+
+Route::get('/cal', 'ViewClubTrackController@index');
