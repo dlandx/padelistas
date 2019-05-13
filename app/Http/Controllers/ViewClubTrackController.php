@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 //use \MaddHatter\LaravelFullcalendar\Event;
+use App\ClubTrack;
+
 
 class ViewClubTrackController extends Controller
 {
@@ -15,75 +17,91 @@ class ViewClubTrackController extends Controller
      */
     public function index()
     {
-        //
-        $events = [];
+
+        //$tracks = ClubTrack::all()->toArray();
+        //$tracks = ClubTrack::select(['id', 'name'])->get()->toArray();
+        $tracks = ClubTrack::select(['id', 'name'])->get();
 
         $events[] = \Calendar::event(
             'Event One', //event title
             false, //full day event?
             '2019-05-13T0800', //start time (you can also use Carbon instead of DateTime)
-            '2019-05-14T0800', //end time (you can also use Carbon instead of DateTime)
-            0 //optionally, you can specify an event ID
-        );
-        
+            '2019-05-13T1200', //end time (you can also use Carbon instead of DateTime)
+            0, //optionally, you can specify an event ID
+            ['resourceId' => 2]
+        );        
         $events[] = \Calendar::event(
             "Valentine's Day", //event title
-            true, //full day event?
-            new \DateTime('2019-05-18'), //start time (you can also use Carbon instead of DateTime)
-            new \DateTime('2019-05-19'), //end time (you can also use Carbon instead of DateTime)
-            'stringEventId' //optionally, you can specify an event ID
+            false, //full day event?
+            new \DateTime('2019-05-13T2200'), //start time (you can also use Carbon instead of DateTime)
+            new \DateTime('2019-05-14T0400'), //end time (you can also use Carbon instead of DateTime)
+            'stringEventId', //optionally, you can specify an event ID
+            ['resourceId' => 1]
         );
 
+$r = [
+    [   'id' => '1',
+'title' => 'Table No.: 1'                   
+],
+[   'id' => '2',
+'title' => 'Table No.: 2',
+'eventColor' => 'green'
+],
+[   'id' => '3',
+'title' => 'Table No.: 3'
+]];
+/*
+select(['id', 'title'])
+    ->orderBy('created_at', 'desc')
+    ->get()
+    ->toArray();
+*/
 
-            $resources = array(
-                array('id' => "2", "name" => "Resource 1"),
-                array('id' => "3", "name" => "Resource 2")
-            );  
+// The array we're going to return
+$data = [];
+// Let's Map the results from [$query]
+$map = $tracks->map(function($items){
+   $data['id'] = $items->id;
+   $data['title'] = $items->name;
+   return $data;
+});
 
-            $resources_JSON_array = json_encode($resources);   
+
+
+        $calendar = \Calendar::addEvents($events) //add an array with addEvents         
+            ->setOptions([
+                'resourceId' => 2,
+
+                'defaultView' => 'agendaDay',
+                'visibleRange'=> [
+                    'start'=> '2019-05-12',
+                    'end'=> '2019-05-13'
+                ],
+                'resourceAreaWidth' => '25%',
+                'resourceLabelText' => 'Rooms',
+                'header' => [
+                    'left'=> 'agendaDay',
+                    'center' => 'title',
+                ],
+/*
+                'resources' => [
+
+                    [   'id' => '1',
+                        'title' => 'Table No.: 1'                   
+                    ],
+                    [   'id' => '2',
+                        'title' => 'Table No.: 2',
+                        'eventColor' => 'green'
+                    ],
+                    [   'id' => '3',
+                        'title' => 'Table No.: 3'
+                    ],
+                ],*/
                 
+                'resources' => $map->toArray(),
+            ]);
 
-
-
-
-        $calendar = \Calendar::addEvents($events) //add an array with addEvents
-->setOptions([ //set fullcalendar options
-            'firstDay' => 1,
-            
-            
-
-            /*
-            'resourceId' => 1,
-            'resourceOrder' => '-type1,type2',
-            'resourceGroupField' =>'room',
-            'resourceLabelText' =>'Rooms', 
-            'views' => [                
-                'timelineDay' => [
-                    'timeFormat' => 'H:mm',
-                    'type' => 'timeline',
-                    'duration' => [ 'days' => 1 ]
-                ],
-            ],      
-            'resources' => [
-                [   
-                    'id' => '1',
-                    'title' => 'Table No.: 1'                   
-                ],
-                [   
-                    'id' => '2',
-                    'title' => 'Table No.: 2'
-                ],
-            ],*/
-
-            'resourceGroupField' =>'room',
-            'resourceLabelText' =>'Rooms', 
-            'resources' => [ $resources_JSON_array ]
-
-        ])->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
-            'viewRender' => 'function() {alert("Callbacks!");}'
-        ]);
-        
-        return view('track_list', compact('calendar'));
+    return view('track_list', compact('calendar'));
     }
 
     /**

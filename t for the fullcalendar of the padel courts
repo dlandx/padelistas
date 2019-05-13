@@ -1,0 +1,95 @@
+[33mcommit 5120d408ad5ce7deee1c182197647e2e33372565[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Mon May 13 00:42:20 2019 +0200
+
+    tests calendar...
+
+[33mcommit 1d8e325ca168297b1bfcb2ded8e86d1aa7f25f96[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Thu May 9 23:52:31 2019 +0200
+
+    designing the application, tests v2...
+
+[33mcommit 0d759b53bf1ae50032209274a5b9be29ba53d6fd[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Thu May 9 00:38:02 2019 +0200
+
+    designing the application, tests...
+
+[33mcommit 1407b36f5fc66303bff8bb75da4df9b39428da11[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Mon May 6 00:49:28 2019 +0200
+
+    test style...
+
+[33mcommit c1adada1ccdcf12ac5941c43d5439841f2ad2085[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Sun May 5 20:09:24 2019 +0200
+
+    View home...
+
+[33mcommit 8cc4f69eeee27e6299037eb0c617fa1a45bce3f5[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Sat May 4 22:19:38 2019 +0200
+
+    CRUD Users...
+
+[33mcommit 27542919b475d465df7ba2ad4d9cf39f1bf9ae4a[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Fri May 3 00:49:32 2019 +0200
+
+    CRUD club track...
+
+[33mcommit dae8c1f21302d4dfe6071d886ebda22c477520a8[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Fri May 3 00:45:51 2019 +0200
+
+    edit club track...
+
+[33mcommit fea893e8e314ba725fe4268a02a6853839da418b[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Thu May 2 23:33:20 2019 +0200
+
+    View information of a selected club track...
+
+[33mcommit 34067dfa49bcbdd44b4b900a4dd85ec9262f2782[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Thu May 2 22:34:55 2019 +0200
+
+    add club tracks (form...)
+
+[33mcommit fd2c9adb4e8613c8221ed5d17081a005a71fe29f[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Thu May 2 22:15:54 2019 +0200
+
+    Show club tracks (for the logged in administrator)...
+
+[33mcommit 277c9cece96d72e4a67647bbe4718c7529617e68[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Thu May 2 21:08:38 2019 +0200
+
+    register admins
+
+[33mcommit 2377d2c18471abdfdd37114c903e48e79ef8e66b[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Wed May 1 23:34:45 2019 +0200
+
+    register club (in register user admin)
+
+[33mcommit 07b74f53789799f09f98e9a42908b9fb1c9c7045[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Wed May 1 20:16:24 2019 +0200
+
+    register/login user
+
+[33mcommit 1e170a548167699fd549cf1736df8a2dd24a93b7[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Wed May 1 19:33:49 2019 +0200
+
+    Crear rutas y vistas login/register, modelos...
+
+[33mcommit 8a9a1f83c1fb45b03dd9abd3d10590faae2773f7[m
+Author: USUARIO <USUARIO@USUARIO-PC>
+Date:   Tue Apr 23 19:17:37 2019 +0200
+
+    1º Estructura del proyecto - migraciones...
