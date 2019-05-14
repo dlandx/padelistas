@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 //use \MaddHatter\LaravelFullcalendar\Event;
+use Calendar; // Alias of Fullcalenda of ServiceProvider...
+use DateTime;
 use App\ClubTrack;
+use App\Reservation;
 
 
 class ViewClubTrackController extends Controller
@@ -21,16 +24,41 @@ class ViewClubTrackController extends Controller
         //$tracks = ClubTrack::all()->toArray();
         //$tracks = ClubTrack::select(['id', 'name'])->get()->toArray();
         $tracks = ClubTrack::select(['id', 'name'])->get();
+        $reservations = Reservation::all();
 
-        $events[] = \Calendar::event(
+
+//dd($reservations->toArray());
+        //$invoice_date =  (new DateTime('Europe/Madrid'))->format('Y-m-d\TH:i');
+        $invoice_date =  (new DateTime('2019-05-15 15:00:00'))->format('Y-m-d\TH:i');
+
+
+        $events = [];
+        foreach ($reservations as $value) {
+            // Add reservations in events of the full calendar...
+            $events[] = Calendar::event(
+                'dd',// Title
+                false,// Full date
+                (new DateTime($value->date))->format('Y-m-d\TH:i'), // Start time
+                (new DateTime("2019-05-19 15:00:00"))->format('Y-m-d\TH:i'),// End time 
+                $value->id, // ID
+                ['resourceId' => $value->club_track_id] // Options event - rooms
+            );
+        }
+
+
+dd($events);
+//date: 2019-05-13 08:00:00.0 UTC (+00:00)
+        $events[] = Calendar::event(
             'Event One', //event title
             false, //full day event?
             '2019-05-13T0800', //start time (you can also use Carbon instead of DateTime)
             '2019-05-13T1200', //end time (you can also use Carbon instead of DateTime)
             0, //optionally, you can specify an event ID
             ['resourceId' => 2]
-        );        
-        $events[] = \Calendar::event(
+        );    
+        
+        
+        $events[] = Calendar::event(
             "Valentine's Day", //event title
             false, //full day event?
             new \DateTime('2019-05-13T2200'), //start time (you can also use Carbon instead of DateTime)
@@ -39,65 +67,30 @@ class ViewClubTrackController extends Controller
             ['resourceId' => 1]
         );
 
-$r = [
-    [   'id' => '1',
-'title' => 'Table No.: 1'                   
-],
-[   'id' => '2',
-'title' => 'Table No.: 2',
-'eventColor' => 'green'
-],
-[   'id' => '3',
-'title' => 'Table No.: 3'
-]];
-/*
-select(['id', 'title'])
-    ->orderBy('created_at', 'desc')
-    ->get()
-    ->toArray();
-*/
-
-// The array we're going to return
-$data = [];
-// Let's Map the results from [$query]
-$map = $tracks->map(function($items){
-   $data['id'] = $items->id;
-   $data['title'] = $items->name;
-   return $data;
-});
-
-
+     
+        // Retornar un array...
+        $data = [];
+        $map = $tracks->map(function($items){
+            $data['id'] = $items->id;
+            $data['title'] = $items->name;
+            return $data;
+        });
 
         $calendar = \Calendar::addEvents($events) //add an array with addEvents         
             ->setOptions([
-                'resourceId' => 2,
-
-                'defaultView' => 'agendaDay',
+                /*'resourceId' => 2,                
                 'visibleRange'=> [
                     'start'=> '2019-05-12',
                     'end'=> '2019-05-13'
                 ],
                 'resourceAreaWidth' => '25%',
+                */
+                'defaultView' => 'agendaDay',
                 'resourceLabelText' => 'Rooms',
                 'header' => [
                     'left'=> 'agendaDay',
                     'center' => 'title',
                 ],
-/*
-                'resources' => [
-
-                    [   'id' => '1',
-                        'title' => 'Table No.: 1'                   
-                    ],
-                    [   'id' => '2',
-                        'title' => 'Table No.: 2',
-                        'eventColor' => 'green'
-                    ],
-                    [   'id' => '3',
-                        'title' => 'Table No.: 3'
-                    ],
-                ],*/
-                
                 'resources' => $map->toArray(),
             ]);
 

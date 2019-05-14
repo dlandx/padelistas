@@ -126,6 +126,46 @@ aspectRatio: 1.6,
 
 
 */
+
+/*
+$(document).ready(function(){
+    $('#calendar-75AOQd74').fullCalendar({
+        "header":{"left":"agendaDay","center":"title"},
+        "eventLimit":true,
+        "resourceId":2,
+        "defaultView":"agendaDay",
+        "visibleRange":{"start":"2019-05-12","end":"2019-05-13"},
+        "resourceAreaWidth":"25%",
+        "resourceLabelText":"Rooms",
+        "resources":[
+            {"id":1,"title":"pista 1"},
+            {"id":2,"title":"pista 2"},
+            {"id":3,"title":"pista 1"},
+            {"id":4,"title":"pista 2"},
+            {"id":5,"title":"new track 4"},
+            {"id":6,"title":"pista 2"}
+        ],
+        "events":[
+            {
+                "id":0,
+                "title":"Event One",
+                "allDay":false,
+                "start":"2019-05-13T08:00:00+00:00",
+                "end":"2019-05-13T12:00:00+00:00",
+                "resourceId":2
+            },
+            {
+                "id":"stringEventId",
+                "title":"Valentine's Day",
+                "allDay":false,
+                "start":"2019-05-13T22:00:00+00:00",
+                "end":"2019-05-14T04:00:00+00:00",
+                "resourceId":1
+            }
+        ]
+    });
+});
+*/
 </script>
 
 </body>
