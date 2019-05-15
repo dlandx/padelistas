@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('gender',30);
             $table->float('level',8,2)->nullable();
             $table->string('address')->nullable();
+            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

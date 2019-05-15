@@ -27,7 +27,6 @@ class ViewClubTrackController extends Controller
         $reservations = Reservation::all();
 
 
-//dd($reservations->toArray());
         //$invoice_date =  (new DateTime('Europe/Madrid'))->format('Y-m-d\TH:i');
         $invoice_date =  (new DateTime('2019-05-15 15:00:00'))->format('Y-m-d\TH:i');
 
@@ -46,7 +45,7 @@ class ViewClubTrackController extends Controller
         }
 
 
-dd($events);
+
 //date: 2019-05-13 08:00:00.0 UTC (+00:00)
         $events[] = Calendar::event(
             'Event One', //event title
@@ -92,6 +91,14 @@ dd($events);
                     'center' => 'title',
                 ],
                 'resources' => $map->toArray(),
+
+                
+                'businessHours' => [
+                    'start' => '9:00',
+                    'end' => '22:00',
+                    //'dow' => [ 1, 2, 3, 4, 5]
+                ]
+
             ]);
 
     return view('track_list', compact('calendar'));

@@ -33,9 +33,9 @@
 <div id="calendar"></div>
 
 <script>
-
-(function($) {
 /*
+(function($) {
+
 //https://codepen.io/snak3/pen/PKbmJr
 $('#calendar').fullCalendar({
     defaultView: 'agendaDay',
@@ -67,13 +67,21 @@ $('#calendar').fullCalendar({
 				{ id: '3', resourceId: 'd', start: '2019-05-15', end: '2017-05-15', title: 'event 3' },
 				{ id: '4', resourceId: 'e', start: '2019-05-16T03:00:00', end: '2019-05-17T08:00:00', title: 'event 4' },
 				{ id: '5', resourceId: 'f', start: '2019-05-17T00:30:00', end: '2019-05-17T02:30:00', title: 'event 5' }
-			]
+			],
+
+            businessHours:
+    {
+
+            start: '9:00',
+            end:   '12:00',
+            dow: [ 1, 2, 3, 4, 5]
+    },
 
 });
 
 })(jQuery);
-
 */
+
 
 // Other -> horizontal https://codepen.io/acerix/pen/zRYjjP
 

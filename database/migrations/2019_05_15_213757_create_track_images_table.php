@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReservationsTable extends Migration
+class CreateTrackImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateReservationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservations', function (Blueprint $table) {
+        Schema::create('track_images', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('date');
-            $table->float('price',8,2);
+            $table->string('image')->nullable();
 
             $table->integer('club_track_id')->unsigned(); // FK
-            $table->foreign('club_track_id')->references('id')->on('club_tracks')->onDelete('cascade');
+            $table->foreign('club_track_id')->references('id')->on('club_tracks')->onDelete('cascade'); 
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateReservationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservations');
+        Schema::dropIfExists('track_images');
     }
 }

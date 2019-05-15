@@ -15,16 +15,18 @@ class CreateClubTracksTable extends Migration
     {
         Schema::create('club_tracks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100);
+            $table->string('name');
+            $table->string('type',50);
+            $table->string('enclosure',50)->nullable(); // cerramiento interior/exterior/cubierta
+            $table->string('walls',50)->nullable();
+            $table->string('size',50)->nullable();
             $table->text('description')->nullable();
-            $table->float('price_1',8,2)->nullable();
-            $table->float('price_2',8,2)->nullable();
-            $table->float('price_3',8,2)->nullable();
 
-            $table->integer('club_id')->unsigned(); // FK
-            $table->foreign('club_id')->references('id')->on('clubs');
+            $table->integer('club_id')->unsigned(); // FK 
+            $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade'); 
+            $table->integer('type_surface_id')->unsigned()->nullable();         
+            $table->foreign('type_surface_id')->references('id')->on('type_surfaces')->onDelete('set null');          
             $table->timestamps();
-
         });
     }
 
