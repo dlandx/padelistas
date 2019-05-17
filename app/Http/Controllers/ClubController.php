@@ -35,10 +35,18 @@ class ClubController extends Controller
      */
     public function store(Request $request)
     {
-        // Insertar Club...
-        Club::create($request->all());
-        // controlar que mantenga los datos del modal...
+        // Obtener los datos enviados del formulario...
+        $data = $request->except('days');
+        // Obtener checkbox[] y convertirlos en JSON
+        $data['days'] = response()->json($request->days)->getContent();
+
+        // Insertar el Club ingresado...
+        Club::create($data);
+        // Redirirgir para continuar con el registro del administrados
         return redirect()->route('admin.register');
+
+        //$json = '{"X":"MIERCOLES","S":"SABADO","D":"DOMINGO"}';
+        //json_decode($json); JSON -> ARRY
     }
 
     /**

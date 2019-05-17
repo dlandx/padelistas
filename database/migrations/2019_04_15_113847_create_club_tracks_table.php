@@ -18,7 +18,7 @@ class CreateClubTracksTable extends Migration
             $table->string('name');
             $table->string('type',50);
             $table->string('enclosure',50)->nullable(); // cerramiento interior/exterior/cubierta
-            $table->string('walls',50)->nullable();
+            $table->string('wall',50)->nullable();
             $table->string('size',50)->nullable();
             $table->text('description')->nullable();
 

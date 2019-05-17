@@ -92,6 +92,8 @@ class ViewClubTrackController extends Controller
                 ],
                 'resources' => $map->toArray(),
 
+                'weekends' => false, //Fin de seamana deshabilitado
+                //'hiddenDays' => [ 2, 4 ], // Ocultar otros dias - como el finde
                 
                 'businessHours' => [
                     'start' => '9:00',

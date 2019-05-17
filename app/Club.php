@@ -12,7 +12,7 @@ class Club extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone_number', 'address', 'description'
+        'name', 'email', 'phone_number', 'days', 'start_time', 'end_time', 'address', 'description'
     ];
     
 }

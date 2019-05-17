@@ -152,7 +152,7 @@
                         </div>
                     </form>
 
-                    {{-- Ventana modal para login --}}
+                    {{-- Ventana modal para el club --}}
                     <div class="modal fade" id="clubModal" tabindex="-1" role="dialog" aria-labelledby="clubModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -198,11 +198,74 @@
                                             <label for="phone_number" class="col-md-4 col-form-label text-md-right">{{ __('Número movil') }}</label>
                 
                                             <div class="col-md-6">
-                                                <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number" autofocus>
+                                                <input id="phone_number" type="number" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number" autofocus>
                 
                                                 @if ($errors->has('phone_number'))
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $errors->first('phone_number') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="days" class="col-md-4 col-form-label text-md-right">{{ __('Abierto los días') }}</label>
+
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <input type="checkbox" name="days[L]" value="LUNES">
+                                                    <label>{{ __('LUN.') }}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" name="days[M]" value="MARTES">
+                                                    <label>{{ __('MAR.') }}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" name="days[X]" value="MIERCOLES">
+                                                    <label>{{ __('MIÉ.') }}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" name="days[J]" value="JUEVES">
+                                                    <label>{{ __('JUE.') }}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" name="days[V]" value="VIERNES">
+                                                    <label>{{ __('VIE.') }}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" name="days[S]" value="SABADO">
+                                                    <label>{{ __('SÁB.') }}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" name="days[D]"value="DOMINGO">
+                                                    <label>{{ __('DOM.') }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="start_time" class="col-md-4 col-form-label text-md-right">{{ __('Horario inicio') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="start_time" type="text" class="form-control{{ $errors->has('start_time') ? ' is-invalid' : '' }}" name="start_time" value="{{ old('start_time') }}" required autofocus>
+
+                                                @if ($errors->has('start_time'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('start_time') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="end_time" class="col-md-4 col-form-label text-md-right">{{ __('Horario fin') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="end_time" type="text" class="form-control{{ $errors->has('end_time') ? ' is-invalid' : '' }}" name="end_time" value="{{ old('end_time') }}" required autofocus>
+
+                                                @if ($errors->has('end_time'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('end_time') }}</strong>
                                                     </span>
                                                 @endif
                                             </div>
