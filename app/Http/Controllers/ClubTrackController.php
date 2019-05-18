@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ClubTrack;
+use App\TrackType;
+use App\TypeSurface;
+use App\EnclosureType;
+use App\Wall;
+use App\Size;
 use Auth;
 
 class ClubTrackController extends Controller
@@ -25,9 +30,17 @@ class ClubTrackController extends Controller
      */
     public function index()
     {
+        // Listar los tipos de pista [Pádel | Tenis | Basketboll...]
+        $types = TrackType::all();
+        // Listar los tipos de cerramientos...
+        $enclosures = EnclosureType::all();
+        // Listar los tipos de paredes...
+        $walls = Wall::all();
+        // Listar los tipos de tamaños...
+        $sizes = Size::all();
         // Listar todas las pistas del club que administre el usuario logueado...
         $tracks = ClubTrack::where('club_id','=', Auth::user()->club_id)->get();     
-        return view('track', compact("tracks"));
+        return view('track', compact("tracks", "types", "enclosures", "walls", "sizes"));
     }
 
     /**
@@ -37,8 +50,18 @@ class ClubTrackController extends Controller
      */
     public function create()
     {
+        // Listar los tipos de pista [Pádel | Tenis | Basketboll...]
+        $types = TrackType::all();    
+        // Listar los tipos de superficies...
+        $surfaces = TypeSurface::all();
+        // Listar los tipos de cerramientos...
+        $enclosures = EnclosureType::all();
+        // Listar los tipos de paredes...
+        $walls = Wall::all();
+        // Listar los tipos de tamaños...
+        $sizes = Size::all();
         // Vista para añadir pistas al club..
-        return view('track_register');
+        return view('track_register',  compact("types", "surfaces", "enclosures", "walls", "sizes"));
     }
 
     /**
@@ -76,9 +99,19 @@ class ClubTrackController extends Controller
      */
     public function edit($id)
     {
+        // Listar los tipos de pista [Pádel | Tenis | Basketboll...]
+        $types = TrackType::all();    
+        // Listar los tipos de superficies...
+        $surfaces = TypeSurface::all();
+        // Listar los tipos de cerramientos...
+        $enclosures = EnclosureType::all();
+        // Listar los tipos de paredes...
+        $walls = Wall::all();
+        // Listar los tipos de tamaños...
+        $sizes = Size::all();
         // Vista para editar una pistas del club..
         $tracks = ClubTrack::find($id);
-        return view('track_edit', compact("tracks"));
+        return view('track_edit', compact("tracks", "types", "surfaces", "enclosures", "walls", "sizes"));
     }
 
     /**

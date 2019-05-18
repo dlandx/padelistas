@@ -9,18 +9,18 @@
 
                 <h1>CLUB</h1>
                 <form action="{{ route('track.create') }}" method="">
-                    <button type='submit' name='btn' value=''>Add</button>
+                    <button type='submit'>Add</button>
                 </form>
                 
                 <div class="card-body">
                     <table border="1">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Precio 1</th>
-                                <th>Precio 2</th>
-                                <th>Precio 3</th>
+                                <th>Nombre pista</th>
+                                <th>Tipo de pista</th>
+                                <th>Cerramiento</th>
+                                <th>Tipo de pared</th>
+                                <th>Tamaño</th>
                                 <th colspan="3">Gestión</th>
                             </tr>
                         </thead>
@@ -29,30 +29,43 @@
                             @foreach ($tracks as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td>{{ $item->price_1 }}</td>
-                                    <td>{{ $item->price_2 }}</td>
-                                    <td>{{ $item->price_3 }}</td>
-
+                                    <td>
+                                        @foreach ($types as $value)
+                                            {{ ($value->id === $item->track_type_id ) ? $value->name : "" }}
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($enclosures as $value)
+                                            {{ ($value->id === $item->enclosure_type_id ) ? $value->name : "" }}
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($walls as $value)
+                                            {{ ($value->id === $item->wall_id ) ? $value->name : "" }}
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($sizes as $value)
+                                            {{ ($value->id === $item->size_id ) ? $value->name : "" }}
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <form action="{{ route('track.show', $item->id) }}" method="">
-                                            <button type='submit' name='btn' value='{{ $item->id }}'>show</button>
+                                            <button type='submit' value='{{ $item->id }}'>show</button>
                                         </form>
-                                    </td>   
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('track.edit', $item->id) }}" method="">
+                                            <button type='submit' value='{{ $item->id }}'>edit</button>
+                                        </form>
+                                    </td>
                                     <td>
                                         <form action="{{ route('track.update', $item->id) }}" method="POST">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="DELETE">
-                                            <button type='submit' name='btn' value='{{ $item->id }}'>eliminar</button>
+                                            <button type='submit' value='{{ $item->id }}'>eliminar</button>
                                         </form>
-                                    </td>   
-
-
-                                    <td>
-                                        <form action="{{ route('track.edit', $item->id) }}" method="">
-                                            <button type='submit' name='btn' value='{{ $item->id }}'>edit</button>
-                                        </form>
-                                    </td> 
+                                    </td>                                     
                                 </tr>
                             @endforeach
                         </tbody>

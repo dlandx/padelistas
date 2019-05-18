@@ -35,7 +35,7 @@ class AdminRegisterController extends Controller
         ]);
        
         // Registrar BD
-        $admin = $this->create($request->all());
+        $this->create($request->all());
         return redirect(route('admin.dashboard')); // controlar (acceder y redirect...)
     }
 

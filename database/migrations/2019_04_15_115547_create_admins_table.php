@@ -23,8 +23,7 @@ class CreateAdminsTable extends Migration
             $table->string('identity_card',20);
             $table->integer('phone_number');
             $table->string('gender',30)->nullable();            
-            $table->string('image')->nullable();
-            
+            $table->string('image')->nullable();            
             $table->integer('club_id')->unsigned(); // FK
             $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
             $table->rememberToken();

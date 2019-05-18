@@ -125,15 +125,13 @@
                                         <option value="{{ $item->id }}" autofocus>{{ $item->name }}</option>
                                     @endforeach                                    
                                 </select>
-                               {{--  }}
-                                <input id="club" type="text" class="form-control{{ $errors->has('club') ? ' is-invalid' : '' }}" name="club" value="{{ old('club') }}" required autocomplete="club" autofocus>
+                            </div>
+                        </div>
 
-                                @if ($errors->has('club'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('club') }}</strong>
-                                    </span>
-                                @endif
-                                {{ --}}
+                        <div class="form-group row">
+                            <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Imagen') }}</label>
+
+                            <div class="col-md-6">
                             </div>
                         </div>
 
@@ -296,6 +294,16 @@
                                                         <strong>{{ $errors->first('description') }}</strong>
                                                     </span>
                                                 @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="images" class="col-md-4 col-form-label text-md-right">{{ __('Imágenes') }}</label>
+
+                                            <div class="col-md-6">
+
+
+                                                
                                             </div>
                                         </div>
 

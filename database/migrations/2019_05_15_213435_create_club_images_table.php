@@ -16,7 +16,6 @@ class CreateClubImagesTable extends Migration
         Schema::create('club_images', function (Blueprint $table) {
             $table->increments('id');
             $table->string('image')->nullable();
-
             $table->integer('club_id')->unsigned(); // FK
             $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade'); 
             $table->timestamps();

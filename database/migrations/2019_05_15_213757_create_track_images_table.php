@@ -16,7 +16,6 @@ class CreateTrackImagesTable extends Migration
         Schema::create('track_images', function (Blueprint $table) {
             $table->increments('id');
             $table->string('image')->nullable();
-
             $table->integer('club_track_id')->unsigned(); // FK
             $table->foreign('club_track_id')->references('id')->on('club_tracks')->onDelete('cascade'); 
             $table->timestamps();
