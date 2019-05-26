@@ -14,7 +14,8 @@ class ClubController extends Controller
      */
     public function index()
     {
-        //
+        // Lista de clubes...
+        return view('list_clubs');
     }
 
     /**

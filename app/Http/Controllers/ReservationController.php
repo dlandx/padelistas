@@ -13,7 +13,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        // Lista de reservas...
+        return view('list_clubs');        
     }
 
     /**

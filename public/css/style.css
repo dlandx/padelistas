@@ -1,89 +1,459 @@
+/* ---------- GENERAL ELEMENTS ---------- */
+::-webkit-scrollbar, .list-scroll::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb, .list-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #074a1f;
+}
+::-webkit-scrollbar-track, .list-scroll::-webkit-scrollbar-track{
+    background: #fff;
+}
+
 body {
     margin: 0;
-    color: #616161;
-    background: #f7f7f7;
+    color: #8a8a8a !important;
+    background: #f7f7f7 !important;
 }
 .main {
-    width: 15%;
-    float: left;
-    position: fixed;
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    width: 100%;
     height: 100%;
+    display: grid;
+    grid-template-areas: "menu" "content";
+    grid-template-columns: 1fr;
+    grid-template-rows: 130px 800px; 
+}
+.menu {
+    grid-area: menu;
+    background: red;
+    justify-content: center;
 }
 .content {
-    float: right;
-    width: 85%;
-    position: relative;
+    grid-area: content;
+    background: #fdfdfd;
 }
-a {
-    color: #546e7a;
+.logo {
+    color: #3d3e42;
 }
 
 /* ---------- MENU ---------- */
-.logo {
-    margin: auto;
-    font-size: 2rem;
-    text-transform: uppercase;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
+.menu>div {
+    padding: 1rem;
 }
-
-.main>nav {
-    margin: auto;
+.menu nav ul {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+        justify-content: center;
 }
-.menu {
+.menu nav li {
     list-style: none;
-    text-align: right;
-    line-height: 3rem;
-}
-.menu>li a {
-    text-decoration: none;
-}
-.menu>li a.active {
-    border-right: 2px solid red;
-    padding-right: 6px;
-}
-.admin {
-    margin: auto;
-    margin-bottom: 1rem;
+    padding: 1rem
 }
 
 /* ---------- CONTENT ---------- */
 .content>section {
-    height: 100vh;
+    height: 100vh; /*DEL*/
     display: grid;
 }
-
-.info_home {
-    background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://4.bp.blogspot.com/-oQ89uVGKBxM/WSqO1ncRCDI/AAAAAAAAAz0/Byto9jIhSMEeCpq5SRaY-ht-fLvRm4_kwCK4B/s1600/SimplePolyStadiumKit_screenshot01.png) no-repeat;
-    background-size: 100%;
-    background-position: center;
-    background-color: #868b8e; /* #878c90;*/                
-    color: #fff;
+.content-info {
+    position: relative;
+    padding: 3rem;
 }
-.info_home>div {
+.info-home {
     margin: auto;
-    width: 80%;
     text-align: center;
 }
-
-.info_app {
+.main-step {
+    display: grid;
     grid-template-columns: 1fr 1fr;
 }
-.text_app {
-    margin: auto;
+.content-img {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://res.cloudinary.com/playtomic/image/upload/v1536584658/playtomic/web/steps.jpg) no-repeat;
 }
-.text_app>h2 {
-    font-size: 3rem;
-    color: #2c2c2c;
-    margin: 2rem;
+
+/* ---------- HOME - STEPS ---------- */
+.content-step {
+    position: absolute;
+    width: 70%;
+    right: -4rem;
 }
-.info {
-    text-align: right;
-    margin: 2rem;
+.steps {
+    position: relative;
 }
-.info_img {
-    /*background: #166732;*/
-    margin: auto;
+/* Card see the hidden content*/
+.step {
+    background: #fff;
+    margin: 1rem;
+    text-align: left;
+    border: 1px solid #0c824a;
+    border-radius: 5px;
+    overflow: hidden;
+}
+input[id^="check-club"], input[id^="check-reserve"], input[id^="check-play"] {
+    display: none;
+}
+input[id^="check-club"] + label, input[id^="check-reserve"] + label, input[id^="check-play"] + label {
+    padding: 1rem;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+input[id^="check-club"]:checked + label, input[id^="check-reserve"]:checked + label, input[id^="check-play"]:checked + label {
+    color: green;
+}
+/* Style hidden content */
+input[id^="check-club"] ~ .step-hidden, input[id^="check-reserve"] ~ .step-hidden, input[id^="check-play"] ~ .step-hidden {
+    border-top: 1px solid gray;;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve"]:checked + label + .step-hidden, input[id^="check-play"]:checked + label + .step-hidden {
+    height: auto;
+    opacity: 1;
+    padding: .5rem;
+}
+/* Hover view hidden content */
+.step>label:hover + .step-hidden {
+    height: auto;
+    opacity: 1;
+    padding: .5rem;
+}
+/* ---------- HOME - END STEPS ---------- */
+
+/* ---------- CARD CLUB ---------- */
+.main-club {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+.card-club {
+    width: 300px;
+    height: 200px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 50px;
+    border-radius: .5em;
+    overflow: hidden;
+    position: relative;
+}
+.card-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+/* IMG Card */
+.card-img {
+    width: 100%;
+    height: 100%;
+    grid-row: 1 / 3;
+    grid-column: 1;
+    position: relative;
+}
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card-img::before {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #0b74857a 60%, #ffffff 90%);
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+}
+/* Info Card */
+.card-info {
+    grid-row: 2;
+    grid-column: 1;
+    margin: 0;
+    
+    z-index: 3;
+}
+.txt-left {
+    display: flex;
+    padding-left: 1rem;
+}
+.txt-right {
+    justify-self: right;
+    padding-right: 1rem;
+}
+/* More info Card */
+.club-open {
+    grid-row: 1 / 3;
+    grid-column: 1;
+    background: rebeccapurple;
+    clip-path: circle(2px at 50%);
+    transition: .3s;
+    z-index: -1;
+}
+/*
+.card-club:hover .club-open {
+    transition: .5s;
+    background: green;
+    z-index: 7;
+    clip-path: circle(100% at center);
+}
+*/
+/* Action Card*/
+.card-actions {
+    color: #e4eaeb;
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 5;
+}
+/* ---------- END - CARD CLUB ---------- */
+
+/* ---------- HEADER CLUB ---------- */
+.head-club {
+    width: 100%;
+    height: 158px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    grid-template-rows: 1fr;
+    position: relative;
+}
+.head-club-img {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    position: absolute;
+    margin: .7rem 0;
+    width: 145px;
+    height: 135px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.head-club-img>img {
+    width: 100%;
+    height: 100%;
+}
+.head-club-info {
+    grid-column: 2 / 3;
+    grid-row: 1;
+    border-radius: 10px;
+    padding-left: 8rem;
+
+    border-style: solid;
+    border-image: linear-gradient(to left, #fdfdfd 10%, rgb(127, 121, 167) 50%, #fdfdfd 90%) 100% 0 100% 1/3px 0 3px 0 stretch;
+    /*
+    border-image: linear-gradient(to left, rgb(250, 250, 253) 1%, rgb(127, 121, 167) 50%, rgba(250, 250, 253, 1) 100%) 100% 0 100% 0/3px 0 3px 0 stretch;*/
+}
+.btn-club {
+    place-self: center;
+}
+/* ---------- END - HEADER CLUB ---------- */
+
+/* ---------- RESERVATIONS ---------- */
+/* ---------- END - RESERVATIONS ---------- */
+
+@media (min-width: 900px) { /*1040px*/
+    .main {
+        grid-template-areas: "menu content";
+        grid-template-columns: 180px 1fr;
+        grid-template-rows: 1fr auto;
+    }
+
+    /* ---------- MENU ---------- */
+    .menu {
+        background: linear-gradient(#f5f5fb, #fdfdfd);
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        justify-items: center;
+        position: fixed;
+        width: 180px;
+        height: 100%;
+    }
+    .logo {
+        font-size: 2rem;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+    }
+    .menu nav {
+        margin-right: -4rem;
+    }
+    .menu nav ul {
+        display: block;
+        text-align: right;
+    }
+
+    /* ---------- CONTENT ---------- */
+    .content-info h1 {
+        font-size: 3rem;
+    }
+    .content-info h2 {
+        font-size: 3rem;
+        text-align: right;
+        padding-right: 2rem;
+    }
+
+    /* ---------- ADMIN - HOME ---------- */
+    .main-admin {
+        display: grid;
+        grid-template-columns: 26vw auto;
+        grid-template-rows: auto auto 1fr;
+    }
+    .title-admin {
+        background: #fdfdfd;
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1
+    }
+    .subtitle-admin {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+    }
+    .list-admin {
+        grid-column: 1 / 2;
+        grid-row: 2 / 4;
+        background: #fdfdfd;
+    }
+    .content-admin {
+        grid-column: 2 / 3;
+        grid-row: 3 / 4;
+        margin: 1rem;
+
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-gap: 1rem;
+    }
+    .title-sticky {
+        background: #fdfdfd;
+        position: sticky;
+        top: 67px;
+        padding: .1px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        z-index: 1;
+    }
+    .management-admin {
+        padding: 1rem;
+    }
+
+    /* ---------- RESERVATIONS ---------- */
+    .list-scroll {
+        overflow-y: scroll;
+        height: calc(100vh - 8.5rem);
+    }
+    .reservation-content {
+        margin: 1rem;
+        padding: .5rem;
+        border-radius: 4px;  
+        border-left: 5px solid #7f79a7;
+        background: linear-gradient(to right, #eceafb, #fdfdfd);
+    }
+    .cancelled-reservation {
+        border-left: 5px solid #ba3132;
+        background: linear-gradient(to right, #ffd9d9, #fdfdfd);
+    }
+    .pending-reservation {
+        border-left: 5px solid #e4ad4c;
+        background: linear-gradient(to right, #fff48f94, #fdfdfd)
+    }
+    .success-reservation {
+        border-left: 5px solid #0f9840;
+        background: linear-gradient(to right, #d7ffdb, #ffffff);   
+    }
+
+    .reservation-content>h3, .info-reserve>h3 {
+        margin: .5rem 0;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    .reservation-content>h4, .info-reserve>h4 {
+        margin: .5rem 0;
+        font-size: 1rem;
+    }
+    .reservation-content span {
+        font-size: .8rem;
+    }
+    .reservation-time {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .reservation-data {
+        display: grid;
+        grid-template-columns: 1fr 30px 1fr;
+        margin-top: .5rem;
+        border-top: 1px solid gray;
+    }
+    .reservation-right {
+        justify-self: right;
+        float: right;
+    }
+
+    /* List of current reserve */
+    .current-reservations {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1rem;
+    }
+    .content-reserve {
+        display: grid;
+        grid-template-columns: .5fr 1fr;
+        background: #fff;
+        grid-gap: 1rem;
+        border-radius: 10px;
+    }
+    .link-reserve {
+        text-decoration: none;
+        color: #8a8a8a;
+    }
+    /* State of the reservation */
+    .cancelled-reserve {
+        background: linear-gradient(180deg, #ffffff7a 80%, #a3000063 100%);
+        border: 1px solid #a30000fa;
+    }
+    .pending-reserve {
+        background: linear-gradient(180deg, #ffffff7a 80%, #ffeb3b94 100%);
+        border: 1px solid #d07c00;
+    }
+    .reserved {
+        background: linear-gradient(180deg, #ffffff7a 80%, #139a4391 100%);
+        border: 1px solid #074a1f;
+    }
+
+    .img-reserve {
+        width: 85%;
+        height: 60%;
+        object-fit: cover;
+        grid-column: 1 / 2;
+        place-self: center;    
+        clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
+        transition: all 0.3s ease;
+    }
+    .content-reserve:hover .img-reserve {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        background: linear-gradient(180deg, #52014845 60%, #52164b6e 90%);
+    }
+    .content-reserve:hover .info-reserve {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        padding: 1rem;
+        z-index: 2;
+        color: white;
+    }
+
+    .info-reserve {
+        grid-column: 2 / 3;
+        grid-row: 1;
+        padding-right: 1rem;
+        /* View or delete */
+            background: url(icon.png);
+            background-size: cover;
+    }
 }

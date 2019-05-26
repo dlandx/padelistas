@@ -218,6 +218,5 @@
                 <h2>Section 3</h2>
             </section>
         </div>
-
     </body>
 </html>

@@ -13,10 +13,11 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
+
+Route::get('/club', 'ClubController@index')->name('list.club');;
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Grupo para el admin

@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+{{-- }}
+@section('content')
+<section>
+    <div class="content-info info-home">
+
+    </div>
+</section>
+@endsection
+{{ --}}
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
