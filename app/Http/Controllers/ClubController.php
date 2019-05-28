@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Club;
+use Auth;
 
 class ClubController extends Controller
 {
@@ -14,8 +15,24 @@ class ClubController extends Controller
      */
     public function index()
     {
-        // Lista de clubes...
-        return view('list_clubs');
+        // Listar todos los clubes disponibles...
+        $clubs = Club::all()->toArray();
+        return view('list_clubs_invited', compact('clubs'));
+
+        /*
+        // Listar todos los clubes disponibles...
+        $clubs = Club::all()->toArray();
+        $follows = [];
+
+        foreach ($clubs as $value) {
+            $follows[$value['id']] = 0; // añadir a los demas clubs 0 = Sígueme
+            foreach (Auth::user()->clubs as $key => $value) {
+                if ($value['id'] == $value->pivot->club_id) {
+                    $follows [$value['id']] = $value->pivot->following; // Cambiar el valor por 1 = Me gusta
+                }
+            }
+        }
+        return view('list_clubs', compact('clubs', 'follows'));*/
     }
 
     /**

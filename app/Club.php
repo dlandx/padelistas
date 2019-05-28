@@ -15,4 +15,12 @@ class Club extends Model
         'name', 'email', 'phone_number', 'days', 'start_time', 'end_time', 'address', 'description'
     ];
     
+    /**
+     * Relationships Many To Many 
+     * The users that follow the club.
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withPivot('following', 'id');
+    }
 }

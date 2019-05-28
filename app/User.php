@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Relationships Many To Many 
+     * The clubs that the user follows.
+     */
+    public function clubs()
+    {
+        return $this->belongsToMany('App\Club')->withPivot('following', 'id'); // Add column extra
+    }
 }

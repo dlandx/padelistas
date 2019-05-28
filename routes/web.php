@@ -15,10 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/club', 'ClubController@index')->name('list.club');;
+Route::get('/club', 'ClubController@index')->name('list.club');
+Route::get('/club/track/{id}', 'ViewClubTrackController@index')->name('club.track');
 
+// Registered user
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/club', 'HomeController@follow')->name('home.club');
+Route::get('/home/follow/{club}/{id}', 'HomeController@update')->name('home.follow');
 
 // Grupo para el admin
 Route::prefix('admin')->group(function() {
@@ -38,5 +42,4 @@ Route::prefix('admin')->group(function() {
 
 
 // Caledar 
-
-Route::get('/cal', 'ViewClubTrackController@index');
+//Route::get('/cal', 'ViewClubTrackController@index');

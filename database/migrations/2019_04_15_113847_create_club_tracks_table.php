@@ -15,7 +15,7 @@ class CreateClubTracksTable extends Migration
     {
         Schema::create('club_tracks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('title'); // name -> event fullcalendar...
             $table->integer('track_type_id')->unsigned()->nullable();  
             $table->foreign('track_type_id')->references('id')->on('track_types')->onDelete('set null');
             $table->integer('type_surface_id')->unsigned()->nullable();   

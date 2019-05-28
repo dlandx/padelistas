@@ -9,8 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Scripts - PROBLEM WITH FULLCALENDAR...
+    <script src="{{ asset('js/app.js') }}" defer></script>-->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,6 +26,9 @@
     
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <!-- SECTION LINK/SCRIPT -->
+    @yield('head')
 </head>
 
 <body>
@@ -40,7 +43,7 @@
                         <ul>
                             <!-- Authentication Links -->
                             @guest
-                                <li><a href="">{{ __('Club') }}</a></li>
+                                <li><a href="{{ route('list.club') }}">{{ __('Club') }}</a></li>
                                 <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                                 @if (Route::has('register'))
                                     <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
@@ -63,6 +66,7 @@
                                         </form>
                                     </div>
                                 </li>
+                                <li><a href="{{ route('home.club') }}">{{ __('Club') }}</a></li>                                
                             @endguest
                         </ul>
                     </nav>
@@ -77,10 +81,10 @@
             <div class="content">
                  @yield('content')
             </div>
-
-            {{-- SCRIPTS --}}
-            @stack('scripts')            
         </div>
     </div>
+
+    {{-- SCRIPTS --}}
+    @yield('script') 
 </body>
 </html>
