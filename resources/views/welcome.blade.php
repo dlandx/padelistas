@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+@endsection
+
 @section('content')
 <section>
     <div class="content-info info-home">

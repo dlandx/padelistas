@@ -12,6 +12,16 @@ class ClubTrack extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'track_type_id', 'type_surface_id', 'enclosure_type_id', 'wall_id', 'size_id', 'description', 'club_id', 'type_surface_id'
+        'title', 'track_type_id', 'type_surface_id', 'enclosure_type_id', 'wall_id', 'size_id', 'description', 'club_id', 'type_surface_id'
     ];
+
+    /**
+     * Relationships Many To Many //One to Many
+     * Get all the prices that the chosen track of each club has.
+     */
+    public function rates()
+    {
+        return $this->belongsToMany('App\Rate', 'club_track_rate');
+        //return $this->hasMany('App\Rate');
+    }
 }

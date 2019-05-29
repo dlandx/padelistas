@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reservation extends Model
+class Rate extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,15 +12,15 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
-        'date', 'price', 'status', 'club_track_id'
+        'duration', 'price', 'club_track_id'
     ];
 
     /**
      * Relationships Many To Many 
-     * The users who make the reservation
+     * Get all the club tracks that have the same price.
      */
-    public function users()
+    public function club_tracks()
     {
-        return $this->belongsToMany('App\User', 'user_reservation')->withPivot('id', 'status', 'pay');
+        return $this->belongsToMany('App\ClubTrack', 'club_track_rate');
     }
 }

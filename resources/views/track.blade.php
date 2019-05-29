@@ -28,7 +28,7 @@
                         <tbody>
                             @foreach ($tracks as $item)
                                 <tr>
-                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->title }}</td>
                                     <td>
                                         @foreach ($types as $value)
                                             {{ ($value->id === $item->track_type_id ) ? $value->name : "" }}

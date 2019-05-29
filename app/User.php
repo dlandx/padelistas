@@ -45,4 +45,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Club')->withPivot('following', 'id'); // Add column extra
     }
+
+    /**
+     * Relationships Many To Many 
+     * The reservations that the user makes.
+     */
+    public function reservations()
+    {
+        return $this->belongsToMany('App\Reservation', 'user_reservation')->withPivot('following', 'id'); // Add column extra
+    }
 }
