@@ -16,7 +16,10 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('date');
+            $table->time('duration');
             $table->float('price',8,2);
+            $table->integer('players');
+            $table->boolean('full');
             $table->integer('club_track_id')->unsigned(); // FK
             $table->foreign('club_track_id')->references('id')->on('club_tracks')->onDelete('cascade');
             $table->timestamps();

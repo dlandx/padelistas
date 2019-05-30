@@ -10,7 +10,7 @@ use DateTime;
 use App\ClubTrack;
 use App\Reservation;
 use App\Rate;
-use Auth;
+use App\Size;
 
 class ViewClubTrackController extends Controller
 {
@@ -105,16 +105,14 @@ class ViewClubTrackController extends Controller
             ]);
 */
 
-
-    //$x = Rate::all();dd($x);
-
         // Obtenemos todas las pistas que tenga el club elegido...
-        $tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title'])->get();
+        $tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title', 'size_id'])->get();
+        $sizes = json_encode(Size::select(['id', 'name', 'description'])->get()); // Obtenemos todos los tamaños de las pistas...
         $reservations = Reservation::all();
         $events = []; // Añadir eventos al calendario = añadir la reserva...
         $start_time = "08:59";
         $end_time = "20:00";
-        $rates = json_encode(Rate::select(['id', 'duration', 'price'])->get()); // Precios de la pista...
+        $rates = json_encode(Rate::select(['id', 'duration', 'price', 'club_track_id'])->get()); // Precios de la pista...
 
         // Si hay reservas en la BBDD, las añadimos al evento del calendario...
         foreach ($reservations as $value) {
@@ -175,9 +173,6 @@ class ViewClubTrackController extends Controller
 
             // Click en una hora del calendario...
             'dayClick' => "function(date, jsEvent, view, resource) {
-                //alert(date.format() +' --- '+date +' R: '+resource.id);
-                console.log(date.format('HH:mm') + ' -> '+ date.format('e'));
-
                 var chosen_date = date.format('HH:mm'); // Hora elegida...
                 var chosen_day = date.format('e'); // Día elegido -> 0 = Domingo, 1 = Lunes, 6 = Sábado
 
@@ -186,32 +181,30 @@ class ViewClubTrackController extends Controller
                     if(chosen_date > '$start_time' && chosen_date < '$end_time') {
                         // Calculamos que haya tiempo... cuando es la reserva siguiente...
 
-                        // Realizamos la reserva...
+                        // Añadimos el valor correspondiente a cada campo determinado...
+                        $('#date').val(date.format('YYYY-MM-DD HH:mm'));
                         // Lo optimo sería filtrarlo solo los precios de un pista elegida pero - no consegui usar var js en php...
                         var price = $rates; // Obtenemos todos los precios de cada pista...
                         price.forEach(function(item, index) {
-
-                            "+ dd(Rate::find('resource.id')) +" 
-                            console.log(item);
                             if(resource.id == item.club_track_id) {
-                                $('#price').append('<option value='+item.id+'>'+item.duration+' ('+item.price+' €)</option>');
-                                
+                                $('#price').append('<option value='+item.id+'>'+item.price+' €  - ( '+item.duration+' )</option>');
                             }
-
                         });
-
-                        // Añadimos el valor correspondiente a cada campo determinado...
-                        $('#date').val(date.format());
+                        $('#pista').val(resource.title);
+                        var size = $sizes; // Todos los tamaños para tiene la pista (dobles, individual...)
+                        size.forEach(function(item) {
+                            if(resource.size_id == item.id) {
+                                $('#size').val(item.name);
+                            }
+                        });
+                        $('#num').val(resource.size_id);
                         $('#club_track_id').val(resource.id);
                         $('#modal').modal(); // Mostramos modal...
 
                         // Si hemos cerrado el modal eliminamos los precios añadidos con $('').append(...)
                         $('#modal').on($.modal.AFTER_CLOSE, function(event, modal) {
                             $('#price').empty();
-                            console.log('Closed modal');
                         });
-                        console.log('OK' + date.format());
-                        
                         
                         //$('.fc-highlight').css('background-color', 'red');
                     } else {
@@ -221,16 +214,6 @@ class ViewClubTrackController extends Controller
                     console.log('Dia fuera de rango');
                 }
             }",
-
-            // Seleccionar varias horas manteniendo el ratón pulsado... 
-            'select' => 'function(startDate, endDate, jsEvent, view, resource) {
-                //alert(startDate.format() +"---"+ endDate.format() +"--"+ resource.id);
-
-
-                    // True si paso la hora, False si no... = validRange.
-                    console.log(endDate.isBefore(moment().add(1,"hour").format()));
-
-            }',
 
             // No pueda seleccionar en horas pasadas - CONTROL COLOR...
             'validRange' => "function(nowDate){

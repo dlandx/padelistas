@@ -16,12 +16,11 @@ class ClubTrack extends Model
     ];
 
     /**
-     * Relationships Many To Many //One to Many
+     * Relationships One to Many
      * Get all the prices that the chosen track of each club has.
      */
     public function rates()
     {
-        return $this->belongsToMany('App\Rate', 'club_track_rate');
-        //return $this->hasMany('App\Rate');
+        return $this->hasMany('App\Rate');
     }
 }

@@ -22,8 +22,14 @@ PROBLEM - user logueado = no logout....
             margin: 0 !important;
         }
 
+        /* Style modal -> kylefox jquery-modal */
         #modal {
             display: none;
+            height: auto;
+            overflow: unset;
+        }
+        .blocker {
+            z-index: 10 !important;
         }
     </style>
     
@@ -50,66 +56,93 @@ PROBLEM - user logueado = no logout....
         {!! $calendar->calendar() !!}
 
         
-        <!-- Modal -->
-        
-           
-            <div id="modal">
-                <h2>REALIZAR RESERVA</h2>
-
-                <form action="">
-                    @csrf                    
-                    <div class="form-group row">
-                        <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Día') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="date" type="text" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required autocomplete="date" autofocus>
-
-                            @if ($errors->has('date'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('date') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+        <!-- Modal - kylefox jquery-modal -->
+        <div id="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">REALIZAR RESERVA</h2>
+                </div>
                     
-                    <div class="form-group row mb-2">
-                        <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Duración') }}</label>
-        
-                        <div class="col-md-6">
-                            <select name="price" class="form-control" id="price"></select>
+                <form action="{{ route('reserve.store') }}" method="POST">
+                    <div class="modal-body">
+                        @csrf                        
+                        <div class="form-group row">
+                            <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Día') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="date" type="text" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" readonly autocomplete="date">
+
+                                @if ($errors->has('date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
+                        
+                        <div class="form-group row mb-2">
+                            <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Duración') }}</label>
+            
+                            <div class="col-md-6">
+                                <select name="price" class="form-control" id="price" autofocus></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="pista" class="col-md-4 col-form-label text-md-right">{{ __('Pista') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="pista" type="text" class="form-control" name="pista" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="size" class="col-md-4 col-form-label text-md-right">{{ __('Tamaño') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="size" type="text" class="form-control" name="size" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="player" class="col-md-4 col-form-label text-md-right">{{ __('Nº jugadores') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="player" type="number" class="form-control{{ $errors->has('player') ? ' is-invalid' : '' }}" name="player" value="{{ old('player') }}" autocomplete="player" autofocus>
+
+                                @if ($errors->has('player'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('player') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-8 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="opponent" id="opponent" {{ old('opponent') ? 'checked' : '' }}>
+            
+                                    <label class="form-check-label" for="opponent">
+                                        {{ __('Buscar Pareja/Oponente') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input id="club_track_id" type="hidden" class="form-control{{ $errors->has('club_track_id') ? ' is-invalid' : '' }}" name="club_track_id" readonly>                        
                     </div>
 
-                    <div class="form-group row mb-2">
-                        <label for="club_track_id" class="col-md-4 col-form-label text-md-right">{{ __('Pista') }}</label>
-        
-                        <div class="col-md-6">
-                            <input id="club_track_id" type="text" class="form-control{{ $errors->has('club_track_id') ? ' is-invalid' : '' }}" name="club_track_id" autofocus readonly>
-                        </div>
-                    </div>                    
+                    <div class="modal-footer">
+                        @if(Auth::check())
+                            <button type="submit" class="btn btn-primary">Reservar</button>
+                        @else
+                            <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
+                        @endif
+                    </div>
                 </form>
             </div>
-
-            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                    ...
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-                </div>
-            </div>
-        
+        </div>        
     </div>
 </section>
 @endsection

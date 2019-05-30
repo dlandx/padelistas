@@ -12,7 +12,7 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
-        'date', 'price', 'status', 'club_track_id'
+        'date', 'duration', 'price', 'players', 'full', 'club_track_id'
     ];
 
     /**
@@ -21,6 +21,6 @@ class Reservation extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\User', 'user_reservation')->withPivot('id', 'status', 'pay');
+        return $this->belongsToMany('App\User')->withPivot('id', 'status', 'pay');
     }
 }

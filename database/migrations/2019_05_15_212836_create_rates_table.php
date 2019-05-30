@@ -17,8 +17,8 @@ class CreateRatesTable extends Migration
             $table->increments('id');
             $table->time('duration');
             $table->float('price',8,2);
-            //$table->integer('club_track_id')->unsigned(); // FK
-            //$table->foreign('club_track_id')->references('id')->on('club_tracks')->onDelete('cascade'); 
+            $table->integer('club_track_id')->unsigned(); // FK
+            $table->foreign('club_track_id')->references('id')->on('club_tracks')->onDelete('cascade'); 
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/club', 'HomeController@follow')->name('home.club');
 Route::get('/home/follow/{club}/{id}', 'HomeController@update')->name('home.follow');
+Route::resource('/reserve', 'ReservationController');
 
 // Grupo para el admin
 Route::prefix('admin')->group(function() {
