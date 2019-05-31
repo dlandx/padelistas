@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Rate;
 use App\Reservation;
 use Auth;
+use DateTime;
 
 class ReservationController extends Controller
 {
@@ -49,20 +50,29 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         // Obtener los datos enviados por formulario...
-        $date = $request->input('date');
+        $start = $request->input('date');
         $rate = Rate::find($request->input('price'));
         $duration = $rate->duration;
         $price = $rate->price;
-        $players = $request->input('player');
         $opponent = ($request->input('opponent') != null) ? 1 : 0;
-        
+
+        // Obtenemos de la duración elegida - la hora/minuto...
+        $end_hour = date('H', strtotime($duration));
+        $end_min = date('i', strtotime($duration));
+        // Sumamos a la hora que empieza la reserva la duración elegida... 
+        $end = strtotime ('+'.$end_hour.' hour', strtotime($start)); 
+        $end = strtotime ('+'.$end_min.' minute', $end); 
+        $end = date('Y-m-j H:i:s' , $end); // Damos el formato a la hora que termina la reserva...
+
         // Insertar en reserva...
         $reserve = new Reservation;
-        $reserve->date = $date;
+        $reserve->start = $start;
+        $reserve->end = $end;
         $reserve->price = $price;
         $reserve->duration = $duration;
-        $reserve->players = $players;
+        $reserve->players = $request->input('player');
         $reserve->full = $opponent; // Si busca oponente/pareja...
+        $reserve->search_players = $request->input('couple');
         $reserve->club_track_id = $request->input('club_track_id');
         $reserve->save(); // Insertamos en la BBDD...
 

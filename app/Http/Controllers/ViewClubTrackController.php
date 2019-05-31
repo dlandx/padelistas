@@ -106,12 +106,12 @@ class ViewClubTrackController extends Controller
 */
 
         // Obtenemos todas las pistas que tenga el club elegido...
-        $tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title', 'size_id'])->get();
+        $tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title', 'businessHours', 'size_id'])->get();
         $sizes = json_encode(Size::select(['id', 'name', 'description'])->get()); // Obtenemos todos los tamaños de las pistas...
         $reservations = Reservation::all();
         $events = []; // Añadir eventos al calendario = añadir la reserva...
-        $start_time = "08:59";
-        $end_time = "20:00";
+        $start_time = "08:00";
+        $end_time = "22:00";
         $rates = json_encode(Rate::select(['id', 'duration', 'price', 'club_track_id'])->get()); // Precios de la pista...
 
         // Si hay reservas en la BBDD, las añadimos al evento del calendario...
@@ -120,13 +120,13 @@ class ViewClubTrackController extends Controller
             $events[] = Calendar::event(
                 'dd',// Title
                 false,// Full date
-                (new DateTime($value->date))->format('Y-m-d\TH:i'), // Start time
-                (new DateTime("2019-05-29 18:00:00"))->format('Y-m-d\TH:i'),// End time 
+                (new DateTime($value->start))->format('Y-m-d\TH:i'), // Start time
+                (new DateTime($value->end))->format('Y-m-d\TH:i'),// End time 
                 $value->id, // ID
-                ['resourceId' => $value->club_track_id] // Options event - rooms (Club tracks)
+                ['resourceId' => $value->club_track_id, 'color' => $value->color] // Options event - rooms (Club tracks)
             );
         }
-
+/*
         $events[] = Calendar::event(
             'Event One', //event title
             false, //full day event?
@@ -134,7 +134,17 @@ class ViewClubTrackController extends Controller
             '2019-05-28T1200', //end time (you can also use Carbon instead of DateTime)
             0, //optionally, you can specify an event ID
             ['resourceId' => 2]
-        );
+        );*/
+
+
+        $map = $tracks->map(function($items){
+            $data['id'] = $items->id;
+            $data['title'] = $items->title;
+            $data['businessHours'] = json_decode($items->businessHours);
+            $data['size_id'] = $items->size_id;
+            return $data;
+        });
+
 
         // Con addEvents(array) podemos agregar un array de eventos...
         $calendar = Calendar::addEvents($events)->setOptions([
@@ -146,15 +156,18 @@ class ViewClubTrackController extends Controller
                 'center' => 'title',
             ],              
             //'editable' => true, // Add point and change position -> setCallbacks - eventClick
-            'selectable' => true, // select several hours -> setCallbacks - select
-
-            'resources' => $tracks,
+            //'selectable' => true, // select several hours -> setCallbacks - select
+            'resources' => $map,
+            /*
             'businessHours' => [
                 'start' => $start_time,
                 'end' => $end_time,
                 //'dow' => [ 1, 2, 3, 4, 5]
-            ],
-            'eventColor' => '#378006',
+            ], OR*/
+            'minTime'=> $start_time,
+            'maxTime'=> $end_time,
+            
+            'eventColor' => '#f6c31c',
 
 
             'slotLabelFormat' => 'HH:mm a', // Formato de las horas...
@@ -173,21 +186,58 @@ class ViewClubTrackController extends Controller
 
             // Click en una hora del calendario...
             'dayClick' => "function(date, jsEvent, view, resource) {
-                var chosen_date = date.format('HH:mm'); // Hora elegida...
+                var chosen_time = date.format('HH:mm'); // Hora elegida...
                 var chosen_day = date.format('e'); // Día elegido -> 0 = Domingo, 1 = Lunes, 6 = Sábado
+                var chosen_date = date.format('YYYY-MM-DD HH:mm:ss');
+                var reserves = ".json_encode($reservations)."; // Obtenemos todas las reservas...
 
                 if (chosen_day > 0 && chosen_day < 6) { // Eligió en los días que habre el club...
-                    // Si la reserva esta en las horas que habre la pista o club...
-                    if(chosen_date > '$start_time' && chosen_date < '$end_time') {
-                        // Calculamos que haya tiempo... cuando es la reserva siguiente...
+                    // Si la reserva a realizar esta en las horas que habre la pista del club...
+                    if(chosen_time >= resource.businessHours.startTime && chosen_time < resource.businessHours.endTime) {
+                        // Calcular el intervalo que hay entre la hora de reserva y el cierre de la pista...
+                        // Es decir, si cierra a las 22:00 y hace la recerva a 21:30 pero el minimo es de 1h no dejar...
+                        var ultima_hora = chosen_time.split(':'); // Dividir la hora de la reserva en hh y mm...
+                        var cierra = resource.businessHours.endTime.split(':'); // Dividir la hora de cierre pista...
+                        //Calculamos la diferencia...
+                        var dif_hora = cierra[0] - ultima_hora[0];
+                        var dif_min = cierra[1] - ultima_hora[1];
+                        var minutos = (dif_hora * 60) + dif_min; // Diferencia en minutos...
+
+                        var diferencia = minutos / 60; // Sacar en horas o minutos la diferencia...
+                        var resultado = diferencia.toString().split('.');
+                        var min = (resultado[1] == 5) ? '30:00' : '00:00'; // Si el resultado es 1.5 = 1:30h...
+                        var tiempo = '0'+resultado[0]+':'+min;
+                        var array = []; // Añadiremos los valores al array temp - para obtener el tiempo más bajo...
 
                         // Añadimos el valor correspondiente a cada campo determinado...
-                        $('#date').val(date.format('YYYY-MM-DD HH:mm'));
+                        $('#date').val(chosen_date);
                         // Lo optimo sería filtrarlo solo los precios de un pista elegida pero - no consegui usar var js en php...
                         var price = $rates; // Obtenemos todos los precios de cada pista...
                         price.forEach(function(item, index) {
                             if(resource.id == item.club_track_id) {
-                                $('#price').append('<option value='+item.id+'>'+item.price+' €  - ( '+item.duration+' )</option>');
+                                // Si no hay tiempo para la reserva deshabilitamos los precios (porque cierra la pista)...
+                                var disabled = (tiempo < item.duration) ? 'disabled' : '';                                
+                                //$('#price').append('<option value='+item.id+' '+disabled+'>'+item.price+' €  - ( '+item.duration+' )</option>');
+
+                                // Controlar que si en el medio esta libre una hora, no deja todas las horas...
+                                reserves.forEach(function(value){
+                                    var start = value.start.split(/\s/); // Fecha en la que comienza el evento... 
+                                    // De la pista elegida mostrar todas las reservas, que tenga el mismo día y que solo muestre las reservas que sean mayor a la hora elegida...
+                                    if(resource.id == value.club_track_id && date.format('YYYY-MM-DD') == start[0] && chosen_time < start[1]) {
+                                        var diff_reserve = moment(value.start).diff(moment(chosen_date), 'minutes');
+                                        var existe = (diff_reserve > 0) ? diff_reserve : ''; // Si hay una reserva posterior
+                                        var diff = existe / 60; // Sacar en horas o minutos la diferencia...
+                                        var result = diff.toString().split('.');
+                                        var min = (result[1] == 5) ? '30:00' : '00:00'; // Si el resultado es 1.5 = 1:30h...
+                                        var time = '0'+result[0]+':'+min;
+                                        array.push(time); // Añadimos al array...
+                                    }
+                                });
+
+                                var minimo = array.sort(); // Si hay varias diferencias obtener la menor...
+                                var disabled_next = (minimo.length != 0 && minimo < item.duration) ? 'disabled=disabled' : '';
+
+                                $('#price').append('<option value='+item.id+' '+disabled+' '+disabled_next+'>'+item.price+' €  - ( '+item.duration+' )</option>');
                             }
                         });
                         $('#pista').val(resource.title);
@@ -205,11 +255,10 @@ class ViewClubTrackController extends Controller
                         $('#modal').on($.modal.AFTER_CLOSE, function(event, modal) {
                             $('#price').empty();
                         });
-                        
-                        //$('.fc-highlight').css('background-color', 'red');
                     } else {
-                        console.log('Hora fuera de rango');
-                    }
+                        // Toast alert...
+                        toastr.error('No está abierta, el horario es de '+resource.businessHours.startTime+' a '+resource.businessHours.endTime, 'PISTA: '+resource.title)
+                    }                        
                 } else {
                     console.log('Dia fuera de rango');
                 }

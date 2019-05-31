@@ -12,7 +12,7 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
-        'date', 'duration', 'price', 'players', 'full', 'club_track_id'
+        'start', 'end', 'color', 'duration', 'price', 'players', 'full', 'search_players', 'club_track_id'
     ];
 
     /**

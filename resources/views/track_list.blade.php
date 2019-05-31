@@ -21,6 +21,10 @@ PROBLEM - user logueado = no logout....
         .fc-ltr .fc-time-grid .fc-event-container {
             margin: 0 !important;
         }
+        
+        .fc-time-grid .fc-bgevent, .fc-time-grid .fc-event {
+            z-index: unset !important;
+        }
 
         /* Style modal -> kylefox jquery-modal */
         #modal {
@@ -31,10 +35,20 @@ PROBLEM - user logueado = no logout....
         .blocker {
             z-index: 10 !important;
         }
+        /* Form */
+        #parejas {
+            display: none;
+        }
+        #parejas[style*='display: block']{
+            display: flex !important;
+        }
     </style>
-    
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    {{-- Modale --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    {{-- Toast alert --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 @endsection
 
 @section('content')
@@ -54,9 +68,8 @@ PROBLEM - user logueado = no logout....
         </div>
         
         {!! $calendar->calendar() !!}
-
         
-        <!-- Modal - kylefox jquery-modal -->
+        <!-- Modal - kylefox jquery-modal [ https://github.com/kylefox/jquery-modal ] -->
         <div id="modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -84,7 +97,7 @@ PROBLEM - user logueado = no logout....
                             <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Duración') }}</label>
             
                             <div class="col-md-6">
-                                <select name="price" class="form-control" id="price" autofocus></select>
+                                <select name="price" class="form-control" id="price" required autofocus></select>
                             </div>
                         </div>
 
@@ -108,7 +121,7 @@ PROBLEM - user logueado = no logout....
                             <label for="player" class="col-md-4 col-form-label text-md-right">{{ __('Nº jugadores') }}</label>
 
                             <div class="col-md-6">
-                                <input id="player" type="number" class="form-control{{ $errors->has('player') ? ' is-invalid' : '' }}" name="player" value="{{ old('player') }}" autocomplete="player" autofocus>
+                                <input id="player" type="number" class="form-control{{ $errors->has('player') ? ' is-invalid' : '' }}" name="player" value="{{ old('player') }}" required autocomplete="player" autofocus placeholder="Jugadores actuales...">
 
                                 @if ($errors->has('player'))
                                     <span class="invalid-feedback" role="alert">
@@ -127,6 +140,20 @@ PROBLEM - user logueado = no logout....
                                         {{ __('Buscar Pareja/Oponente') }}
                                     </label>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="parejas">
+                            <label for="couple" class="col-md-4 col-form-label text-md-right">{{ __('Nº Oponente') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="couple" type="number" class="form-control{{ $errors->has('couple') ? ' is-invalid' : '' }}" name="couple" value="{{ old('couple') }}" autocomplete="couple" autofocus placeholder="Jugadores a buscar....">
+
+                                @if ($errors->has('couple'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('couple') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
@@ -150,10 +177,20 @@ PROBLEM - user logueado = no logout....
 @section('script')
     {!! $calendar->script() !!}
 
-    <script>/*
-        https://github.com/kylefox/jquery-modal
-        $('#btn').click(function() {
-            $('#modal').modal();
-        });*/
+    {{-- Alert tipo toast -> CodeSeven - Toastr [ https://github.com/CodeSeven/toastr ] --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        // Modal mostrar/ocultar el campo de buscar pareja...
+        $(document).ready(function(){
+            $('#opponent').on('change',function(){
+                if (this.checked) {
+                    $("#parejas").show();
+                } else {
+                    $("#parejas").hide();
+                }  
+            });
+        });
     </script>
+
 @stop

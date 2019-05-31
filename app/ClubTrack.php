@@ -12,7 +12,7 @@ class ClubTrack extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'track_type_id', 'type_surface_id', 'enclosure_type_id', 'wall_id', 'size_id', 'description', 'club_id', 'type_surface_id'
+        'title', 'businessHours', 'track_type_id', 'type_surface_id', 'enclosure_type_id', 'wall_id', 'size_id', 'description', 'club_id', 'type_surface_id'
     ];
 
     /**

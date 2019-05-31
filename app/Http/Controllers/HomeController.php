@@ -57,12 +57,13 @@ class HomeController extends Controller
     {
         $user = Club::find($club)->users; // Obtenemos los usuarios que siguen al club - pivot...
         $dato = ($status == 1) ? 0 : 1; // Cambiamos el valor del campo follow - tabla pivot
-
+/*
         // Si el usuario no nos sigue le damos la posibilidad de seguirnos - creando en la pivot los datos...
         if (count($user) == 0) {
             Auth::user()->clubs()->attach(1, ['following' => $dato, 'club_id' => $club, 'user_id' => Auth::user()->id]);
             //Auth::user()->clubs()->wherePivot('id','=',$id)->detach(); // Para Eliminar
         } 
+*/
 
         foreach ($user as $value) {
             // Comprobamos que el usuario logueado sigue al club...
@@ -70,9 +71,9 @@ class HomeController extends Controller
                 $id = $value->pivot->id; // Obtenemos el ID de la pivot                 
                 // Actualizamos en la tabla pivot el campo following...
                 Auth::user()->clubs()->wherePivot('id','=',$id)->update(['following' => $dato]);
-            }
+            } 
         }
-        
+
         return redirect()->route('home.club'); // Mostramos el listado del club con los cambios
     }
 
