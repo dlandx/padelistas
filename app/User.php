@@ -52,6 +52,6 @@ class User extends Authenticatable
      */
     public function reservations()
     {
-        return $this->belongsToMany('App\Reservation')->withPivot('id', 'status', 'pay'); // Add column extra
+        return $this->belongsToMany('App\Reservation')->withPivot('id', 'status', 'cancelled', 'pay', 'waiting_list'); // Add column extra
     }
 }

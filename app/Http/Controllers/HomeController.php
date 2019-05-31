@@ -8,7 +8,6 @@ use App\Club;
 use App\ClubTrack;
 use Auth;
 use DateTime, DateTimeZone;
-use App\TrackType;
 
 class HomeController extends Controller
 {
@@ -35,7 +34,6 @@ class HomeController extends Controller
         $fecha_actual = (new DateTime('now', new DateTimeZone('Europe/Madrid') ))->format('Y-m-d H:i:s'); // Fecha actual...
         $current = []; // Reservas actuales - vigentes a día de hoy...
         $past = []; // Reservas pasadas...
-        $users_reserves = [];
 
         foreach ($reserves as $value) {
             // Si la reserva es mayor a la fecha/hora actual...
@@ -46,25 +44,6 @@ class HomeController extends Controller
             }
         }
 
-        // Recorrer las reservas vigentes...
-        foreach ($current as $value) {
-            // Buscar cuantos usuarios han realizado la misma reserva...
-            $users = Reservation::find($value->pivot->reservation_id);
-            $users_reserves[] = $users->users;
-        }
-
-//dd($current);
-  //dd($reserves->toArray());    
-  //$pista = Club::find(2);dd($clubs->tracks);
-//$club = ClubTrack::find(2); dd($club->club);
-
-//$club = TrackType::find(1); dd($club->club_tracks);
-//$club = ClubTrack::find(2); dd($club->track_type);
-
-//$club = Reservation::find(5);dd($club->users);
-
-// estado reserve
-//$x = Reservation::find(5);dd($x->pivot);
         return view('home', compact('club_tracks', 'current', 'past'));
     }
 

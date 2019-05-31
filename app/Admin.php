@@ -37,4 +37,13 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Relationships Many to One [n Admins - 1 Club]
+     * Get the club to which the administrator belongs.
+     */
+    public function club()
+    {
+        return $this->belongsTo('App\Club');
+    }
 }

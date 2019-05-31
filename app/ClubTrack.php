@@ -42,4 +42,12 @@ class ClubTrack extends Model
         return $this->belongsTo('App\TrackType');
     }
 
+    /**
+     * Relationships Many to One [TrackType - ClubTrack]
+     * Get the club to which the chosen track belongs.
+     */
+    public function size()
+    {
+        return $this->belongsTo('App\Size');
+    }
 }

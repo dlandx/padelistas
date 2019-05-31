@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Rate;
 use App\Reservation;
+use App\ClubTrack;
 use Auth;
-use DateTime;
+use DateTime, DateTimeZone;
 
 class ReservationController extends Controller
 {
@@ -78,7 +79,7 @@ class ReservationController extends Controller
 
         // Insertar en la tabla pivot...
         $reservation = Reservation::find($reserve->id);
-        $reservation->users()->attach(1, ['status' => 3, 'pay' => 0, 'user_id' => Auth::user()->id, 'reservation_id' => $reserve->id]);
+        $reservation->users()->attach(1, ['status' => 2, 'pay' => 0, 'user_id' => Auth::user()->id, 'reservation_id' => $reserve->id]);
     }
 
     /**
@@ -89,7 +90,13 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        //
+        // Mostrar informacion de la reserva seleccionada...
+        $show = Reservation::find($id);
+        $club_tracks = ClubTrack::find($show->club_track_id); // Info del club
+
+        $fecha_actual = (new DateTime('now', new DateTimeZone('Europe/Madrid') ))->format('Y-m-d H:i:s'); // Fecha actual...
+        $disabled = ($show->start < $fecha_actual)  ? 'disabled' : ''; // Si la fecha ya ha pasado no dejamos cancelar...
+        return view('reserve_show', compact("show", "club_tracks", "disabled"));
     }
 
     /**
@@ -112,7 +119,30 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Actualizar la reserva...
+        $status = Reservation::find($id);
+        foreach ($status->users as $value) {
+            // Si en los usuarios de la reserva esta el usuario logueado...
+            if ($value->id == Auth::user()->id) {
+                $estado = $value->pivot->status;
+                $cancelled = $value->pivot->cancelled;
+                $lista = ($value->pivot->waiting_list != null) ? $value->pivot->waiting_list : 0; //
+                $espera = ($lista == 1) ? 0 : 1; //
+                
+                // Estado anterior si se cancelo...
+                $last = ($cancelled != null) ? $cancelled : null;
+                // Si es 2 | 1 = Pendiente | Confirmado -> pasa a cancelado...
+                // Si es 0 -> Obtenemos el estado anterior...
+                $valor = ($estado == 2 || $estado == 1) ? 0 : $last;
+
+                // Si cambia de 2 a 1....??
+
+                // Actualizamos en la tabla pivot el campo status...
+                Auth::user()->reservations()->wherePivot('id','=',$value->pivot->id)->update(['status' => $valor, 'cancelled' => $estado, 'waiting_list' => $espera]);
+            }            
+        }
+
+        return redirect()->route('home');
     }
 
     /**

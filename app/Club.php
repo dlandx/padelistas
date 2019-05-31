@@ -26,10 +26,19 @@ class Club extends Model
 
     /**
      * Relationships One to Many
-     * Get all the clues that the chosen club has.
+     * Get all the clubes that the chosen club has.
      */
     public function tracks()
     {
         return $this->hasMany('App\ClubTrack');
+    }
+
+    /**
+     * Relationships One to Many (1 Club - n Admins)
+     * Get all the administrators that the club has.
+     */
+    public function admins()
+    {
+        return $this->hasMany('App\Admin');
     }
 }

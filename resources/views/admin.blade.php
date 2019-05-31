@@ -8,7 +8,7 @@
 <section>
     <div class="main-admin">
         <div class="title-admin">
-            <h2>Home admin</h2>
+            <h2>Dashboard - {{ Auth::user()->name }}</h2>
         </div>
         
         <!-- Lista de espera -->
@@ -16,73 +16,39 @@
             <div class="title-sticky">
                 <h2>Lista de espera</h2>
             </div>                        
-            
+           
             <div class="list-scroll">
-                <div class="reservation-content">
-                    <h3>Club</h3>
-                    <h4>Pista x</h4>
-                    <div class="reservation-time">
-                        <span>2000-05-19 8:40 AM</span>
-                        <span class="reservation-right"><b>Duración</b> 2h</span>
-                    </div>
-                    
-                    <div class="reservation-data">
-                        <span>Stado</span>
-                        <span>Tipo</span>
-                        <span class="reservation-right">user</span>
-                    </div>            
-                </div>
-        
-                <div class="reservation-content">
-                    <h3>Club</h3>
-                    <h4>Pista x</h4>
-                    <div class="reservation-time">
-                        <span>2000-05-19 8:40 AM</span>
-                        <span class="reservation-right"><b>Duración</b> 2h</span>
-                    </div>
-                    
-                    <div class="reservation-data">
-                        <span>Stado</span>
-                        <span>Tipo</span>
-                        <span class="reservation-right">user</span>
-                    </div>            
-                </div>
-    
-                <div class="reservation-content">
-                    <h3>Club</h3>
-                    <h4>Pista x</h4>
-                    <div class="reservation-time">
-                        <span>2000-05-19 8:40 AM</span>
-                        <span class="reservation-right"><b>Duración</b> 2h</span>
-                    </div>
-                    
-                    <div class="reservation-data">
-                        <span>Stado</span>
-                        <span>Tipo</span>
-                        <span class="reservation-right">user</span>
-                    </div>            
-                </div>
-        
-                <div class="reservation-content">
-                    <h3>Club</h3>
-                    <h4>Pista x</h4>
-                    <div class="reservation-time">
-                        <span>2000-05-19 8:40 AM</span>
-                        <span class="reservation-right"><b>Duración</b> 2h</span>
-                    </div>
-                    
-                    <div class="reservation-data">
-                        <span>Stado</span>
-                        <span>Tipo</span>
-                        <span class="reservation-right">user</span>
-                    </div>            
-                </div>
+                @foreach ($current as $item)
+                    {{-- Si en la pivot esta en la lista de espera (es decir, que a cancelado la reserva...) --}}
+                    @if ($item->pivot->waiting_list == 1)
+                        <div class="reservation-content">
+                            <h3>{{ Auth::user()->club->name }}</h3>
+                            <h4>
+                                @foreach (Auth::user()->club->tracks as $value)
+                                    {{ ($item->club_track_id == $value->id) ? $value->title : '' }}
+                                @endforeach
+                            </h4>
+                            <div class="reservation-time">
+                                <span>{{ $item->start }}</span>
+                                <span class="reservation-right">{{ $item->duration }}</span>
+                            </div>
+                            
+                            <div class="reservation-data">
+                                <span>{{ ($item->pivot->status == 2) ? 'Pendiente' : (($item->pivot->status == 1) ? 'Confirmado' : 'Cancelado') }}</span>
+                                <span>
+                                    {{-- Tipo de pista - pivot --}}
+                                </span>
+                                <span class="reservation-right">{{ count($item->users) }}</span>
+                            </div>            
+                        </div>                        
+                    @endif
+                @endforeach
             </div>
         </div>
 
         <!-- Gestión -->                    
         <div class="subtitle-admin title-sticky">
-            <h2>Gestión...</h2>
+            <h2>Gestionar el club deportivo</h2>
         </div>
 
         <div class="content-admin">
@@ -91,10 +57,10 @@
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/228448/stranger-things.jpg" alt="">
                 </div>
                 <div class="head-club-info">
-                    <h3>TEXT</h3>
-                    <p>Realiza una reserva en las pistas del club</p>
+                    <h3>{{ Auth::user()->club->name }}</h3>
+                    <p>{{ Auth::user()->club->description }}</p>
                     <div class="main-step">
-                        <p>GPS</p>
+                        <p>{{ Auth::user()->club->address }}</p>
                         <button class="btn-club">Ver club</button>
                     </div>                            
                 </div>

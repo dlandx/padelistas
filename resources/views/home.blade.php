@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-<script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                         <h3>
                             {{-- Nombre del club que tiene la pista - pivot --}}
                             @foreach ($club_tracks as $item)
-                                {{ ($value->club_track_id == $item->id) ? $item->club->name : ''}}
+                                <a href="{{ route('reserve.show', $value->id) }}">{{ ($value->club_track_id == $item->id) ? $item->club->name : ''}}</a>
                             @endforeach
                         </h3>
                         <h4>
@@ -75,7 +75,7 @@
             <div class="current-reservations">
                 {{-- Reservas actuales --}}
                 @foreach ($current as $value)
-                    <a href="" class="link-reserve">
+                    <a href="{{ route('reserve.show', $value->id) }}" class="link-reserve">
                         <div class="content-reserve">
                             <img class="img-reserve" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/228448/stranger-things.jpg" alt="">
                 

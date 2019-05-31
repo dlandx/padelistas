@@ -14,4 +14,13 @@ class Size extends Model
     protected $fillable = [
         'name', 'description'
     ];
+
+    /**
+     * Relationships One to Many
+     * Get the size of the chosen track (Individual, double)...
+     */
+    public function club_tracks()
+    {
+        return $this->hasMany('App\ClubTrack');
+    }
 }
