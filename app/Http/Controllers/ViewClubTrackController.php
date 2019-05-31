@@ -260,6 +260,7 @@ class ViewClubTrackController extends Controller
                         toastr.error('No está abierta, el horario es de '+resource.businessHours.startTime+' a '+resource.businessHours.endTime, 'PISTA: '+resource.title)
                     }                        
                 } else {
+                    toastr.warning('Lo sentimos, el club no habre los días')
                     console.log('Dia fuera de rango');
                 }
             }",

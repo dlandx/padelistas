@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Reservation;
 use App\Club;
+use App\ClubTrack;
 use Auth;
+use DateTime, DateTimeZone;
+use App\TrackType;
 
 class HomeController extends Controller
 {
@@ -26,8 +29,43 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //$tracks = Reservation::where('club_id','=', Auth::user()->club_id)->get();  
-        return view('home');
+        $clubs = Club::all();
+        $club_tracks = ClubTrack::all();
+        $reserves = Auth::user()->reservations; // Obtenemos todas las reservas del usuario logueado... 
+        $fecha_actual = (new DateTime('now', new DateTimeZone('Europe/Madrid') ))->format('Y-m-d H:i:s'); // Fecha actual...
+        $current = []; // Reservas actuales - vigentes a día de hoy...
+        $past = []; // Reservas pasadas...
+        $users_reserves = [];
+
+        foreach ($reserves as $value) {
+            // Si la reserva es mayor a la fecha/hora actual...
+            if ($value->start > $fecha_actual) {
+                $current[] = $value;
+            } else {
+                $past[] = $value;
+            }
+        }
+
+        // Recorrer las reservas vigentes...
+        foreach ($current as $value) {
+            // Buscar cuantos usuarios han realizado la misma reserva...
+            $users = Reservation::find($value->pivot->reservation_id);
+            $users_reserves[] = $users->users;
+        }
+
+//dd($current);
+  //dd($reserves->toArray());    
+  //$pista = Club::find(2);dd($clubs->tracks);
+//$club = ClubTrack::find(2); dd($club->club);
+
+//$club = TrackType::find(1); dd($club->club_tracks);
+//$club = ClubTrack::find(2); dd($club->track_type);
+
+//$club = Reservation::find(5);dd($club->users);
+
+// estado reserve
+//$x = Reservation::find(5);dd($x->pivot);
+        return view('home', compact('club_tracks', 'current', 'past'));
     }
 
     /**
@@ -57,21 +95,32 @@ class HomeController extends Controller
     {
         $user = Club::find($club)->users; // Obtenemos los usuarios que siguen al club - pivot...
         $dato = ($status == 1) ? 0 : 1; // Cambiamos el valor del campo follow - tabla pivot
-/*
-        // Si el usuario no nos sigue le damos la posibilidad de seguirnos - creando en la pivot los datos...
-        if (count($user) == 0) {
+        $clubs =  Auth::user()->clubs; // Obtenemos los clubes que sigue el usuario - pivot...
+        $follow = false; // Resultado si nos sigue - si esta registrado en la tabla pivot...
+
+        // Recorremos los clubes que sigue el usuario... 
+        foreach ($clubs as $value) {
+            // Si sigue al club seleccionado - notificamos...
+            if($value->id == $club) {
+                $follow = true;
+            } 
+        }
+
+        // Si el usuario sigue al club = existe en la tabla pivot el registro...
+        if ($follow) {
+            // Recorremos los usuarios que siguen al club elegido...
+            foreach ($user as $value) {
+                // Comprobamos que el usuario logueado sigue al club...
+                if ($value->id == Auth::user()->id) {
+                    $id = $value->pivot->id; // Obtenemos el ID de la pivot                 
+                    // Actualizamos en la tabla pivot el campo following...
+                    Auth::user()->clubs()->wherePivot('id','=',$id)->update(['following' => $dato]);
+                }
+            }
+        } else {
+            // Si el usuario no nos sigue le damos la posibilidad de seguirnos - creando en la pivot los datos...
             Auth::user()->clubs()->attach(1, ['following' => $dato, 'club_id' => $club, 'user_id' => Auth::user()->id]);
             //Auth::user()->clubs()->wherePivot('id','=',$id)->detach(); // Para Eliminar
-        } 
-*/
-
-        foreach ($user as $value) {
-            // Comprobamos que el usuario logueado sigue al club...
-            if ($value->id == Auth::user()->id) {
-                $id = $value->pivot->id; // Obtenemos el ID de la pivot                 
-                // Actualizamos en la tabla pivot el campo following...
-                Auth::user()->clubs()->wherePivot('id','=',$id)->update(['following' => $dato]);
-            } 
         }
 
         return redirect()->route('home.club'); // Mostramos el listado del club con los cambios

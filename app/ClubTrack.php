@@ -23,4 +23,23 @@ class ClubTrack extends Model
     {
         return $this->hasMany('App\Rate');
     }
+
+    /**
+     * Relationships Many to One
+     * Get the club to which the chosen track belongs.
+     */
+    public function club()
+    {
+        return $this->belongsTo('App\Club');
+    }
+
+    /**
+     * Relationships Many to One [TrackType - ClubTrack]
+     * Get the club to which the chosen track belongs.
+     */
+    public function track_type()
+    {
+        return $this->belongsTo('App\TrackType');
+    }
+
 }

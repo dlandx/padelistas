@@ -16,7 +16,7 @@ class Rate extends Model
     ];
 
     /**
-     * Relationships One to Many
+     * Relationships Many to One
      * Get the track of the club that owns the price.
      */
     public function club_track()

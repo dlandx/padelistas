@@ -23,4 +23,13 @@ class Club extends Model
     {
         return $this->belongsToMany('App\User')->withPivot('following', 'id');
     }
+
+    /**
+     * Relationships One to Many
+     * Get all the clues that the chosen club has.
+     */
+    public function tracks()
+    {
+        return $this->hasMany('App\ClubTrack');
+    }
 }
