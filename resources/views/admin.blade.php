@@ -7,7 +7,7 @@
 @section('content')
 <section>
     <div class="main-admin">
-        <div class="title-admin">
+        <div class="title-admin p-4 text-uppercase">
             <h2>Dashboard - {{ Auth::user()->name }}</h2>
         </div>
         
@@ -18,6 +18,10 @@
             </div>
 
             <div class="list-scroll">
+                @empty($current)
+                    <div class="alert alert-warning sin-datos text-center w-75" role="alert"><b>Milagro!!!</b> no hay reservas en la lista de espera, por el momento.</div>
+                @endempty
+
                 @foreach ($current as $item)
                     {{-- Si en la pivot esta en la lista de espera (es decir, que a cancelado la reserva...) --}}
                     @if ($item->pivot->waiting_list == 1)

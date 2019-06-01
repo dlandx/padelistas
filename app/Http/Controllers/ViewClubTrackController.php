@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //use \MaddHatter\LaravelFullcalendar\Event;
 use Calendar; // Alias of Fullcalenda of ServiceProvider...
 use DateTime;
+use App\Club;
 use App\ClubTrack;
 use App\Reservation;
 use App\Rate;
@@ -19,7 +20,7 @@ class ViewClubTrackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($club)
+    public function index($id)
     {
 /*
         //$tracks = ClubTrack::all()->toArray();
@@ -107,15 +108,17 @@ class ViewClubTrackController extends Controller
 
         // Obtenemos todas las pistas que tenga el club elegido...
         //$tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title', 'businessHours', 'size_id'])->get();
-        $tracks = ClubTrack::where('club_id','=', $club)->get();
-        $club = ($tracks->isEmpty()) ? '' : $tracks[0]->club; // Información del club...
+        $tracks = ClubTrack::where('club_id','=', $id)->get();
+        $club = Club::find($id);
+//        $club = ($tracks->isEmpty()) ? '' : $tracks[0]->club; // Información del club...
         $sizes = json_encode(Size::select(['id', 'name', 'description'])->get()); // Obtenemos todos los tamaños de las pistas...
+        $rates = json_encode(Rate::select(['id', 'duration', 'price', 'club_track_id'])->get()); // Precios de la pista...
         $reservations = Reservation::all();
         $events = []; // Añadir eventos al calendario = añadir la reserva...
-        $start_time = "08:00";
-        $end_time = "22:00";
-        $rates = json_encode(Rate::select(['id', 'duration', 'price', 'club_track_id'])->get()); // Precios de la pista...
-
+        $horario_club = []; // Horario del club...
+        $start_time = $club->start_time;
+        $end_time = $club->end_time;
+        
         // Si hay reservas en la BBDD, las añadimos al evento del calendario...
         foreach ($reservations as $value) {
             // Add reservations in events of the full calendar...
@@ -137,7 +140,11 @@ class ViewClubTrackController extends Controller
             $data['size_id'] = $items->size_id;            
             return $data;
         });
-        
+        // Preparamos los días a ocultar en el calendario (Solo los días que NO habre el club)
+        foreach (json_decode($club->days) as $value) {
+            $horario_club[] = (int) $value;
+        }
+
         // Con addEvents(array) podemos agregar un array de eventos...
         $calendar = Calendar::addEvents($events)->setOptions([
             // Configuramos las propiedades para añadir el fullcalendar...
@@ -156,6 +163,7 @@ class ViewClubTrackController extends Controller
                 'end' => $end_time,
                 //'dow' => [ 1, 2, 3, 4, 5]
             ], OR*/
+            'hiddenDays' => $horario_club,
             'minTime'=> $start_time,
             'maxTime'=> $end_time,
             
@@ -201,8 +209,8 @@ class ViewClubTrackController extends Controller
                 var chosen_day = date.format('e'); // Día elegido -> 0 = Domingo, 1 = Lunes, 6 = Sábado
                 var chosen_date = date.format('YYYY-MM-DD HH:mm:ss');
                 var reserves = ".json_encode($reservations)."; // Obtenemos todas las reservas...
-console.log(chosen_day);
-                if (chosen_day >= 0 && chosen_day <= 6) { // Eligió en los días que habre el club...
+
+                if (chosen_day >= 0 && chosen_day <= 6) { // Eligió en los días que habre el club... //
                     // Si la reserva a realizar esta en las horas que habre la pista del club...
                     if(chosen_time >= resource.businessHours.startTime && chosen_time < resource.businessHours.endTime) {
                         // Calcular el intervalo que hay entre la hora de reserva y el cierre de la pista...
@@ -270,7 +278,7 @@ console.log(chosen_day);
                         // Toast alert...
                         toastr.error('No está abierta, el horario es de '+resource.businessHours.startTime+' a '+resource.businessHours.endTime, 'PISTA: '+resource.title)
                     }                        
-                } else {
+                } else { // Ya no - hiddenDays...
                     toastr.warning('Lo sentimos, el club no habre los días')
                     console.log('Dia fuera de rango');
                 }

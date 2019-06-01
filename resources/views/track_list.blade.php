@@ -60,9 +60,9 @@ PROBLEM - user logueado = no logout....
             <div class="head-club-info">
                 <h3 class="text-capitalize c-green">{{ ($club != null) ? $club->name : 'El club' }}</h3>
                 <p>{{ ($club != null) ? $club->description : 'No tiene pistas disponibles' }}</p>
-                <div class="main-step">
-                    <p>{{ ($club != null) ? $club->address : 'Sin ubicación' }}</p>
-                    <button class="btn btn-outline-success w-50 mx-auto">RESERVA</button>
+                <div class="card-content">
+                    <p class="pt-3">{{ ($club != null) ? $club->address : 'Sin ubicación' }}</p>
+                    <button id="reserve" class="btn btn-outline-dark w-50 mx-auto">RESERVA</button>
                 </div>                            
             </div>
         </div>
@@ -181,14 +181,22 @@ PROBLEM - user logueado = no logout....
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        // Modal mostrar/ocultar el campo de buscar pareja...
         $(document).ready(function(){
+            // Modal mostrar/ocultar el campo de buscar pareja...
             $('#opponent').on('change',function(){
                 if (this.checked) {
                     $("#parejas").show();
                 } else {
                     $("#parejas").hide();
                 }  
+            });
+
+            // Si pulsa en reservar - scroll al calendario...
+            $("#reserve").click(function() {
+                var cal = "#calendar-{{ $calendar->getId() }}";
+                $('html, body').animate({
+                    scrollTop: $(cal).offset().top
+                }, 2000);
             });
         });
     </script>

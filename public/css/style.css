@@ -38,10 +38,23 @@ body {
 .c-green {
     color: #17a279 !important;
 }
-a {
+.link {
     text-decoration: none !important;
     color: #1e84a7 !important;
-    font-weight: bold !important;
+}
+button {
+    outline: none !important;
+}
+/* MODAL */
+.modal-days {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: left;
+}
+.modal-days-all {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-items: left;
 }
 
 /* ---------- MENU ---------- */
@@ -152,6 +165,7 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
 .card-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: center;
 }
 /* IMG Card */
 .card-img {
@@ -186,7 +200,6 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
 .txt-left {
     display: flex;
     padding-left: 1rem;
-    text-transform: capitalize;
 }
 .txt-right {
     justify-self: right;
@@ -269,6 +282,71 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
         grid-template-rows: 1fr auto;
     }
 
+    /* ---------- LOGIN ---------- */
+    .login {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        position: relative;
+        background: rebeccapurple;
+        border-radius: 20px;
+        box-shadow: 0px 0px 10px 2px #000;
+        max-width: 80%;
+        margin: auto;
+    }
+    .login-img {
+        grid-column: 1 / 2;
+
+width: 400px;
+height: 500px;
+    }
+    .login-form {
+        grid-column: 2 / 3;
+        /*position: absolute;
+        width: calc(100% - 2rem);
+        height: calc(100% + 2rem);*/
+        background: #e8e8e8;
+        padding: 1rem;
+        margin: -1rem;
+        border-radius: 20px;
+        box-shadow: 0px 0px 10px 2px #000;
+        display: grid;
+        align-items: center;
+    }
+    .input-user {
+        text-align: center;
+        margin: 1em auto;
+        outline: none;
+        border-radius: 15px;
+        transition: 0.2s;
+        background: url() no-repeat;
+        background-position: .5rem;
+        background-size: 2em;
+        box-shadow: 0px 0px 8px 0px #000;
+    }/*
+    input[type = "password"]{
+        background-image: url(https://img.icons8.com/ios/50/000000/unlock-2.png);
+    }
+    .type-user {
+        background-image: url(https://img.icons8.com/ios/50/000000/admin-settings-male.png);
+    }*/
+    .login-btn {
+        background: #17a279;
+        border: none;
+        border-radius: .5rem;
+        width: 10rem;
+        height: 3em;
+        box-shadow: 0 1px 10px #000;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+    }
+    /* Bootstrap custom */
+    .text-md-right {font-size: .8rem;}
+    .sin-datos {
+        height: max-content !important;
+        margin: 0 auto;
+    }
+
     /* ---------- MENU ---------- */
     .menu {
         background: linear-gradient(#f5f5fb, #fdfdfd);
@@ -294,7 +372,7 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
         text-align: right;
     }
 
-    /* ---------- CONTENT ---------- */
+    /* ---------- CONTENT ---------- /
     .content-info h1 {
         font-size: 3rem;
     }
@@ -302,7 +380,7 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
         font-size: 3rem;
         text-align: right;
         padding-right: 2rem;
-    }
+    }*/
 
     /* ---------- ADMIN - HOME ---------- */
     .main-admin {
@@ -340,7 +418,7 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
     .title-sticky {
         background: #fdfdfd;
         position: sticky;
-        top: 67px;
+        top: 92px;
         padding: .1px;
         margin-bottom: 1.5rem;
         text-align: center;

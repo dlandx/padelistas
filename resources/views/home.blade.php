@@ -7,7 +7,7 @@
 @section('content')
 <section>
     <div class="main-admin">
-        <div class="title-admin">
+        <div class="title-admin p-4 text-uppercase">
             <h2>Mis reservas</h2>
         </div>
         
@@ -15,9 +15,13 @@
         <div class="list-admin">
             <div class="title-sticky">
                 <h2>Historial de reservas</h2>
-            </div>                        
-            
+            </div>       
+
             <div class="list-scroll">
+                @empty($past)
+                    <div class="alert alert-danger sin-datos text-center w-50" role="alert"><b>No puede ser :(</b> no has realizado ninguna reserva.</div>
+                @endempty
+
                 @foreach ($past as $value)
                     <div class="reservation-content">
                         <h3>
@@ -61,17 +65,21 @@
         </div>
 
         <div class="content-admin">
-            <div class="managment-admin">
-                <h4>Bienvenido {{ Auth::user()->name }}!!!</h4>
-                <p>Aquí tiene un pequeño lisatado de las reservas actuales o pendientes que tiene a día de hoy.</p>
+            <div class="managment-admin p-3">
+                <h4 class="c-green">Bienvenido {{ Auth::user()->name }}!!!</h4>
+                <p>Aquí tiene un pequeño listado de las reservas actuales o pendientes que tiene a día de hoy.</p>
                 <p>Si gustas puedes ver más información o cancelar una reserva puslando en ella.</p>
                 
                 <div class="main-step">
-                    <p>No dudes en realizar una reserva</p>
-                    <a class="btn-club" href="{{ route('home.club') }}"><button class="btn-club">Realizar reserva</button></a>
+                    <p class="pt-2 font-italic text-info">No dudes en realizar una reserva</p>
+                    <a class="btn-club" href="{{ route('home.club') }}"><button class="btn-club btn btn-light">Realizar reserva</button></a>
                 </div>
             </div>
             
+            @empty($current)
+                <div class="alert alert-danger sin-datos" role="alert"><b>Vaya!!!</b> no tienes niguna reserva actual...</div>
+            @endempty
+
             <div class="current-reservations">
                 {{-- Reservas actuales --}}
                 @foreach ($current as $value)
