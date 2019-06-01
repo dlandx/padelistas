@@ -35,6 +35,14 @@ body {
 .logo {
     color: #3d3e42;
 }
+.c-green {
+    color: #17a279 !important;
+}
+a {
+    text-decoration: none !important;
+    color: #1e84a7 !important;
+    font-weight: bold !important;
+}
 
 /* ---------- MENU ---------- */
 .menu>div {
@@ -132,7 +140,7 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
     grid-gap: 1rem;
 }
 .card-club {
-    width: 300px;
+    width: 320px;
     height: 200px;
     display: grid;
     grid-template-columns: 1fr;
@@ -172,16 +180,18 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
     grid-row: 2;
     grid-column: 1;
     margin: 0;
-    
+    align-items: end;
     z-index: 3;
 }
 .txt-left {
     display: flex;
     padding-left: 1rem;
+    text-transform: capitalize;
 }
 .txt-right {
     justify-self: right;
     padding-right: 1rem;
+    font-size: .7rem;
 }
 /* More info Card */
 .club-open {
@@ -235,6 +245,7 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
 .head-club-info {
     grid-column: 2 / 3;
     grid-row: 1;
+    display: grid;
     border-radius: 10px;
     padding-left: 8rem;
 

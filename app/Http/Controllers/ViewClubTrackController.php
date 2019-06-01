@@ -106,7 +106,9 @@ class ViewClubTrackController extends Controller
 */
 
         // Obtenemos todas las pistas que tenga el club elegido...
-        $tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title', 'businessHours', 'size_id'])->get();
+        //$tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title', 'businessHours', 'size_id'])->get();
+        $tracks = ClubTrack::where('club_id','=', $club)->get();
+        $club = ($tracks->isEmpty()) ? '' : $tracks[0]->club; // Información del club...
         $sizes = json_encode(Size::select(['id', 'name', 'description'])->get()); // Obtenemos todos los tamaños de las pistas...
         $reservations = Reservation::all();
         $events = []; // Añadir eventos al calendario = añadir la reserva...
@@ -126,26 +128,16 @@ class ViewClubTrackController extends Controller
                 ['resourceId' => $value->club_track_id, 'color' => $value->color] // Options event - rooms (Club tracks)
             );
         }
-/*
-        $events[] = Calendar::event(
-            'Event One', //event title
-            false, //full day event?
-            '2019-05-28T0800', //start time (you can also use Carbon instead of DateTime)
-            '2019-05-28T1200', //end time (you can also use Carbon instead of DateTime)
-            0, //optionally, you can specify an event ID
-            ['resourceId' => 2]
-        );*/
 
-
+        // Preparamos al formato de fullcalendar - la seccion para las pistas...
         $map = $tracks->map(function($items){
             $data['id'] = $items->id;
             $data['title'] = $items->title;
             $data['businessHours'] = json_decode($items->businessHours);
-            $data['size_id'] = $items->size_id;
+            $data['size_id'] = $items->size_id;            
             return $data;
         });
-
-
+        
         // Con addEvents(array) podemos agregar un array de eventos...
         $calendar = Calendar::addEvents($events)->setOptions([
             // Configuramos las propiedades para añadir el fullcalendar...
@@ -176,6 +168,21 @@ class ViewClubTrackController extends Controller
 
 
         ])->setCallbacks([
+            // Primera vez antes de cargar el fullcalendar...
+            'viewRender' => 'function() {
+                //alert("Callbacks! ");
+            }',
+
+            'resourceRender' => "function(renderInfo) {
+                if (renderInfo === undefined) {
+                    console.log('Con pistas...');
+                } else {
+                    
+                
+                //alert('Callbacks! ');
+                }
+            }",
+
             // Click en el evento...
             'eventClick' => 'function(event) { title= event.title; alert("hi "+title)}',
             
@@ -186,12 +193,16 @@ class ViewClubTrackController extends Controller
 
             // Click en una hora del calendario...
             'dayClick' => "function(date, jsEvent, view, resource) {
+                if (resource === undefined) {
+                    toastr.error('Lo sentimos :( el club no tiene pistas disponibles...', 'SIN PISTAS')
+                }
+
                 var chosen_time = date.format('HH:mm'); // Hora elegida...
                 var chosen_day = date.format('e'); // Día elegido -> 0 = Domingo, 1 = Lunes, 6 = Sábado
                 var chosen_date = date.format('YYYY-MM-DD HH:mm:ss');
                 var reserves = ".json_encode($reservations)."; // Obtenemos todas las reservas...
-
-                if (chosen_day > 0 && chosen_day < 6) { // Eligió en los días que habre el club...
+console.log(chosen_day);
+                if (chosen_day >= 0 && chosen_day <= 6) { // Eligió en los días que habre el club...
                     // Si la reserva a realizar esta en las horas que habre la pista del club...
                     if(chosen_time >= resource.businessHours.startTime && chosen_time < resource.businessHours.endTime) {
                         // Calcular el intervalo que hay entre la hora de reserva y el cierre de la pista...
@@ -280,7 +291,7 @@ class ViewClubTrackController extends Controller
 
 
         //return view('track_list_cal', compact('calendar'));
-        return view('track_list', compact('calendar'));
+        return view('track_list', compact('calendar', 'club'));
     }
 
     /**

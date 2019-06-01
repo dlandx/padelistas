@@ -50,4 +50,31 @@ class ClubTrack extends Model
     {
         return $this->belongsTo('App\Size');
     }
+
+    /**
+     * Relationships Many to One (n Pistas - 1 tipo cerramiento)
+     * Get the type of enclosure that has the chosen track.
+     */
+    public function enclosure_type()
+    {
+        return $this->belongsTo('App\EnclosureType');
+    }
+
+    /**
+     * Relationships Many to One (n Pistas - 1 tipo superficie)
+     * Get the type of surface that the chosen track will have.
+     */
+    public function type_surface()
+    {
+        return $this->belongsTo('App\TypeSurface');
+    }
+
+    /**
+     * Relationships Many to One (n Pistas - 1 tipo pared)
+     * Get the type of wall that the chosen track will have.
+     */
+    public function wall()
+    {
+        return $this->belongsTo('App\Wall');
+    }
 }

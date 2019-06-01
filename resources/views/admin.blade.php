@@ -15,14 +15,14 @@
         <div class="list-admin">
             <div class="title-sticky">
                 <h2>Lista de espera</h2>
-            </div>                        
-           
+            </div>
+
             <div class="list-scroll">
                 @foreach ($current as $item)
                     {{-- Si en la pivot esta en la lista de espera (es decir, que a cancelado la reserva...) --}}
                     @if ($item->pivot->waiting_list == 1)
-                        <div class="reservation-content">
-                            <h3>{{ Auth::user()->club->name }}</h3>
+                        <div class="reservation-content">                            
+                            <h3><a href="{{ route('admin.list', $item->id) }}">{{ Auth::user()->club->name }}</a></h3>
                             <h4>
                                 @foreach (Auth::user()->club->tracks as $value)
                                     {{ ($item->club_track_id == $value->id) ? $value->title : '' }}

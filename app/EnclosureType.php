@@ -14,4 +14,13 @@ class EnclosureType extends Model
     protected $fillable = [
         'name', 'description'
     ];
+
+    /**
+     * Relationships One to Many (1 Tipo cerramiento - n Pistas)
+     * Get all the type of enclosure that has the track.
+     */
+    public function club_tracks()
+    {
+        return $this->hasMany('App\ClubTrack');
+    }
 }

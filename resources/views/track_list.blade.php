@@ -54,15 +54,15 @@ PROBLEM - user logueado = no logout....
 @section('content')
 <section>
     <div class="content-info">
-        <h1>Reserva tu pista</h1>
-        <div class="head-club">
+        <h1 class="text-center mb-5">Reserva tu pista</h1>
+        <div class="head-club my-5">
             <div class="head-club-img"></div>
             <div class="head-club-info">
-                <h3>TEXT</h3>
-                <p>Realiza una reserva en las pistas del club</p>
-                <div class="head-club-link">
-                    <p>GPS</p>
-                    <button id="btn">RESERVA</button>
+                <h3 class="text-capitalize c-green">{{ ($club != null) ? $club->name : 'El club' }}</h3>
+                <p>{{ ($club != null) ? $club->description : 'No tiene pistas disponibles' }}</p>
+                <div class="main-step">
+                    <p>{{ ($club != null) ? $club->address : 'Sin ubicación' }}</p>
+                    <button class="btn btn-outline-success w-50 mx-auto">RESERVA</button>
                 </div>                            
             </div>
         </div>

@@ -14,4 +14,13 @@ class Wall extends Model
     protected $fillable = [
         'name', 'description'
     ];
+
+    /**
+     * Relationships One to Many (1 Tipo pared - n Pistas)
+     * Get the wall that will have the chosen track.
+     */
+    public function club_tracks()
+    {
+        return $this->hasMany('App\ClubTrack');
+    }
 }

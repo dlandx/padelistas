@@ -16,8 +16,8 @@ class CreateReservationUserTable extends Migration
         Schema::create('reservation_user', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('status');
-            $table->boolean('pay');
             $table->boolean('cancelled')->nullable(); // Estado antes de cancelar...
+            $table->boolean('pay');            
             $table->boolean('waiting_list')->nullable(); // Lista de espera
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
