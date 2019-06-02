@@ -72,12 +72,12 @@
                 
                 <div class="main-step">
                     <p class="pt-2 font-italic text-info">No dudes en realizar una reserva</p>
-                    <a class="btn-club" href="{{ route('home.club') }}"><button class="btn-club btn btn-light">Realizar reserva</button></a>
+                    <a class="btn-club" href="{{ route('home.club') }}"><button class="btn-club btn btn-outline-info">Realizar reserva</button></a>
                 </div>
             </div>
             
             @empty($current)
-                <div class="alert alert-danger sin-datos" role="alert"><b>Vaya!!!</b> no tienes niguna reserva actual...</div>
+                <div class="alert alert-warning sin-datos" role="alert"><b>Vaya!!!</b> no tienes niguna reserva actual...</div>
             @endempty
 
             <div class="current-reservations">

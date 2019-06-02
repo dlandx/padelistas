@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('head')
-<script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 @endsection
 
 @section('content')
 <section>
     <div class="main-admin">
         <div class="title-admin p-4 text-uppercase">
-            <h2>Dashboard - {{ Auth::user()->name }}</h2>
+            <h2>Dashboard - {{ Auth::user()->username }}</h2>
         </div>
         
         <!-- Lista de espera -->
@@ -55,26 +55,32 @@
             <h2>Gestionar el club deportivo</h2>
         </div>
 
-        <div class="content-admin">
+        <div class="content-admin p-4">
             <div class="head-club">
                 <div class="head-club-img">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/228448/stranger-things.jpg" alt="">
                 </div>
                 <div class="head-club-info">
-                    <h3>{{ Auth::user()->club->name }}</h3>
-                    <p>{{ Auth::user()->club->description }}</p>
+                    <h3><a class="link text-capitalize" href="">{{ Auth::user()->club->name }}</a></h3>
+                    <p>
+                        @if (Auth::user()->club->description == '')
+                            <div class="alert alert-danger mr-4" role="alert">El <b>{{ Auth::user()->club->name }}</b> no dispone de ninguna descripción por el momento...</div>
+                        @else
+                            {{ Auth::user()->club->description }}
+                        @endif
+                    </p>
                     <div class="main-step">
-                        <p>{{ Auth::user()->club->address }}</p>
-                        <button class="btn-club">Ver club</button>
+                        <p class="pt-3">{{ Auth::user()->club->address }}</p>
+                        <button class="btn-club btn btn-outline-info">Ver club</button>
                     </div>                            
                 </div>
             </div>
             
-            <div class="managment-admin">
-                <h4>Bienvenido!!! comience a gestionar el club deportivo...</h4>
-                <div class="main-step">
-                    <a class="btn-club" href="{{ route('track.index') }}"><button >Gestionar pistas</button></a>
-                    <a class="btn-club" href="{{ route('user.index') }}"><button class="btn-club">Gestionar usuarios</button></a>
+            <div class="pt-4 managment-admin">
+                <div class="alert alert-success mr-4" role="alert">Bienvenido <b>{{ Auth::user()->name }}</b>!!! comience a gestionar el club deportivo...</div>
+                <div class="main-step mt-4">
+                    <a class="btn-club" href="{{ route('track.index') }}"><button class="btn btn-outline-dark">Gestionar pistas</button></a>
+                    <a class="btn-club" href="{{ route('user.index') }}"><button class="btn-club btn btn-outline-secondary">Gestionar usuarios</button></a>
                 </div>
             </div>
         </div>

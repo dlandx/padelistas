@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -24,9 +25,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        // Listar los usuario registrados
-        $users = User::all();
-        return view('user', compact("users"));
+        // Listar los usuario registrados en el club (Siguen o siguieron al club)...
+        $users = Auth::user()->club->users; 
+        $follows = [];
+        $unfollow = [];
+
+        foreach ($users as $value) {
+            // Si en la tabla pivot, el usuario nos sigue actualmente...
+            if ($value->pivot->following == 1) {
+                $follows[] = $value; // Obenemos los usuario...
+            } else {
+                $unfollows[] = $value; // Usuarios que ya no nos siguen...
+            }            
+        }
+
+        return view('user', compact("follows", "unfollows"));
     }
 
     /**

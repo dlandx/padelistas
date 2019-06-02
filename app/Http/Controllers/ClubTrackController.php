@@ -73,8 +73,15 @@ class ClubTrackController extends Controller
     public function store(Request $request)
     {
         // Añadir las pistas a la BBDD...
-        ClubTrack::create($request->all());
-        // controlar que mantenga los datos del modal...
+        //ClubTrack::create($request->all());
+
+        // Obtener los datos enviados del formulario excepto...
+        $data = $request->except(['startTime', 'endTime']);
+        // Obtener checkbox[] y convertirlos en JSON
+        $data['businessHours'] = response()->json(['startTime' => $request->startTime, 'endTime' => $request->endTime])->getContent();
+        // Añadir las pistas a la BBDD...
+        ClubTrack::create($data);
+
         return redirect()->route('track.index');
     }
 
@@ -125,7 +132,14 @@ class ClubTrackController extends Controller
     {
         // Actualizar la pista...
         $tracks = ClubTrack::find($id);
-        $tracks->update($request->all());
+        //$tracks->update($request->all());
+
+        // Obtener los datos enviados del formulario excepto...
+        $data = $request->except(['startTime', 'endTime']);
+        // Obtener checkbox[] y convertirlos en JSON
+        $data['businessHours'] = response()->json(['startTime' => $request->startTime, 'endTime' => $request->endTime])->getContent();
+        $tracks->update($data);
+
         return redirect()->route('track.index');
     }
 
