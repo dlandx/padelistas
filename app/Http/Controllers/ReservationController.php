@@ -19,6 +19,7 @@ class ReservationController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        // Si queremos que el admin vea - controlar middleware o quitar -> modificar el la vista show -> Auth = null
     }
 
     /**

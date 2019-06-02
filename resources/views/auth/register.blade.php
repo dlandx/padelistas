@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+@endsection
+
 @section('content')
 <section>
     <div class="content-info info-home">
@@ -7,7 +11,7 @@
             <div class="login-img"></div>
             <div class="login-form">
                 <form method="POST" action="{{ route('register') }}">
-                    <h2 class="text-center text-uppercase mb-4">{{ __('Register') }}</h2>
+                    <h2 class="text-center text-uppercase mb-4">{{ __('Registrar usuario') }}</h2>
                     @csrf
                     <div class="row">
                         <label for="username" class="col-md-4 col-form-label text-md-right pt-4">{{ __('Usuario') }}</label>

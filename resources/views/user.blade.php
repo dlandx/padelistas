@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="alert alert-success" role="alert">Lista de usuario que se han suscrito al club...</div>
+        <div class="alert alert-success my-5" role="alert">Lista de usuario que se han suscrito al club...</div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -31,7 +31,6 @@
                     <th>Nombre completo</th>
                     <th>Documento de identidad</th>
                     <th>Número movil</th>
-                    <th>Fecha de nacimiento</th>
                     <th>Género</th>
                     <th>Dirección</th>
                     <th style="padding-left: 2em;">Gestión</th>
@@ -45,7 +44,6 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->identity_card }}</td>
                         <td>{{ $item->phone_number }}</td>
-                        <td>{{ $item->birthdate }}</td>
                         <td>{{ $item->gender }}</td>
                         <td class="nowgrap">{{ $item->address }}</td>
                         <td class="d-flex align-items-center">
@@ -56,7 +54,7 @@
                             <form action="{{ route('user.edit', $item->id) }}" method="">
                                 <button type='submit' class="btn-crud" value='{{ $item->id }}'><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 192 192" style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,192v-192h192v192z" fill="none"></path><g fill="#20926b"><g id="surface1"><path d="M170.28,7.68c-3.615,0 -7.335,1.335 -10.08,4.08l-5.16,5.28l19.92,19.92c-0.015,0.015 5.28,-5.16 5.28,-5.16c5.505,-5.505 5.505,-14.535 0,-20.04c-2.76,-2.76 -6.345,-4.08 -9.96,-4.08zM148.8,22.8l-87.24,87.24l-0.24,1.2l-3.6,18.6l-1.2,5.64l5.64,-1.2l18.6,-3.6l1.2,-0.24l87.24,-87.24l-5.52,-5.4l-85.44,85.32l-9.36,-9.36l85.32,-85.44zM11.52,38.4c-2.13,0 -3.84,1.725 -3.84,3.84v138.24c0,2.115 1.71,3.84 3.84,3.84h138.24c2.13,0 3.84,-1.725 3.84,-3.84v-111.36l-7.68,7.68v99.84h-130.56v-130.56h99.84l7.68,-7.68z"></path></g></g></g></svg></button>
                             </form>
-
+{{-- Quita de la pivot - no eliminar. Si se crea add a la pivot... --}}
                             <form action="{{ route('user.update', $item->id) }}" method="POST">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="_method" value="DELETE">
@@ -68,7 +66,7 @@
             </tbody>
         </table>
 
-        <div class="alert alert-warning" role="alert">Lista de usuario que han dejado de seguir al club...</div>
+        <div class="alert alert-warning my-5" role="alert">Lista de usuario que han dejado de seguir al club...</div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -77,7 +75,6 @@
                     <th>Nombre completo</th>
                     <th>Documento de identidad</th>
                     <th>Número movil</th>
-                    <th>Fecha de nacimiento</th>
                     <th>Género</th>
                     <th>Dirección</th>
                     <th style="padding-left: 2em;">Gestión</th>
@@ -91,7 +88,6 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->identity_card }}</td>
                         <td>{{ $item->phone_number }}</td>
-                        <td>{{ $item->birthdate }}</td>
                         <td>{{ $item->gender }}</td>
                         <td class="nowgrap">{{ $item->address }}</td>
                         <td class="d-flex align-items-center">
