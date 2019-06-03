@@ -20,6 +20,7 @@ class ReservationController extends Controller
     {
         $this->middleware('auth');
         // Si queremos que el admin vea - controlar middleware o quitar -> modificar el la vista show -> Auth = null
+        // https://pusher.com/tutorials/multiple-authentication-guards-laravel
     }
 
     /**

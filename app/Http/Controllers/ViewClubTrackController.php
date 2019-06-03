@@ -255,7 +255,8 @@ class ViewClubTrackController extends Controller
 
                                 var minimo = array.sort(); // Si hay varias diferencias obtener la menor...
                                 var disabled_next = (minimo.length != 0 && minimo < item.duration) ? 'disabled=disabled' : '';
-
+// Controlar disables -> club 1 - p3...
+// Validar que la pista no sea mayor al club hora...
                                 $('#price').append('<option value='+item.id+' '+disabled+' '+disabled_next+'>'+item.price+' €  - ( '+item.duration+' )</option>');
                             }
                         });

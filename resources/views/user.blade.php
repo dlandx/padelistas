@@ -37,7 +37,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($follows as $item)
+                @foreach ($follows ?? [] as $item)
                     <tr>
                         <td>{{ $item->username }}</td>
                         <td>{{ $item->email }}</td>
@@ -81,7 +81,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($unfollows as $item)
+                @foreach ($unfollows ?? [] as $item)
                     <tr>
                         <td>{{ $item->username }}</td>
                         <td>{{ $item->email }}</td>
