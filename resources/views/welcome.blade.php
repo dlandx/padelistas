@@ -5,14 +5,14 @@
 @endsection
 
 @section('content')
-<section>
-    <div class="text-center">
+<section class="center">
+    <div class="text-center col-12">
         <h1>Reserva pista de pádel, tenis y campo de fútbol al instante, nunca fue tan fácil...</h1>
         <p>¡Reserva tu pista o campo en los clubes disponibles según tu ciudad!</p>
     </div>
 </section>
 
-<section>
+<section class="center">
     <div class="dos-grid w-75 h-75">
         <div class="steps align-self-center">
             <h2>Con padelistas juega en 3 pasos sencillos</h2>

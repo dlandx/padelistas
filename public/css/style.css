@@ -34,6 +34,7 @@ body {
     height: 60px;
     background: #f4f4fc;
     border-bottom: 1px solid #f7a5a5;
+    z-index: 30;
 }
 .content {
     grid-area: content;
@@ -59,6 +60,13 @@ a {
 }
 .blue {
     color: #0152a9;
+}
+.green {
+    color: #074a1f;
+}
+.info {
+    background: #f4f4fc;
+    border-radius: 5px;
 }
 
 /* ---------- MODAL - CLUB ---------- */
@@ -92,7 +100,7 @@ a {
     transform: translateX(-245px);
     box-shadow: rgb(160, 160, 160) 0 0 15px -5px;
     transition: all .6s ease-in-out;   
-    z-index: 1;   
+    z-index: 100;   
     background: linear-gradient(#f4f4f5, #fdfdfd);
 }
 .menu.active {
@@ -111,9 +119,9 @@ a {
 .menu nav {
     width: 100%;
 }
-.menu nav ul {
-    padding: 0;
-    list-style-type: none;
+.menu nav ul, ul {
+    padding: 0 !important;
+    list-style-type: none !important;
 }
 .menu nav ul li {
     padding: 1rem 2rem;
@@ -138,7 +146,10 @@ a {
 }
 .title {
     position: sticky;
-    top: 80px;
+    top: 60px;
+    background: #fdfdfd;
+    padding: 1rem 3rem;
+    z-index: 50;
 }
 /* ---------- HOME - STEPS ---------- */
 .accordion {
@@ -290,9 +301,16 @@ a {
 /* ---------- END - CARD CLUB ---------- */
 
 /* ---------- RESERVATIONS ---------- */
+.reserve-img {
+    background: linear-gradient(rgba(0, 0, 0, 0.72),rgba(0, 0, 0, 0.5)), url('../images/pista.jpg') no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.81),rgba(5, 28, 47, 0.73)), url('../images/pista.jpg') no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
 .list-scroll {
     overflow-y: scroll;
     height: calc(100vh - 8.5rem);
+    padding: 0 1rem;
 }
 .reservation-content {
     margin: 1rem 0;
@@ -312,6 +330,15 @@ a {
 .success-reservation {
     border-left: 5px solid #0f9840;
     background: linear-gradient(to right, #d7ffdb, #ffffff);   
+}
+.cancelled {
+    color: #ba3132;
+}
+.pending {
+    color: #c58d2a;
+}
+.success {
+    color: #066d2b;
 }
 
 .reservation-content>h3, .info-reserve>h3 {
@@ -338,6 +365,21 @@ a {
     float: right;
 }
 
+/* State of the reservation */
+.cancelled-reserve {
+    background: linear-gradient(180deg, #ffffff7a 80%, #a3000063 100%);
+    border: 1px solid #a30000fa;
+}
+.pending-reserve {
+    background: linear-gradient(180deg, #ffffff7a 80%, #ffeb3b94 100%);
+    border: 1px solid #d07c00;
+}
+.reserved {
+    background: linear-gradient(180deg, #ffffff7a 80%, #139a4391 100%);
+    border: 1px solid #074a1f;
+}
+
+
 @media (min-width: 900px) {
     .main {
         grid-template-columns: 200px 1fr;
@@ -359,19 +401,21 @@ a {
     
     /* ---------- DASHBOARD ---------- */
     .dashboard {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        grid-template-areas: "dashboard list";
-        grid-gap: 2rem;
     }
-
+    .dashboard:after {
+        display: grid;
+        content: '';
+        clear: both;
+    }    
+    .dashboard-content {
+        width: 60%;
+        float: left;
+    }
     .dashboard-list {
-        grid-area: list;
-        position: fixed;
-        right: 0;
-        top: 25%;
-        width: 225px;
-        margin-right: 4rem;
+        position: sticky;
+        top: 130px;
+        float: right;
+        width: 31%;
     }
 
     /* ---------- LOGIN ---------- /
