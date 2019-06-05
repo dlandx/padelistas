@@ -20,7 +20,7 @@ class CreateClubTracksTable extends Migration
             $table->integer('track_type_id')->unsigned()->nullable();  
             $table->foreign('track_type_id')->references('id')->on('track_types')->onDelete('set null');
             $table->integer('type_surface_id')->unsigned()->nullable();   
-            $table->foreign('type_surface_id')->references('id')->on('track_types')->onDelete('set null');      
+            $table->foreign('type_surface_id')->references('id')->on('type_surfaces')->onDelete('set null');      
             $table->integer('enclosure_type_id')->unsigned()->nullable(); // cerramiento interior/exterior/cubierta
             $table->foreign('enclosure_type_id')->references('id')->on('enclosure_types')->onDelete('set null');
             $table->integer('wall_id')->unsigned()->nullable();

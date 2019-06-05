@@ -5,6 +5,63 @@
 @endsection
 
 @section('content')
+<section class="text-justify col-12 p-5">
+    <div class="my-5 title">
+        <h2 class="blue text-uppercase">Elige el club deportivo más cercano</h2>
+    </div>
+
+    <div class="dashboard">
+        <div class="dashboard-content">
+            <h3>Reservas actuales</h3>
+        </div>
+        <div class="dashboard-list">
+            <h3>Historial de reservas</h3> 
+            
+            <div class="list-scroll">
+                @empty($past)
+                    <div class="alert alert-danger sin-datos text-center w-50" role="alert"><b>No puede ser :(</b> no has realizado ninguna reserva.</div>
+                @endempty
+
+                @foreach ($past as $value)
+                    <div class="reservation-content">
+                        <h3>
+                            {{-- Nombre del club que tiene la pista - pivot --}}
+                            @foreach ($club_tracks as $item)
+                                <a href="{{ route('reserve.show', $value->id) }}">{{ ($value->club_track_id == $item->id) ? $item->club->name : ''}}</a>
+                            @endforeach
+                        </h3>
+                        <h4>
+                            {{-- Nombre de la pista --}}
+                            @foreach ($club_tracks as $item)
+                                {{ ($value->club_track_id == $item->id ) ? $item->title : ''}}
+                            @endforeach
+                        </h4>
+                        <div class="dos-grid">
+                            <span>{{ $value->start }}</span>
+                            <span class="reservation-right">{{ $value->duration }}</span>
+                        </div>
+                        
+                        <div class="reservation-data">
+                            <span>{{ ($value->pivot->status == 2) ? 'Pendiente' : (($value->pivot->status == 1) ? 'Confirmado' : 'Cancelado') }}</span>
+                            <span>
+                                {{-- Tipo de pista - pivot --}}
+                                @foreach ($club_tracks as $item)
+                                    {{ ($value->club_track_id == $item->id ) ? $item->track_type->name : ''}}
+                                @endforeach
+                            </span>
+                            <span class="reservation-right">
+                                {{-- Nº de usuario que han realizado la reserva --}}
+                                {{ count($value->users) }}
+                            </span>
+                        </div>            
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
 <section>
     <div class="main-admin">
         <div class="title-admin p-4 text-uppercase">
@@ -123,5 +180,5 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 @endsection

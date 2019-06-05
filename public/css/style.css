@@ -10,50 +10,58 @@
     background: #fff;
 }
 
+
 body {
     margin: 0;
     color: #8a8a8a !important;
-    background: #f7f7f7 !important;
+    background: #fdfdfd !important;
 }
 .main {
-    width: 100%;
-    height: 100%;
     display: grid;
-    grid-template-areas: "menu" "content";
     grid-template-columns: 1fr;
-    grid-template-rows: 130px 800px; 
+    grid-template-rows: 60px 1fr;
+    grid-template-areas: "header" "content";
+    height: 100vh;
 }
-.menu {
-    grid-area: menu;
-    background: red;
-    justify-content: center;
+.actions {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas: "icon title user";
+    justify-items: right;
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background: #f4f4fc;
+    border-bottom: 1px solid #f7a5a5;
 }
 .content {
     grid-area: content;
-    background: #fdfdfd;
 }
-.logo {
-    color: #3d3e42;
+.dos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
-.c-green {
-    color: #17a279 !important;
-}
-.link {
+a {
     text-decoration: none !important;
-    color: #1e84a7 !important;
 }
-button {
-    outline: none !important;
+.red {
+    color: #ee544e;
 }
-.btn-crud {
-    background: none;
-    border: none;
+.red:hover {
+    color: #fff;
 }
-.nowgrap {
-    white-space: nowrap;
+.yellow {
+    color: #fec833;
+}
+.yellow:hover {
+    color: #d7eefe;
+}
+.blue {
+    color: #0152a9;
 }
 
-/* MODAL */
+/* ---------- MODAL - CLUB ---------- */
 .modal-days {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -66,122 +74,167 @@ button {
 }
 
 /* ---------- MENU ---------- */
-.menu>div {
-    padding: 1rem;
+.icon-menu {
+    cursor: pointer;
+    padding: 0 1rem;
+    background: rebeccapurple;
+}
+
+.menu {
+    width: 200px;
+    height: 100%;
+    grid-area: menu;            
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    position: fixed;
+    overflow-y: auto;
+    transform: translateX(-245px);
+    box-shadow: rgb(160, 160, 160) 0 0 15px -5px;
+    transition: all .6s ease-in-out;   
+    z-index: 1;   
+    background: linear-gradient(#f4f4f5, #fdfdfd);
+}
+.menu.active {
+    transform: translateX(0);
+}
+.close-menu {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+.logo {
+    padding: 1.5rem 1rem;
+    text-transform: uppercase;
+}
+.menu nav {
+    width: 100%;
 }
 .menu nav ul {
     padding: 0;
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-        justify-content: center;
+    list-style-type: none;
 }
-.menu nav li {
-    list-style: none;
-    padding: 1rem
+.menu nav ul li {
+    padding: 1rem 2rem;
+    letter-spacing: 1px;
+}
+.menu nav ul li:hover {
+    cursor: pointer;
+    background: red;
+}
+.menu nav ul li:hover a>svg {
+    transform: rotate(90deg);
 }
 
 /* ---------- CONTENT ---------- */
 .content>section {
-    height: 100vh; /*DEL*/
-    display: grid;
-}
-.content-info {
-    position: relative;
-    padding: 3rem;
-}
-.info-home {
-    margin: auto;
-    text-align: center;
-}
-.main-step {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-.content-img {
-    width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://res.cloudinary.com/playtomic/image/upload/v1536584658/playtomic/web/steps.jpg) no-repeat;
+    min-height: 100vh;    
+}
+.center {
+    display: grid;
+    place-items: center;
+}
+.title {
+    position: sticky;
+    top: 80px;
+}
+/* ---------- HOME - STEPS ---------- */
+.accordion {
+    width: 91%;
+    justify-self: right;
+    margin: auto;
+    margin-right: -4rem;
+}
+.step-img {
+    background: url('https://i.pinimg.com/originals/cc/24/4d/cc244d1e81f6b97ebb5404ce2924b648.jpg') no-repeat;
+    background-position: center;
+    background-size: 100vh 100%;
+    height: 100%;
 }
 
-/* ---------- HOME - STEPS ---------- */
-.content-step {
-    position: absolute;
-    width: 70%;
-    right: -4rem;
-}
-.steps {
+/* ---------- LOGIN ---------- */
+.login {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     position: relative;
-}
-/* Card see the hidden content*/
-.step {
     background: #fff;
-    margin: 1rem;
-    text-align: left;
-    border: 1px solid #0c824a;
-    border-radius: 5px;
-    overflow: hidden;
+    box-shadow: 0px 0px 10px 2px #000;
+    margin: auto;
+    color: #fff;
 }
-input[id^="check-club"], input[id^="check-reserve"], input[id^="check-play"] {
-    display: none;
+.login-img {
+    grid-column: 1 / 2;
+    width: 400px;
+    height: 500px;
 }
-input[id^="check-club"] + label, input[id^="check-reserve"] + label, input[id^="check-play"] + label {
+.img-login {
+    background: url('../images/register.jpg') no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
+}
+.login-form {
+    grid-column: 2 / 3;
+    background-image: linear-gradient(to right, #0c394f, #286a8a);
     padding: 1rem;
-    cursor: pointer;
-    display: block;
+    margin: -1rem 0;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 2px #000;
+    display: grid;
+    align-items: center;
+}
+.input-user {
     text-align: center;
+    margin: 1em auto;
+    outline: none;
+    border-radius: 15px;
+    transition: 0.2s;
+    background: #fff;
+    box-shadow: 0px 0px 8px 0px #000;
 }
-input[id^="check-club"]:checked + label, input[id^="check-reserve"]:checked + label, input[id^="check-play"]:checked + label {
-    color: green;
+.login-btn {
+    background: #17a279;
+    border: none;
+    border-radius: .5rem;
+    min-width: 10rem;
+    width: auto;
+    height: 3em;
+    box-shadow: 0 1px 10px #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
 }
-/* Style hidden content */
-input[id^="check-club"] ~ .step-hidden, input[id^="check-reserve"] ~ .step-hidden, input[id^="check-play"] ~ .step-hidden {
-    border-top: 1px solid gray;;
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
+.login-admin {
+    background-image: linear-gradient(to right, #e43e62, #7b1128);
 }
-input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve"]:checked + label + .step-hidden, input[id^="check-play"]:checked + label + .step-hidden {
-    height: auto;
-    opacity: 1;
-    padding: .5rem;
+.img-admin {
+    background: url('../images/admin.jpg') no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
 }
-/* Hover view hidden content */
-.step>label:hover + .step-hidden {
-    height: auto;
-    opacity: 1;
-    padding: .5rem;
-}
-/* ---------- HOME - END STEPS ---------- */
 
 /* ---------- CARD CLUB ---------- */
 .main-club {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
 }
 .card-club {
-    width: 320px;
     height: 200px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 50px;
-    border-radius: .5em;
     overflow: hidden;
     position: relative;
-}
-.card-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    padding: 1rem;
 }
 /* IMG Card */
 .card-img {
-    width: 100%;
-    height: 100%;
     grid-row: 1 / 3;
     grid-column: 1;
     position: relative;
+    border-radius: 10px;
+    overflow: hidden;
 }
 .card-img img {
     width: 100%;
@@ -204,10 +257,6 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
     margin: 0;
     align-items: end;
     z-index: 3;
-}
-.txt-left {
-    display: flex;
-    padding-left: 1rem;
 }
 .txt-right {
     justify-self: right;
@@ -240,96 +289,116 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
 }
 /* ---------- END - CARD CLUB ---------- */
 
-/* ---------- HEADER CLUB ---------- */
-.head-club {
-    width: 100%;
-    /*height: 158px;*/
-    display: grid;
-    grid-template-columns: 30px 1fr;
-    grid-template-rows: 1fr;
-    position: relative;
-}
-.head-club-img {
-    grid-column: 1 / 2;
-    grid-row: 1;
-    position: absolute;
-    margin: .7rem 0;
-    width: 145px;
-    height: 135px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-.head-club-img>img {
-    width: 100%;
-    height: 100%;
-}
-.head-club-info {
-    grid-column: 2 / 3;
-    grid-row: 1;
-    display: grid;
-    border-radius: 10px;
-    padding-left: 8rem;
-
-    border-style: solid;
-    border-image: linear-gradient(to left, #fdfdfd 10%, rgb(127, 121, 167) 50%, #fdfdfd 90%) 100% 0 100% 1/3px 0 3px 0 stretch;
-    /*
-    border-image: linear-gradient(to left, rgb(250, 250, 253) 1%, rgb(127, 121, 167) 50%, rgba(250, 250, 253, 1) 100%) 100% 0 100% 0/3px 0 3px 0 stretch;*/
-}
-.btn-club {
-    place-self: center;
-}
-/* ---------- END - HEADER CLUB ---------- */
-
-/* ---------- SHOW TRACK ---------- */
-.show-track {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 3rem;
-}
-.track-content {
-}
-.track-sidebar {
-}
-/* ---------- END - SHOW TRACK ---------- */
-
 /* ---------- RESERVATIONS ---------- */
-/* ---------- END - RESERVATIONS ---------- */
+.list-scroll {
+    overflow-y: scroll;
+    height: calc(100vh - 8.5rem);
+}
+.reservation-content {
+    margin: 1rem 0;
+    padding: .5rem;
+    border-radius: 4px;  
+    border-left: 5px solid #7f79a7;
+    background: linear-gradient(to right, #eceafb, #fdfdfd);
+}
+.cancelled-reservation {
+    border-left: 5px solid #ba3132;
+    background: linear-gradient(to right, #ffd9d9, #fdfdfd);
+}
+.pending-reservation {
+    border-left: 5px solid #e4ad4c;
+    background: linear-gradient(to right, #fff48f94, #fdfdfd)
+}
+.success-reservation {
+    border-left: 5px solid #0f9840;
+    background: linear-gradient(to right, #d7ffdb, #ffffff);   
+}
 
-@media (min-width: 900px) { /*1040px*/
+.reservation-content>h3, .info-reserve>h3 {
+    margin: .5rem 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+.reservation-content>h4, .info-reserve>h4 {
+    margin: .5rem 0;
+    font-size: 1rem;
+}
+.reservation-content span {
+    font-size: .8rem;
+}
+
+.reservation-data {
+    display: grid;
+    grid-template-columns: 1fr 30px 1fr;
+    margin-top: .5rem;
+    border-top: 1px solid gray;
+}
+.reservation-right {
+    justify-self: right;
+    float: right;
+}
+
+@media (min-width: 900px) {
     .main {
-        grid-template-areas: "menu content";
-        grid-template-columns: 180px 1fr;
-        grid-template-rows: 1fr auto;
+        grid-template-columns: 200px 1fr;
+        grid-template-areas: "menu header" "menu content";
     }
-    .title {
-        font-size: 5rem;
+    /* ---------- MENU ---------- */
+    .icon-menu, .close-menu, .logo-responsive {
+        visibility: hidden;
+    }
+    .menu {
+        transform: translateX(0);
+    }
+    .logo {
+        font-size: 2rem;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+    }
+    
+    /* ---------- DASHBOARD ---------- */
+    .dashboard {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas: "dashboard list";
+        grid-gap: 2rem;
     }
 
-    /* ---------- LOGIN ---------- */
+    .dashboard-list {
+        grid-area: list;
+        position: fixed;
+        right: 0;
+        top: 25%;
+        width: 225px;
+        margin-right: 4rem;
+    }
+
+    /* ---------- LOGIN ---------- /
+    
     .login {
         display: grid;
         grid-template-columns: 1fr 2fr;
         position: relative;
-        background: rebeccapurple;
+        background: #fff;
         border-radius: 20px;
         box-shadow: 0px 0px 10px 2px #000;
-        max-width: 80%;
         margin: auto;
     }
     .login-img {
         grid-column: 1 / 2;
-
-width: 400px;
-height: 500px;
+        background: url('../images/register.jpg') no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 20px;
+        width: 400px;
+        height: 500px;
     }
     .login-form {
         grid-column: 2 / 3;
-        /*position: absolute;
-        width: calc(100% - 2rem);
-        height: calc(100% + 2rem);*/
-        background: #e8e8e8;
+        background: #f0edf8;
         padding: 1rem;
-        margin: -1rem;
+        margin: -1rem 0;
         border-radius: 20px;
         box-shadow: 0px 0px 10px 2px #000;
         display: grid;
@@ -345,228 +414,5 @@ height: 500px;
         background-position: .5rem;
         background-size: 2em;
         box-shadow: 0px 0px 8px 0px #000;
-    }/*
-    input[type = "password"]{
-        background-image: url(https://img.icons8.com/ios/50/000000/unlock-2.png);
-    }
-    .type-user {
-        background-image: url(https://img.icons8.com/ios/50/000000/admin-settings-male.png);
     }*/
-    .login-btn {
-        background: #17a279;
-        border: none;
-        border-radius: .5rem;
-        width: 10rem;
-        height: 3em;
-        box-shadow: 0 1px 10px #000;
-        text-transform: uppercase;
-        font-weight: bold;
-        color: white;
-    }
-    /* Bootstrap custom */
-    .text-md-right {font-size: .8rem;}
-    .sin-datos {
-        height: max-content !important;
-        margin: 0 auto;
-    }
-
-    /* ---------- MENU ---------- */
-    .menu {
-        background: linear-gradient(#f5f5fb, #fdfdfd);
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto;
-        justify-items: center;
-        position: fixed;
-        width: 180px;
-        height: 100%;
-    }
-    .logo {
-        font-size: 2rem;
-        text-transform: uppercase;
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-    }
-    .menu nav {
-        margin-right: -4rem;
-    }
-    .menu nav ul {
-        display: block;
-        text-align: right;
-    }
-
-    /* ---------- CONTENT ---------- /
-    .content-info h1 {
-        font-size: 3rem;
-    }
-    .content-info h2 {
-        font-size: 3rem;
-        text-align: right;
-        padding-right: 2rem;
-    }*/
-
-    /* ---------- ADMIN - HOME ---------- */
-    .main-admin {
-        display: grid;
-        grid-template-columns: 26vw auto;
-        grid-template-rows: auto auto 1fr;
-    }
-    .title-admin {
-        background: #fdfdfd;
-        grid-column: 1 / 3;
-        grid-row: 1 / 2;
-        text-align: center;
-        position: sticky;
-        top: 0;
-        z-index: 1
-    }
-    .subtitle-admin {
-        grid-column: 2 / 3;
-        grid-row: 2 / 3;
-    }
-    .list-admin {
-        grid-column: 1 / 2;
-        grid-row: 2 / 4;
-        background: #fdfdfd;
-    }
-    .content-admin {
-        grid-column: 2 / 3;
-        grid-row: 3 / 4;
-        margin: 1rem;
-
-        display: grid;
-        /*grid-template-rows: auto 1fr;*/
-        grid-template-rows: 1fr 2fr;
-        grid-gap: 2rem;
-    }
-    .title-sticky {
-        background: #fdfdfd;
-        position: sticky;
-        top: 92px;
-        padding: .1px;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        z-index: 1;
-    }
-    .management-admin {
-        padding: 1rem;
-    }
-
-    /* ---------- RESERVATIONS ---------- */
-    .list-scroll {
-        overflow-y: scroll;
-        height: calc(100vh - 8.5rem);
-    }
-    .reservation-content {
-        margin: 1rem;
-        padding: .5rem;
-        border-radius: 4px;  
-        border-left: 5px solid #7f79a7;
-        background: linear-gradient(to right, #eceafb, #fdfdfd);
-    }
-    .cancelled-reservation {
-        border-left: 5px solid #ba3132;
-        background: linear-gradient(to right, #ffd9d9, #fdfdfd);
-    }
-    .pending-reservation {
-        border-left: 5px solid #e4ad4c;
-        background: linear-gradient(to right, #fff48f94, #fdfdfd)
-    }
-    .success-reservation {
-        border-left: 5px solid #0f9840;
-        background: linear-gradient(to right, #d7ffdb, #ffffff);   
-    }
-
-    .reservation-content>h3, .info-reserve>h3 {
-        margin: .5rem 0;
-        font-size: 1rem;
-        text-transform: uppercase;
-    }
-    .reservation-content>h4, .info-reserve>h4 {
-        margin: .5rem 0;
-        font-size: 1rem;
-    }
-    .reservation-content span {
-        font-size: .8rem;
-    }
-    .reservation-time {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-    .reservation-data {
-        display: grid;
-        grid-template-columns: 1fr 30px 1fr;
-        margin-top: .5rem;
-        border-top: 1px solid gray;
-    }
-    .reservation-right {
-        justify-self: right;
-        float: right;
-    }
-
-    /* List of current reserve */
-    .current-reservations {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 1rem;
-    }
-    .content-reserve {
-        display: grid;
-        grid-template-columns: .5fr 1fr;
-        background: #fff;
-        grid-gap: 1rem;
-        border-radius: 10px;
-    }
-    .link-reserve {
-        text-decoration: none;
-        color: #8a8a8a;
-    }
-    /* State of the reservation */
-    .cancelled-reserve {
-        background: linear-gradient(180deg, #ffffff7a 80%, #a3000063 100%);
-        border: 1px solid #a30000fa;
-    }
-    .pending-reserve {
-        background: linear-gradient(180deg, #ffffff7a 80%, #ffeb3b94 100%);
-        border: 1px solid #d07c00;
-    }
-    .reserved {
-        background: linear-gradient(180deg, #ffffff7a 80%, #139a4391 100%);
-        border: 1px solid #074a1f;
-    }
-
-    .img-reserve {
-        width: 85%;
-        height: 60%;
-        object-fit: cover;
-        grid-column: 1 / 2;
-        place-self: center;    
-        clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
-        transition: all 0.3s ease;
-    }
-    .content-reserve:hover .img-reserve {
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-        grid-column: 1 / 3;
-        grid-row: 1 / 3;
-        background: linear-gradient(180deg, #52014845 60%, #52164b6e 90%);
-    }
-    .content-reserve:hover .info-reserve {
-        grid-column: 1 / 3;
-        grid-row: 1 / 3;
-        padding: 1rem;
-        z-index: 2;
-        color: white;
-    }
-
-    .info-reserve {
-        grid-column: 2 / 3;
-        grid-row: 1;
-        padding-right: 1rem;
-        /* View or delete */
-            background: url(icon.png);
-            background-size: cover;
-    }
 }
