@@ -10,7 +10,7 @@
         <h2 class="blue text-uppercase">Elige el club deportivo más cercano</h2>
     </div>
 
-    <div class="col-12 px-5">
+    <div class="col-sm-12 col-md-11 m-auto">
         <div class="mb-5">
             <p>Selecciona tu club preferido para poder ver las instalaciones deportivas que dispone, la calidad de la instalaciones, pistas... </p>
     
@@ -34,7 +34,7 @@
                     <div class="card-img">
                         <img src="https://res.cloudinary.com/playtomic/image/upload/c_limit,w_1600/v1/pro/tenants/da7c8c09-43b3-11e8-8674-52540049669c/launion_0001" alt="">
                     </div>
-                    <div class="dos-grid card-info">
+                    <div class="dos-grid-card card-info">
                         <p class="pl-3"><a class="link" href="{{ route('club.track', $item['id']) }}">{{ $item['name'] }}</a></p>
                         <p class="txt-right">{{ ($item['address'] != '') ? $item['address'] : 'Sin ubicación' }}</p>
                     </div>
@@ -42,7 +42,7 @@
                         L M X Y Z
                     </div>
         
-                    <div class="dos-grid card-actions">
+                    <div class="dos-grid-card card-actions">
                         <div class="d-flex pl-2">
                             {{-- Recorremos los club al cual segimos - tabla pivot --}}
                             @foreach ($follows as $key => $value)

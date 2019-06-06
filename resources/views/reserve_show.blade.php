@@ -11,9 +11,9 @@
         <h2 class="blue text-uppercase">Información de la Reserva</h2>
     </div>
 
-    <div class="col-12 px-5">
+    <div class="col-sm-12 col-md-10 m-auto">
         <div class="dos-grid">
-            <div class="p-5">
+            <div>
                 <table class="table table-hover table-borderless">
                     <tbody>
                         <tr>
@@ -92,14 +92,14 @@
 
                     <div class="row">
                         {{-- Fecha actual... --}}
-                        <form action="{{ route('reserve.update', $show->id) }}" method="POST">
+                        <form action="{{ route('reserve.update', $show->id) }}" method="POST" class="col-sm-12 col-md-8 p-1">
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
-                            <button type='submit' class="btn btn-outline-light" {{ $disabled }}>Cancelar reserva</button>
+                            <button type='submit' class="btn btn-outline-light btn-block" {{ $disabled }}>Cancelar reserva</button>
                         </form>
 
-                        <a href="{{ route('home') }}" class="pl-4">
-                            <button type="button" class="btn btn-outline-danger">
+                        <a href="{{ route('home') }}" class="col-sm-12 col-md-4 p-1">
+                            <button type="button" class="btn btn-outline-danger btn-block">
                                     {{ __('Volver') }}
                             </button>
                         </a>

@@ -7,14 +7,14 @@
 @section('content')
 <section class="text-justify">
     <div class="title">
-        <h2 class="blue text-uppercase">Elige el club deportivo más cercano</h2>
+        <h2 class="blue text-uppercase">Mis reservas</h2>
     </div>
 
-    <div class="dashboard col-12 px-5">
-        <div class="dashboard-content">
+    <div class="dashboard col-sm-12 col-md-11 m-auto">
+        <div class="dashboard-content pb-5">
             <div class="mb-5">
                 <h4 class="text-primary pb-3">Bienvenido {{ Auth::user()->name }}!!!</h4>
-                <p>Aquí tiene un pequeño listado de las reservas actuales o pendientes que tiene a día de hoy.</p>
+                <p>Aquí tiene un pequeño listado de las <b>reservas actuales o pendientes</b> que tiene a <b>día de hoy</b>.</p>
                 <p>Si gustas puedes ver más información o cancelar una reserva puslando en ella.</p>
                 
                 <div class="dos-grid text-center p-3 info">
@@ -30,7 +30,7 @@
             <div class="dos-grid">
                 {{-- Reservas actuales --}}
                 @foreach ($current as $value)
-                    <a href="{{ route('reserve.show', $value->id) }}" class="px-3">
+                    <a href="{{ route('reserve.show', $value->id) }}" class="px-3 col-12">
                         <div class="reservation-content {{ ($value->pivot->status == 2) ? 'pending-reserve pending' : (($value->pivot->status == 1) ? 'reserved success' : 'cancelled-reserve cancelled') }}">
                             <h3>
                                 {{-- Nombre del club que tiene la pista - pivot --}}

@@ -40,11 +40,18 @@ body {
     grid-area: content;
 }
 .dos-grid {
+    display: grid;    
+    justify-items: center;
+}
+.dos-grid-card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
 }
 a {
     text-decoration: none !important;
+}
+h2 {
+    font-size: 1.3rem;
 }
 .red {
     color: #ee544e;
@@ -67,6 +74,19 @@ a {
 .info {
     background: #f4f4fc;
     border-radius: 5px;
+}
+.font-title {
+    font-size: 1rem;
+}
+button {
+    outline: none !important;
+}
+.btn-crud {
+    background: none;
+    border: none;
+}
+.nowgrap {
+    white-space: nowrap;
 }
 
 /* ---------- MODAL - CLUB ---------- */
@@ -148,7 +168,7 @@ a {
     position: sticky;
     top: 60px;
     background: #fdfdfd;
-    padding: 1rem 3rem;
+    padding: 1rem 1rem;
     z-index: 50;
 }
 /* ---------- HOME - STEPS ---------- */
@@ -228,7 +248,7 @@ a {
 /* ---------- CARD CLUB ---------- */
 .main-club {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
 }
 .card-club {
     height: 200px;
@@ -302,10 +322,11 @@ a {
 
 /* ---------- RESERVATIONS ---------- */
 .reserve-img {
-    background: linear-gradient(rgba(0, 0, 0, 0.72),rgba(0, 0, 0, 0.5)), url('../images/pista.jpg') no-repeat;
     background: linear-gradient(rgba(0, 0, 0, 0.81),rgba(5, 28, 47, 0.73)), url('../images/pista.jpg') no-repeat;
     background-position: center;
     background-size: 100% 100%;
+    width: 100%;
+    padding: 2rem;
 }
 .list-scroll {
     overflow-y: scroll;
@@ -381,10 +402,30 @@ a {
 
 
 @media (min-width: 900px) {
+    h2 {
+        font-size: 2rem;
+    }
+    .title {
+        padding: 1rem 3.5rem;
+    }
+    .font-title {
+        font-size: 3rem;
+        font-weight: 300;
+    }
     .main {
         grid-template-columns: 200px 1fr;
         grid-template-areas: "menu header" "menu content";
     }
+    .dos-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: unset;
+    }
+    .main-club {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
     /* ---------- MENU ---------- */
     .icon-menu, .close-menu, .logo-responsive {
         visibility: hidden;
