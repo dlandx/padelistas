@@ -88,6 +88,14 @@ button {
 .nowgrap {
     white-space: nowrap;
 }
+.img-user {
+    background: linear-gradient(rgba(0, 0, 0, 0.87),rgba(2, 11, 21, 0.84)), url('../images/user.jpg') no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    width: 100%;
+    padding: 2rem;
+}
+
 
 /* ---------- MODAL - CLUB ---------- */
 .modal-days {
@@ -105,7 +113,7 @@ button {
 .icon-menu {
     cursor: pointer;
     padding: 0 1rem;
-    background: rebeccapurple;
+    background: #003b7b;
 }
 
 .menu {
@@ -149,10 +157,24 @@ button {
 }
 .menu nav ul li:hover {
     cursor: pointer;
-    background: red;
+    background: #e6e6ec;
 }
 .menu nav ul li:hover a>svg {
     transform: rotate(90deg);
+}
+
+.nav-item  {
+    list-style-type: none !important;
+}
+
+.admin {
+    list-style-type: none !important;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+.register {
+    background-image: linear-gradient(to right, #0c394f, #286a8a);
+    color: #f4f4f5;
 }
 
 /* ---------- CONTENT ---------- */
@@ -179,7 +201,7 @@ button {
     margin-right: -4rem;
 }
 .step-img {
-    background: url('https://i.pinimg.com/originals/cc/24/4d/cc244d1e81f6b97ebb5404ce2924b648.jpg') no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.56),rgba(1, 19, 10, 0.92)), url('../images/home.jpg') no-repeat;
     background-position: center;
     background-size: 100vh 100%;
     height: 100%;

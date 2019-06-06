@@ -52,12 +52,14 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+        $club = ClubTrack::find($request->input('club_track_id'));
         // Obtener los datos enviados por formulario...
         $start = $request->input('date');
         $rate = Rate::find($request->input('price'));
         $duration = $rate->duration;
         $price = $rate->price;
-        $opponent = ($request->input('opponent') != null) ? 1 : 0;
+        $opponent = ($request->input('opponent') != null) ? 1 : 0; // 1 = Busca oponente...
+        $color = ($request->input('opponent') != null) ? "#f8d254" : "#65a7ec";
 
         // Obtenemos de la duración elegida - la hora/minuto...
         $end_hour = date('H', strtotime($duration));
@@ -72,6 +74,7 @@ class ReservationController extends Controller
         $reserve->start = $start;
         $reserve->end = $end;
         $reserve->price = $price;
+        $reserve->color = $color;
         $reserve->duration = $duration;
         $reserve->players = $request->input('player');
         $reserve->full = $opponent; // Si busca oponente/pareja...
@@ -82,6 +85,7 @@ class ReservationController extends Controller
         // Insertar en la tabla pivot...
         $reservation = Reservation::find($reserve->id);
         $reservation->users()->attach(1, ['status' => 2, 'pay' => 0, 'user_id' => Auth::user()->id, 'reservation_id' => $reserve->id]);
+        return redirect()->route('club.track', [$club->club_id]);
     }
 
     /**
@@ -137,7 +141,7 @@ class ReservationController extends Controller
                 // Si es 0 -> Obtenemos el estado anterior...
                 $valor = ($estado == 2 || $estado == 1) ? 0 : $last;
 
-                // Si cambia de 2 a 1....??
+                // Quitar de la pivot...
 
                 // Actualizamos en la tabla pivot el campo status...
                 Auth::user()->reservations()->wherePivot('id','=',$value->pivot->id)->update(['status' => $valor, 'cancelled' => $estado, 'waiting_list' => $espera]);

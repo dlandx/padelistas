@@ -113,9 +113,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // lista de clubes que sigue el user...
         $users = User::find($id);
-        $users->delete();
+        foreach ($users->clubs as $value) {
+            if (Auth::user()->club->id == $value->id) {
+                echo $value->pivot;
+                // Eliminamos de la pivot su registro = 'ya no nos sigue...'
+                $users->clubs()->wherePivot('id','=',$value->pivot->id)->detach();
+            }
+        }
         return redirect()->route('user.index');
     }
 }

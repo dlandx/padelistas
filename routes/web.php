@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/club', 'HomeController@follow')->name('home.club');
 Route::get('/home/follow/{club}/{id}', 'HomeController@update')->name('home.follow');
 Route::resource('/reserve', 'ReservationController');
+Route::post('/club/track/add', 'ViewClubTrackController@store')->name('reserve.add')->middleware('auth');
 
 // Grupo para el admin
 Route::prefix('admin')->group(function() {
@@ -37,6 +38,8 @@ Route::prefix('admin')->group(function() {
 
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/list/{id}', 'AdminController@show')->name('admin.list');
+    Route::get('/reserve/{id}', 'AdminController@reservation')->name('admin.reserve');
+    Route::get('/cancelled/{id}/{user}', 'AdminController@reservation_cancelled')->name('admin.cancelled');
     
     Route::resource('/club/track', 'ClubTrackController');
     Route::resource('/user', 'UserController');

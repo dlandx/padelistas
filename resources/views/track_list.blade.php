@@ -17,11 +17,12 @@
         }
 
         /* Style modal -> kylefox jquery-modal */
-        #modal {
+        #modal, #show {
             display: none;
             height: auto;
             overflow: unset;
         }
+        #show {max-width: 700px;}
         .blocker {
             z-index: 100 !important;
         }
@@ -155,7 +156,7 @@
             </div>
         </div>
 
-        <!-- Modal - kylefox jquery-modal [ https://github.com/kylefox/jquery-modal ] -->
+        <!-- Modal crear reserva - kylefox jquery-modal [ https://github.com/kylefox/jquery-modal ] -->
         <div id="modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -256,6 +257,100 @@
                 </form>
             </div>
         </div>  
+
+        <!-- Modal ver reserva - kylefox jquery-modal [ https://github.com/kylefox/jquery-modal ] -->
+        <div id="show">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">RESERVA</h2>
+                </div>
+                    
+                <form action="{{ route('reserve.add') }}" method="POST">
+                    <div class="modal-body">
+                        @csrf                 
+                        <div class="form-group row mb-2">
+                            <label for="show-status" class="col-md-4 col-form-label text-md-right">{{ __('Estado') }}</label>
+            
+                            <div class="col-md-6">
+                                <input id="show-status" type="text" class="form-control" name="show-status" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="show-start" class="col-md-4 col-form-label text-md-right">{{ __('Comienza') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="show-start" type="text" class="form-control" name="show-start" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="show-end" class="col-md-4 col-form-label text-md-right">{{ __('Finaliza') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="show-end" type="text" class="form-control" name="show-end" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row mb-2">
+                            <label for="show-duration" class="col-md-4 col-form-label text-md-right">{{ __('Duración') }}</label>
+            
+                            <div class="col-md-6">
+                                <input id="show-duration" type="text" class="form-control" name="show-duration" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label for="show-price" class="col-md-4 col-form-label text-md-right">{{ __('Precio') }}</label>
+            
+                            <div class="col-md-6">
+                                <input id="show-price" type="text" class="form-control" name="show-price" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label for="show-player" class="col-md-4 col-form-label text-md-right">{{ __('Jugadores actuales') }}</label>
+            
+                            <div class="col-md-6">
+                                <input id="show-player" type="text" class="form-control" name="show-player" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label for="show-search" class="col-md-4 col-form-label text-md-right">{{ __('Jugadores buscar') }}</label>
+            
+                            <div class="col-md-6">
+                                <input id="show-search" type="text" class="form-control" name="show-search" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-sm-12 py-3 m-auto">
+                            <table class="table" id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Nivel</th>
+                                        <th scope="col">Asiste</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                             
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <input id="show-id" type="hidden" class="form-control" name="show-id" readonly>    
+                    </div>
+
+                    <div class="modal-footer">
+                        @if(Auth::check())
+                            <button type="submit" id="btn-user" class="btn btn-primary">Reservar</button>
+                        @else
+                            <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+        </div>  
     </div>
 </section>
 @endsection
@@ -272,8 +367,10 @@
             $('#opponent').on('change',function(){
                 if (this.checked) {
                     $("#parejas").show();
+                    $("#couple").attr("required", true);
                 } else {
                     $("#parejas").hide();
+                    $("#couple").attr("required", false);
                 }  
             });
 
@@ -283,7 +380,7 @@
                 $('html, body').animate({
                     scrollTop: $(cal).offset().top
                 }, 2000);
-            });
+            });            
         });
     </script>
 

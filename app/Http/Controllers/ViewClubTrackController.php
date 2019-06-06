@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 //use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 //use \MaddHatter\LaravelFullcalendar\Event;
 use Calendar; // Alias of Fullcalenda of ServiceProvider...
-use DateTime;
+use DateTime, DateTimeZone;
 use App\Club;
 use App\ClubTrack;
 use App\Reservation;
 use App\Rate;
 use App\Size;
+use Auth;
 
 class ViewClubTrackController extends Controller
 {
@@ -22,95 +23,9 @@ class ViewClubTrackController extends Controller
      */
     public function index($id)
     {
-/*
-        //$tracks = ClubTrack::all()->toArray();
-        //$tracks = ClubTrack::select(['id', 'name'])->get()->toArray();
-        $tracks = ClubTrack::select(['id', 'title'])->get();
-        $reservations = Reservation::all();
-
-
-        //$invoice_date =  (new DateTime('Europe/Madrid'))->format('Y-m-d\TH:i');
-        $invoice_date =  (new DateTime('2019-05-15 15:00:00'))->format('Y-m-d\TH:i');
-
-
-        $events = [];
-        foreach ($reservations as $value) {
-            // Add reservations in events of the full calendar...
-            $events[] = Calendar::event(
-                'dd',// Title
-                false,// Full date
-                (new DateTime($value->date))->format('Y-m-d\TH:i'), // Start time
-                (new DateTime("2019-05-19 15:00:00"))->format('Y-m-d\TH:i'),// End time 
-                $value->id, // ID
-                ['resourceId' => $value->club_track_id] // Options event - rooms
-            );
-        }
-
-
-
-    //date: 2019-05-13 08:00:00.0 UTC (+00:00)
-        $events[] = Calendar::event(
-            'Event One', //event title
-            false, //full day event?
-            '2019-05-13T0800', //start time (you can also use Carbon instead of DateTime)
-            '2019-05-13T1200', //end time (you can also use Carbon instead of DateTime)
-            0, //optionally, you can specify an event ID
-            ['resourceId' => 2]
-        );    
-        
-        
-        $events[] = Calendar::event(
-            "Valentine's Day", //event title
-            false, //full day event?
-            new \DateTime('2019-05-13T2200'), //start time (you can also use Carbon instead of DateTime)
-            new \DateTime('2019-05-14T0400'), //end time (you can also use Carbon instead of DateTime)
-            'stringEventId', //optionally, you can specify an event ID
-            ['resourceId' => 1]
-        );
-
-     
-        // Retornar un array...
-        $data = [];
-        $map = $tracks->map(function($items){
-            $data['id'] = $items->id;
-            $data['title'] = $items->name;
-            return $data;
-        });
-
-        $calendar = \Calendar::addEvents($events) //add an array with addEvents         
-            ->setOptions([
-                /*'resourceId' => 2,                
-                'visibleRange'=> [
-                    'start'=> '2019-05-12',
-                    'end'=> '2019-05-13'
-                ],
-                'resourceAreaWidth' => '25%',
-                /* /
-                'defaultView' => 'agendaDay',
-                'resourceLabelText' => 'Rooms',
-                'header' => [
-                    'left'=> 'agendaDay',
-                    'center' => 'title',
-                ],
-                'resources' => $map->toArray(),
-
-                'weekends' => false, //Fin de seamana deshabilitado
-                //'hiddenDays' => [ 2, 4 ], // Ocultar otros dias - como el finde
-                
-                'businessHours' => [
-                    'start' => '9:00',
-                    'end' => '22:00',
-                    //'dow' => [ 1, 2, 3, 4, 5]
-                ]
-
-            ]);
-*/
-
         // Obtenemos todas las pistas que tenga el club elegido...
-        //$tracks = ClubTrack::where('club_id','=', $club)->select(['id', 'title', 'businessHours', 'size_id'])->get();
         $tracks = ClubTrack::where('club_id','=', $id)->get();
         $club = Club::find($id);
-//        $club = ($tracks->isEmpty()) ? '' : $tracks[0]->club; // Información del club...
         $sizes = json_encode(Size::select(['id', 'name', 'description'])->get()); // Obtenemos todos los tamaños de las pistas...
         $rates = json_encode(Rate::select(['id', 'duration', 'price', 'club_track_id'])->get()); // Precios de la pista...
         $reservations = Reservation::all();
@@ -118,12 +33,26 @@ class ViewClubTrackController extends Controller
         $horario_club = []; // Horario del club...
         $start_time = $club->start_time;
         $end_time = $club->end_time;
-        
+        $fecha_actual = (new DateTime('now', new DateTimeZone('Europe/Madrid') ))->format('Y-m-d H:i:s'); // Fecha actual...
+        $users = [];
+        $reservas_actual = [];
+ 
         // Si hay reservas en la BBDD, las añadimos al evento del calendario...
         foreach ($reservations as $value) {
+            // Si la reserva es mayor a la fecha/hora actual...
+            if ($value->start > $fecha_actual) {
+                // Usuario a la que pertenece la reserva...
+                foreach ($value->users as $item) {
+                    $users[] =  $item;
+                }
+                $reservas_actual[] = $value;
+            }
+
+            //count($value->users) -> nº usuarios que se han unido...
+            $estado = ($value->full == 0) ? "Completa" : "Parcial -  ".(count($value->users)-1)."/$value->search_players jugadores";
             // Add reservations in events of the full calendar...
             $events[] = Calendar::event(
-                'dd',// Title
+                $estado,// Title
                 false,// Full date
                 (new DateTime($value->start))->format('Y-m-d\TH:i'), // Start time
                 (new DateTime($value->end))->format('Y-m-d\TH:i'),// End time 
@@ -174,7 +103,6 @@ class ViewClubTrackController extends Controller
             'allDaySlot' => false, // Todo el día quitado...
             //'navLinks' => true, https://codepen.io/LeonardoXu/pen/BJayaY
 
-
         ])->setCallbacks([
             // Primera vez antes de cargar el fullcalendar...
             'viewRender' => 'function() {
@@ -182,17 +110,75 @@ class ViewClubTrackController extends Controller
             }',
 
             'resourceRender' => "function(renderInfo) {
-                if (renderInfo === undefined) {
+                if (renderInfo == undefined) {
                     console.log('Con pistas...');
                 } else {
-                    
-                
-                //alert('Callbacks! ');
+                    //alert('Callbacks! ');
                 }
             }",
 
             // Click en el evento...
-            'eventClick' => 'function(event) { title= event.title; alert("hi "+title)}',
+            'eventClick' => "function(event) {
+                var color = (event.color == '#65a7ec') ? 'Reserva completa' : 'Reserva pendiente';
+                $('#show-status').val(color);                
+                $('#show-start').val(event.start.format('YYYY-MM-DD HH:mm'));
+                $('#show-end').val(event.end.format('YYYY-MM-DD HH:mm'));
+                
+                var users =  ".json_encode($users)."; // Obtenemos los users
+                var reserves = ".json_encode($reservas_actual)."; // Reservas actuales
+                var total = 0; // jugadores a buscar
+
+                // Información de la reserva elegida...
+                reserves.forEach(function(value){
+                    if(event.id == value.id){
+                        $('#show-duration').val(value.duration);
+                        $('#show-price').val(value.price);
+                        $('#show-player').val(value.players);                        
+                        $('#show-search').val(value.search_players);
+                        total = value.search_players;
+                    }
+                });
+
+                // Informacion de los jugadores...
+                var estas = false;
+                var user = ".Auth::user()->id.";
+                var cont = 0;
+                
+                // Para controlar que si sale del modal - elimine las row... 
+                $('#show').on($.modal.BEFORE_CLOSE, function(event, modal) {
+                    $('.filastabla').remove();
+                });
+
+                users.forEach(function(value){
+                    if(event.id == value.pivot.reservation_id){
+                        // si el usuario esta en la pivot, lo mostramos...
+                        if(value.pivot.user_id == value.id && value.pivot.cancelled != 1) {
+                            $('#users-table>tbody').append('<tr class=filastabla><td>'+value.username+'</td><td>'+value.level+'</td><td>'+value.pivot.status+'</td></tr>');                            
+
+                            if(value.pivot.user_id == user){
+                                estas = true;
+                            }
+                        } else {
+                            if(value.pivot.cancelled == 1 && value.pivot.user_id == user){
+                                estas = true;
+                            }
+                        } 
+                        cont++;
+                    }
+                });
+console.log(cont);
+                // Si la reserva ya consiguio los jugadores buscados...
+                if(cont > total) {
+                    estas = true;
+                }
+
+                if(estas) {
+                    // Si estas en la listas deshabilitamos el BTN
+                    $('#btn-user').attr('disabled','disabled');
+                }                
+                $('#show-id').val(event.id);
+                $('#show').modal(); // Mostramos modal..
+            }",
             
             // Elegir manteniendo en el calendar - add event temp...
             //'editable' => true,
@@ -292,14 +278,6 @@ class ViewClubTrackController extends Controller
 
         ]);
 
-                
-        $x = Rate::find(1);
-        $y = ClubTrack::find(2);
-        //dd($x->club_tracks);
-        //dd($y->rates);
-
-
-        //return view('track_list_cal', compact('calendar'));
         return view('track_list', compact('calendar', 'club'));
     }
 
@@ -322,6 +300,24 @@ class ViewClubTrackController extends Controller
     public function store(Request $request)
     {
         //
+        $reserva = $request->input('show-id');
+        $apuntado = false;
+
+        // Obtenemos todas las reservas del user...
+        foreach (Auth::user()->reservations as $value) {
+            if($value->pivot->id == $reserva) {
+                $apuntado = true; // Ya esta apuntado...
+            }
+        }
+
+
+        // Si no esta aputado, lo apuntamos...
+        if($apuntado == false) {
+            // Status 2=pendiente, 1=confirmado, 0=cancelado...
+            Auth::user()->reservations()->attach(1, ['status' => 1, 'pay' => 0, 'user_id' => Auth::user()->id, 'reservation_id' => $reserva]);
+        }
+
+        return redirect()->route('home');
     }
 
     /**

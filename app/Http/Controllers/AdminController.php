@@ -71,4 +71,44 @@ class AdminController extends Controller
 
         return view('waiting_list', compact('show_list', 'club_tracks'));
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reservation($id)
+    {
+        // Mostrar informacion de la reserva seleccionada...
+        $show = Reservation::find($id);
+        $club_tracks = ClubTrack::find($show->club_track_id); // Info del club
+
+        $fecha_actual = (new DateTime('now', new DateTimeZone('Europe/Madrid') ))->format('Y-m-d H:i:s'); // Fecha actual...
+        $disabled = ($show->start < $fecha_actual)  ? 'disabled' : ''; // Si la fecha ya ha pasado no dejamos cancelar...
+        return view('reservation_show', compact("show", "club_tracks", "disabled"));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reservation_cancelled($id, $user)
+    {
+        // Actualizar la reserva...
+        $status = Reservation::find($id);
+
+        foreach ($status->users as $value) {
+            // Reservas del user...
+            //echo $value->pivot->user_id;
+            if ($value->pivot->user_id == $user) {
+                // concegir el id del user pasando (user_show) - el id del usario a las reservas.
+                // Al ver una reserva (reservation_show) obtener el id y pasar por btn cancelar... 
+            }
+        }
+        dd();
+        return redirect()->route('home');
+    }
 }

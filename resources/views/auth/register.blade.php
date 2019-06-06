@@ -6,7 +6,7 @@
 
 @section('content')
 <section class="center">
-    <form method="POST" action="{{ route('register') }}" class="was-validated needs-validation w-75 modal-content p-4" validate>
+    <form method="POST" action="{{ route('register') }}" class="was-validated needs-validation w-75 modal-content p-4 register" validate>
         <div class="modal-header">
             <h2 class="m-auto text-uppercase modal-title">{{ __('Registrar usuario') }}</h2>
         </div>
@@ -196,7 +196,7 @@
         
         <div class="modal-footer">
             <a href="{{ route('login') }}" class="link">
-                <button type="button" class="btn btn-outline-secondary">Login</button>
+                <button type="button" class="btn btn-outline-light">Login</button>
             </a>
             <button type="submit" class="btn btn-success">{{ __('Registrarse') }}</button>
         </div>

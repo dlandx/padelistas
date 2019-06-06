@@ -5,6 +5,14 @@
 @endsection
 
 @section('content')
+<section class="text-justify">
+    <div class="title">
+        <h2 class="blue text-uppercase font-title">Gestión de usuarios del - {{ Auth::user()->club->name }}</h2>
+    </div>
+
+    <div class="col-sm-12 col-md-11 m-auto">
+</section>
+
 <section>
     <div class="content-info">
         <div class="title-admin p-4 text-uppercase">

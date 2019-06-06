@@ -7,7 +7,7 @@
 @section('content')
 <section class="text-justify">
     <div class="title">
-        <h2 class="blue text-uppercase font-title">Gestión de usuarios del centro deportivo {{ Auth::user()->club->name }}</h2>
+        <h2 class="blue text-uppercase font-title">Gestión de usuarios del - {{ Auth::user()->club->name }}</h2>
     </div>
 
     <div class="col-sm-12 col-md-11 m-auto">
@@ -70,6 +70,10 @@
 
         <div class="table-responsive py-2">
             <div class="alert alert-warning my-5" role="alert">Lista de usuario que han dejado de seguir al club...</div>
+
+            @empty($unfollows)
+                <div class="alert alert-primary my-5" role="alert">Vaya a los usuario les gusta nuestro club</div>
+            @else
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -105,13 +109,14 @@
                                 <form action="{{ route('user.update', $item->id) }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE">
-                                    <button type='submit' class="btn-crud pt-1" value='{{ $item->id }}'><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 192 192" style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,192v-192h192v192z" fill="none"></path><g fill="#c23b2c"><path d="M34.56,15.36c-10.55814,0 -19.2,8.64186 -19.2,19.2v122.88c0,10.55814 8.64186,19.2 19.2,19.2h122.88c10.55814,0 19.2,-8.64186 19.2,-19.2v-122.88c0,-10.55814 -8.64186,-19.2 -19.2,-19.2zM34.56,23.04h122.88c6.40698,0 11.52,5.11302 11.52,11.52v122.88c0,6.40698 -5.11302,11.52 -11.52,11.52h-122.88c-6.40698,0 -11.52,-5.11302 -11.52,-11.52v-122.88c0,-6.40698 5.11302,-11.52 11.52,-11.52zM64.155,58.725l-5.43,5.43l31.845,31.845l-31.845,31.845l5.43,5.43l31.845,-31.845l31.845,31.845l5.43,-5.43l-31.845,-31.845l31.845,-31.845l-5.43,-5.43l-31.845,31.845z"></path></g></g></svg></button>
+                                    <button type='submit' onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn-crud pt-1" value='{{ $item->id }}'><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 192 192" style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,192v-192h192v192z" fill="none"></path><g fill="#c23b2c"><path d="M34.56,15.36c-10.55814,0 -19.2,8.64186 -19.2,19.2v122.88c0,10.55814 8.64186,19.2 19.2,19.2h122.88c10.55814,0 19.2,-8.64186 19.2,-19.2v-122.88c0,-10.55814 -8.64186,-19.2 -19.2,-19.2zM34.56,23.04h122.88c6.40698,0 11.52,5.11302 11.52,11.52v122.88c0,6.40698 -5.11302,11.52 -11.52,11.52h-122.88c-6.40698,0 -11.52,-5.11302 -11.52,-11.52v-122.88c0,-6.40698 5.11302,-11.52 11.52,-11.52zM64.155,58.725l-5.43,5.43l31.845,31.845l-31.845,31.845l5.43,5.43l31.845,-31.845l31.845,31.845l5.43,-5.43l-31.845,-31.845l31.845,-31.845l-5.43,-5.43l-31.845,31.845z"></path></g></g></svg></button>
                                 </form>
                             </td>                                     
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            @endempty
         </div>
     </div>
 </section>
