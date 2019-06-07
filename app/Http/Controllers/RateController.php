@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rate;
 
 class RateController extends Controller
 {
@@ -35,6 +36,8 @@ class RateController extends Controller
     public function store(Request $request)
     {
         //
+        Rate::create($request->all());
+        return redirect()->route('track.show', [$request->input('club_track_id')]);
     }
 
     /**

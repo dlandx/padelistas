@@ -108,7 +108,7 @@ class AdminController extends Controller
                 // Al ver una reserva (reservation_show) obtener el id y pasar por btn cancelar... 
             }
         }
-        dd();
+        
         return redirect()->route('home');
     }
 }

@@ -7,21 +7,13 @@
 @section('content')
 <section class="text-justify">
     <div class="title">
-        <h2 class="blue text-uppercase font-title">Gestión de usuarios del - {{ Auth::user()->club->name }}</h2>
+        <h2 class="blue text-uppercase font-title">Información de la pista - {{ $show->title }}</h2>
     </div>
 
     <div class="col-sm-12 col-md-11 m-auto">
-</section>
-
-<section>
-    <div class="content-info">
-        <div class="title-admin p-4 text-uppercase">
-            <h2>Información de la pista - {{ $show->title }}</h2>
-        </div>
-
-        <div class="show-track p-4">
-            <div class="track-content">
-                <h3 class="title">{{ $show->title }}</h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-8 mb-4">
+                <h2 class="font-title">{{ $show->title }}</h2>
 
                 <div class="my-4">
                     @if ($show->description == '')
@@ -35,9 +27,84 @@
                     <button type="submit" class="btn btn-outline-warning btn-lg"  value='{{ $show->id }}'>Actualizar pista</button>
                 </form>
 
-                <div></div>
+                <div>
+                    <div class="alert alert-danger" role="alert"><b>Importante!!!</b> añada los precios que va a tener la pista por la horas usada...</div>
+                    <a href="#" data-toggle="modal" data-target="#rates" class="center">
+                        <button type="submit" class="btn btn-outline-success btn-lg"  value='{{ $show->id }}'>Añadir precios a la pista</button>
+                    </a>
+                </div>
+                
+                {{-- Ventana modal para el club --}}
+                <div class="modal fade" id="rates" tabindex="-1" role="dialog" aria-labelledby="ratesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ratesModalLabel">{{ __('Precio para la pista') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+            
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <label for="track_type_id" class="col-md-4 col-form-label text-md-right">{{ __('Precios actuales') }}</label>     
+                                    <div class="col-md-6">         
+                                        <select name="track_type_id" class="form-control">
+                                            @foreach ($show->rates as $item)
+                                                <option value="{{ $item->id }}" >{{ $item->duration }} - {{ $item->price }}€</option>
+                                            @endforeach                                
+                                        </select>
+                                    </div>  
+                                </div>
+
+                                <form method="POST" action="{{ route('rate.store') }}">
+                                    @csrf            
+                                    <div class="form-group row">
+                                        <label for="duration" class="col-md-4 col-form-label text-md-right">{{ __('Duración') }}</label>
+            
+                                        <div class="col-md-6">
+                                            <input id="duration" type="time" class="form-control{{ $errors->has('duration') ? ' is-invalid' : '' }}" name="duration" value="{{ old('duration') }}" required autofocus>
+            
+                                            @if ($errors->has('duration'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('duration') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Precio') }}</label>
+            
+                                        <div class="col-md-6">
+                                            <input id="price" type="text" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" required autocomplete="price" autofocus placeholder="Precio 00.00">
+            
+                                            @if ($errors->has('price'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('price') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+            
+                                    <input type="hidden" name="club_track_id" value="{{ $show->id }}">
+
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" id="signUp" class="btn btn-outline-dark">
+                                                {{ __('Registrar precio') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="track-sidebar">
+
+            <div class="col-sm-12 col-md-4">
                 <div class="jumbotron jumbotron-fluid p-2">
                     <div class="container pt-2">
                         <div class="d-flex">
@@ -90,8 +157,8 @@
                         <p>{{ $show->size->name }}</p>
                     </div>
                 </div>
-            </div>            
-        </div>
+            </div>
+        </div>        
     </div>
 </section>
 @endsection

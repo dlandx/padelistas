@@ -141,7 +141,7 @@ class ViewClubTrackController extends Controller
 
                 // Informacion de los jugadores...
                 var estas = false;
-                var user = ".Auth::user()->id.";
+                var user = ".(Auth::user()->id ?? 0).";
                 var cont = 0;
                 
                 // Para controlar que si sale del modal - elimine las row... 

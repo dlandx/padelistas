@@ -43,6 +43,7 @@ Route::prefix('admin')->group(function() {
     
     Route::resource('/club/track', 'ClubTrackController');
     Route::resource('/user', 'UserController');
+    Route::resource('/rate', 'RateController');
 });
 
 
