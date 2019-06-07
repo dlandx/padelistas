@@ -286,10 +286,6 @@ input[id^="check-club"]:checked + label + .step-hidden, input[id^="check-reserve
     grid-template-columns: 2fr 1fr;
     grid-gap: 3rem;
 }
-.track-content {
-}
-.track-sidebar {
-}
 /* ---------- END - SHOW TRACK ---------- */
 
 /* ---------- RESERVATIONS ---------- */

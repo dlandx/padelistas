@@ -50,7 +50,7 @@
                             {{-- Nombre de la pista --}}
                             <h4>
                                 @foreach (Auth::user()->club->tracks as $value)
-                                    {{ ($item->club_track_id == $value->id) ? $value->title : 'Pista sin nombre' }}
+                                    {{ ($item->club_track_id == $value->id) ? $value->title : '' }}
                                 @endforeach
                             </h4>
                             <div class="dos-grid">
@@ -62,11 +62,10 @@
                                 <span class="{{ ($item->pivot->status == 2) ? 'pending' : (($item->pivot->status == 1) ? 'success' : 'cancelled') }}">{{ ($item->pivot->status == 2) ? 'Pendiente' : (($item->pivot->status == 1) ? 'Confirmado' : 'Cancelado') }}</span>
                                 <span>
                                     {{-- Tipo de pista - pivot --}}
-                                    {{ $item}}
                                 </span>
                                 <span class="reservation-right">
                                     {{-- Nº de usuario que han realizado la reserva --}}
-                                    {{ count($item->users) }}
+                                    Judadores: {{ count($item->users) }}
                                 </span>
                             </div>            
                         </div>

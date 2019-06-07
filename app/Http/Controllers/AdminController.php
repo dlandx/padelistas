@@ -66,10 +66,10 @@ class AdminController extends Controller
     public function show($id)
     {
         // Obtener los datos de la lista de espera...
-        $show_list = Reservation::find($id);
-        $club_tracks = ClubTrack::find($show_list->club_track_id); // Info del club
+        $show = Reservation::find($id);
+        $club_tracks = ClubTrack::find($show->club_track_id); // Info del club
 
-        return view('waiting_list', compact('show_list', 'club_tracks'));
+        return view('waiting_list', compact('show', 'club_tracks'));
     }
 
     /**
