@@ -47,9 +47,16 @@ class ViewClubTrackController extends Controller
                 }
                 $reservas_actual[] = $value;
             }
-
+// ADD
+            $cancelled = 0; 
+            foreach ($value->users as $item) {
+                // Si el usuario cancelo la reserva no contar....
+                $cancelled = ($item->pivot->cancelled != null) ? 0: count($value->users)-1;
+            }
+// 
             //count($value->users) -> nº usuarios que se han unido...
-            $estado = ($value->full == 0) ? "Completa" : "Parcial -  ".(count($value->users)-1)."/$value->search_players jugadores";
+            //$estado = ($value->full == 0) ? "Completa" : "Parcial -  ".(count($value->users)-1)."/$value->search_players jugadores";
+            $estado = ($value->full == 0) ? "Completa" : "Parcial -  ".$cancelled."/$value->search_players jugadores"; //
             // Add reservations in events of the full calendar...
             $events[] = Calendar::event(
                 $estado,// Title
@@ -166,7 +173,7 @@ class ViewClubTrackController extends Controller
                         cont++;
                     }
                 });
-console.log(cont);
+                console.log(cont);
                 // Si la reserva ya consiguio los jugadores buscados...
                 if(cont > total) {
                     estas = true;
@@ -241,8 +248,8 @@ console.log(cont);
 
                                 var minimo = array.sort(); // Si hay varias diferencias obtener la menor...
                                 var disabled_next = (minimo.length != 0 && minimo < item.duration) ? 'disabled=disabled' : '';
-// Controlar disables -> club 1 - p3...
-// Validar que la pista no sea mayor al club hora...
+                // Controlar disables -> club 1 - p3...
+                // Validar que la pista no sea mayor al club hora...
                                 $('#price').append('<option value='+item.id+' '+disabled+' '+disabled_next+'>'+item.price+' €  - ( '+item.duration+' )</option>');
                             }
                         });
@@ -300,6 +307,7 @@ console.log(cont);
     public function store(Request $request)
     {
         //
+
         $reserva = $request->input('show-id');
         $apuntado = false;
 
@@ -316,7 +324,27 @@ console.log(cont);
             // Status 2=pendiente, 1=confirmado, 0=cancelado...
             Auth::user()->reservations()->attach(1, ['status' => 1, 'pay' => 0, 'user_id' => Auth::user()->id, 'reservation_id' => $reserva]);
         }
-
+       
+        $reservation = Reservation::find($reserva); // Obtenemos la reserva...
+        $busca = $reservation->search_players; // El nº de jugadores que busca...
+        $players = count($reservation->users)-1;
+        // Si su ha completado actualizamos la reserva...
+        if ($busca <= $players){
+            // Actualizamos...
+            $reservation->color = '#65a7ec';
+            $reservation->update($reservation->toArray());
+        }
+/*
+        foreach ($reservation->users as $value) {
+            if ($value->id == Auth::user()->id){
+                if($value->pivot->cancelled != null) {
+                    // Actualizamos...
+                    $reservation->color = '#f8d254';
+                    $reservation->update($reservation->toArray());
+                }
+            }
+        }
+*/
         return redirect()->route('home');
     }
 
@@ -328,7 +356,9 @@ console.log(cont);
      */
     public function show($id)
     {
-        //
+        // Mostrar informacion de la pista seleccionada...
+        $show = ClubTrack::find($id);
+        return view('track_show_user', compact("show"));
     }
 
     /**

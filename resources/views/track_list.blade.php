@@ -91,7 +91,7 @@
 
                         <ul class="list-group pt-3 col-sm-12 col-md-8">
                             @foreach ($club->tracks as $item)
-                                <a href="{{ $item->id }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $item->title }}<span class="badge badge-primary badge-pill">{{ $item->track_type->name }}</span></a>
+                                <a href="{{ route('track.show.user', $item->id) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $item->title }}<span class="badge badge-primary badge-pill">{{ $item->track_type->name }}</span></a>
                             @endforeach
                         </ul>
                     </div>

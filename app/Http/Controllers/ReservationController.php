@@ -83,8 +83,9 @@ class ReservationController extends Controller
         $reserve->save(); // Insertamos en la BBDD...
 
         // Insertar en la tabla pivot...
+        $status = ($opponent == 0) ? 1 : 2;
         $reservation = Reservation::find($reserve->id);
-        $reservation->users()->attach(1, ['status' => 2, 'pay' => 0, 'user_id' => Auth::user()->id, 'reservation_id' => $reserve->id]);
+        $reservation->users()->attach(1, ['status' => $status, 'pay' => 0, 'user_id' => Auth::user()->id, 'reservation_id' => $reserve->id]);
         return redirect()->route('club.track', [$club->club_id]);
     }
 
@@ -141,13 +142,34 @@ class ReservationController extends Controller
                 // Si es 0 -> Obtenemos el estado anterior...
                 $valor = ($estado == 2 || $estado == 1) ? 0 : $last;
 
-                // Quitar de la pivot...
-
                 // Actualizamos en la tabla pivot el campo status...
                 Auth::user()->reservations()->wherePivot('id','=',$value->pivot->id)->update(['status' => $valor, 'cancelled' => $estado, 'waiting_list' => $espera]);
-            }            
+            }
         }
 
+                    // Actualizar la reserva...
+                    //var_dump($value->pivot->cancelled);
+        $users = count($status->users); // Nº de usuarios...
+        $cont = 0; // nº de cancelaciones...
+        // Recorremos los usuarios 
+        foreach ($status->users as $value) {
+            if ($value->pivot->cancelled != null) {
+                $cont++;
+            }
+        }
+
+        // Si los jugadores a buscar es menor a los cancelados...
+        if($status->search_players >= $cont) {
+            // Actualizamos...
+            $status->color = '#f8d254';
+            $status->update($status->toArray());
+        } else {
+            // No ejecuta - controlar que nº jugadores a buscar..., si vuelve a confirmara la reserva cancelada = cambiar color...
+            $status->color = '#65a7ec';
+            $status->update($status->toArray());
+        }
+
+       
         return redirect()->route('home');
     }
 

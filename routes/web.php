@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/club', 'ClubController@index')->name('list.club');
 Route::get('/club/track/{id}', 'ViewClubTrackController@index')->name('club.track');
+Route::get('/track/{id}', 'ViewClubTrackController@show')->name('track.show.user');
 
 // Registered user
 Auth::routes();
